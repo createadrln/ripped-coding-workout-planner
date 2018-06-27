@@ -1,0 +1,276 @@
+<!-- ToDo make sure everything works or there is a fallback when not connected to firebase -->
+<!-- ToDo add Alexa integration -->
+<!-- ToDo restore and make PWA -->
+
+<!-- Form Toggles -->
+<nav>
+    <div class="actions w-100 text-center">
+        <div class="btn btn-info d-inline-block m-1" (click)="addWorkoutCollection = true">Add Weekly Workouts<span
+                class="glyphicon glyphicon-plus"></span></div>
+        <div class="btn btn-info d-inline-block m-1" (click)="addNote = true; addWorkoutCollection = false">Add New Workout <span
+                class="glyphicon glyphicon-plus"></span></div>
+        <!-- todo create common exercise repository -->
+        <!--<div class="btn btn-info d-inline-block m-1" (click)="addExercise = true">Add New Exercise <span-->
+                <!--class="glyphicon glyphicon-plus"></span></div>-->
+    </div>
+</nav>
+
+<!-- Weekly Form -->
+<form *ngIf="addWorkoutCollection" #newWorkoutCollectionForm="ngForm" (ngSubmit)="addNewWorkoutCollection(newWorkoutCollectionForm)">
+    <div class="container my-4">
+        <div class="row">
+
+            <header>
+                <h3 *ngIf="addWorkoutCollection">Add workouts for the week of...</h3>
+            </header>
+
+            <table class="table table-responsive table-bordered w-100 d-block d-md-table">
+                <tbody>
+                <tr>
+                    <td>
+                        <mat-checkbox (ngModel)="newWeeklyWorkoutCollectionCurrentToggle" #newWeeklyWorkoutCollectionCurrentToggle name="newWeeklyWorkoutCollectionCurrentToggle">
+                            Set this to be current weekly workouts:
+                        </mat-checkbox>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Enter a date:</label>
+                        <mat-form-field class="d-block">
+                            <input matInput [matDatepicker]="picker" placeholder="Choose a date"
+                                   (ngModel)="newWorkoutCollectionDate" #newWorkoutCollectionDate
+                                   name="newWorkoutCollectionDate" value="{{ weeklyWorkoutNotesDate }}"
+                                   placeholder="{{ weeklyWorkoutNotesDate }}">
+                            <mat-datepicker-toggle ng-model="ctrl.weeklyWorkoutNotesDate" matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Enter weekly goals:</label>
+                        <mat-form-field class="d-block">
+                            <textarea id="new-workout-collection-description"
+                                      (change)="newWorkoutCollectionDescriptionChange($event)" matInput
+                                      placeholder="Goals for the week"></textarea>
+                        </mat-form-field>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Add saved workouts:</label>
+                        <div>
+                            <mat-form-field>
+                                <mat-select placeholder="Select workouts" (ngModel)="newWeeklyWorkoutWorkouts"
+                                            #newWeeklyWorkoutWorkouts
+                                            name="newWeeklyWorkoutWorkouts" [(value)]="selectedWorkouts" multiple>
+                                    <mat-option *ngFor="let note of notes  | async | reverse; let n = index"
+                                                value="{{ note.key }}">{{ note.title }}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+
+                            <p>You selected: {{ selectedWorkouts }}</p>
+
+                            <footer>
+                                <div class="actions w-100">
+                                    <!-- Submit Form -->
+                                    <div class="btn btn-warning d-inline-block m-1" (click)="addNote = true">Add New Workout <span
+                                            class="glyphicon glyphicon-plus"></span></div>
+                                    <div *ngIf="addWorkoutCollection" class="btn btn-default" (click)="addWorkoutCollection = false">Cancel
+                                        <span class="glyphicon glyphicon-refresh"></span></div>
+                                </div>
+                            </footer>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <footer>
+                <div class="actions w-100">
+                    <!-- Submit Form -->
+                    <button *ngIf="addWorkoutCollection" type="submit" class="btn btn-success">Save Weekly Workout Plan
+                        <span class="glyphicon glyphicon-ok"></span></button>
+                    <div *ngIf="addWorkoutCollection" class="btn btn-default" (click)="addWorkoutCollection = false">Cancel
+                        <span class="glyphicon glyphicon-refresh"></span></div>
+                </div>
+            </footer>
+
+        </div>
+    </div>
+</form>
+
+<!-- Workout Note Form -->
+<form *ngIf="addNote" #newNoteForm="ngForm" (ngSubmit)="addNewNote(newNoteForm)">
+    <div class="container my-4">
+        <div class="row">
+
+            <table class="table table-responsive table-bordered w-100 d-block d-md-table">
+                <tbody>
+                <tr>
+                    <td>
+                        <input class="form-control" (ngModel)="newNoteTitle" #newNoteTitle name="newNoteTitle"
+                               placeholder="Note Title">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <textarea class="form-control" id="new-note-description"
+                                  (change)="newNoteDescriptionChange($event)" rows="4" cols="50"
+                                  placeholder="Note Description">{{ textareaValue }}</textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input id="workoutTags" class="form-control" (ngModel)="newWorkoutTags" #newWorkoutTags
+                               name="newWorkoutTags" placeholder="Tags" value="">
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <h4 *ngIf="addNote">Enter exercise details</h4>
+
+            <table *ngIf="addNote" class="table table-responsive table-bordered w-100 d-block d-md-table">
+                <thead class="thead-dark">
+                <tr>
+                    <th class="align-middle">Exercise Title</th>
+                    <th class="align-middle">Sets</th>
+                    <th class="align-middle">Reps</th>
+                    <th class="align-middle">Weight</th>
+                    <!--<th class="align-middle">Rest</th>-->
+                    <!--<th class="align-middle">Duration</th>-->
+                </tr>
+                </thead>
+
+                <!-- todo iterate <tr> for multiple exercise rows -->
+                <tbody>
+                <tr *ngFor="let row of newNoteExercisesRowSetup; let nr = index">
+                    <td class="align-middle">
+                        <input class="form-control" type="text" (ngModel)="newNoteExerciseTitle" #newNoteExerciseTitle
+                               name="newNoteExerciseTitle" placeholder="Exercise Title">
+                    </td>
+                    <td *ngFor="let col of newNoteExercisesColsSetup; let nc = index">
+                        <input class="form-control" placeholder="Input" #rowCol (blur)="rowCols[nc] = rowCol.value"
+                               (keyup.enter)="rowCols[nc] = rowCol.value">
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <div class="actions w-100">
+
+                <!-- todo submit form -->
+                <div *ngIf="addNote" class="btn btn-success m-1"
+                     (click)="addNewNoteExerciseRow(newNoteExerciseTitle.value)">Add Row <span
+                        class="glyphicon glyphicon-plus"></span></div>
+                <button *ngIf="addNote" type="submit" class="btn btn-warning m-1">Save Note <span
+                        class="glyphicon glyphicon-ok"></span></button>
+                <div *ngIf="addNote" class="btn btn-default m-1" (click)="addNote = false">Cancel <span
+                        class="glyphicon glyphicon-refresh"></span></div>
+
+                <!-- todo add different formats -->
+                <!--<div *ngIf="!addNote" class="btn btn-info disabled">Add New Superset/Dropset Workout (Coming Soon)<span class="glyphicon glyphicon-plus"></span></div><br><br>-->
+                <!--<div *ngIf="!addNote" class="btn btn-info disabled">Add New 5x5 Workout (Coming Soon)<span class="glyphicon glyphicon-plus"></span></div>-->
+
+                <!-- todo add column -->
+                <!--<span class="btn btn-default btn-sm" (click)="addNoteColumn(note.$key)">+ Add Column</span>-->
+
+            </div>
+        </div>
+    </div>
+</form>
+
+<hr>
+
+<!-- Weekly Workout Selection -->
+<div class="container">
+    <div class="row">
+        <mat-form-field>
+            <mat-select placeholder="Change week selected" [(ngModel)]="selectedValue" (selectionChange)="selectNewWorkoutCollection($event)">
+                <mat-option *ngFor="let workoutCollection of weeklyWorkoutCollections | async" [value]="workoutCollection.key">
+                    {{ workoutCollection.week }} - {{ workoutCollection.description }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+</div>
+
+<!-- Titles and Descriptions -->
+<div class="container">
+    <div class="row d-block">
+        <h2>This is my workout plan for the week of {{ upcomingWeek }}</h2>
+        <h4>Workout Description:  {{ upcomingWeekDescription }}</h4>
+    </div>
+</div>
+
+<!-- Workout Notes -->
+<div class="container my-4" *ngFor="let note of weeklyWorkouts | async | reverse; let n = index">
+    <div class="row d-block">
+
+        <header>
+            <div class="row">
+                <div class="col-md-7">
+                    <h2>{{ note.title }}</h2>
+                    <p>{{ note.description }}</p>
+                </div>
+                <div class="col-md-5 text-right">
+                    <div class="btn btn-danger" (click)="deleteNote(note)">Delete Note <span
+                            class="glyphicon glyphicon-trash"></span></div>
+                    <input type="hidden" id="rows-count" #rowsCount value="{{ note.exercises.length }}">
+                    <button class="btn btn-default btn-success"
+                            (click)="createNewNoteRow(note.key, rowsCount.value, rowTitle.value)">Save New Row<span
+                            class="glyphicon glyphicon-plus"></span></button>
+                </div>
+            </div>
+        </header>
+
+        <div class="col-md-12">
+            <div class="row">
+                <table class="table table-responsive table-bordered w-100 d-block d-md-table">
+
+                <thead class="thead-dark">
+                <tr>
+                    <th class="align-middle">Exercise Title</th>
+                    <th class="align-middle">Sets</th>
+                    <th class="align-middle">Reps</th>
+                    <th class="align-middle">Weight</th>
+                    <!--<th class="align-middle">Actions</th>-->
+                    <!--<th>&nbsp;</th>-->
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr *ngFor="let exercise of note.exercises; let i = index">
+
+                    <td class="align-middle">{{ exercise.title }}</td>
+                    <td *ngFor="let col of exercise.cols; let j = index" class="align-middle">
+                        <!-- Main exercise info and input -->
+                        <!-- todo convert string to number and count -->
+                        <span *ngIf="editRowValues != [i]" >{{ col }}</span><br>
+                        <input *ngIf="editRowValues == [i]" class="form-control" value="{{ col }}" #rowCol
+                               (blur)="rowCols[j].$value = rowCol.value"
+                               (keyup.enter)="rowCols[j].$value = rowCol.value">
+                    </td>
+                </tr>
+                </tbody>
+
+                <tfoot>
+                <tr>
+                    <td class="align-middle">
+                        <input class="form-control" type="text" id="row-title" required #rowTitle name="row-title"
+                               placeholder="New Title">
+                    </td>
+                    <td *ngFor="let col of note.exercises[0].cols; let j = index" class="align-middle">
+                        <input class="form-control" placeholder="Row Col-{{ j }}" name="rowCol_{{ j }}" #rowCol
+                               (blur)="rowCols[j] = rowCol.value" (keyup.enter)="rowCols[j] = rowCol.value">
+                    </td>
+                </tr>
+                </tfoot>
+
+            </table>
+            </div>
+        </div>
+    </div>
+</div>
