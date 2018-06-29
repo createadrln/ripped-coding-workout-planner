@@ -1,26 +1,37 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { AngularFireModule } from 'angularfire2';
-import { AngularFireDatabaseModule } from 'angularfire2/database';
-import { AngularFireAuthModule } from 'angularfire2/auth';
+/* ToDo restore service worker and make PWA */
+import {BrowserModule} from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
+import {FormsModule} from '@angular/forms';
+import {AngularFireModule} from 'angularfire2';
+import {AngularFireDatabaseModule} from 'angularfire2/database';
+import {AngularFireAuthModule} from 'angularfire2/auth';
 // import { ServiceWorkerModule } from '@angular/service-worker';
-import { environment } from '../environments/environment';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatFormFieldModule, MatSelectModule, MatOptionModule, MatInputModule, MatDatepickerModule, MatNativeDateModule, MatCheckboxModule } from '@angular/material';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {environment} from '../environments/environment';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {
+    MatFormFieldModule,
+    MatSelectModule,
+    MatOptionModule,
+    MatInputModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatCheckboxModule
+} from '@angular/material';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
-import { AppComponent } from './app.component';
-import { AppNavbarComponent } from './app-navbar/app-navbar.component';
+import {AppComponent} from './app.component';
+import {AppNavbarComponent} from './app-navbar/app-navbar.component';
 
-import { AuthGuard } from './auth.service';
-import { routes } from './app.routes';
-import { LoginComponent } from './login/login.component';
-import { EmailComponent } from './email/email.component';
-import { MembersComponent } from './members/members.component';
-import { NotesComponent } from './notes/notes.component';
+import {AuthGuard} from './auth.service';
+import {routes} from './app.routes';
+import {LoginComponent} from './login/login.component';
+import {EmailComponent} from './email/email.component';
+import {SignupComponent} from './signup/signup.component';
+import {MembersComponent} from './members/members.component';
+import {NotesComponent} from './notes/notes.component';
 
-import { ReversePipe } from './shared/reverse.pipe';
+import {ReversePipe} from './shared/reverse.pipe';
+
 // import { SearchPipe } from './shared/search.pipe';
 
 @NgModule({
@@ -31,6 +42,7 @@ import { ReversePipe } from './shared/reverse.pipe';
         // SearchPipe,
         LoginComponent,
         EmailComponent,
+        SignupComponent,
         MembersComponent,
         NotesComponent
     ],
@@ -57,4 +69,5 @@ import { ReversePipe } from './shared/reverse.pipe';
     providers: [AuthGuard],
     bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

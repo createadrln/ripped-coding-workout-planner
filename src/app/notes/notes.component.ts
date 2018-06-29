@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { AngularFireAuth } from 'angularfire2/auth';
-import { AngularFireDatabase, AngularFireList, AngularFireObject } from 'angularfire2/database';
-import { Observable } from 'rxjs/Observable';
+import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
+import {AngularFireAuth} from 'angularfire2/auth';
+import {AngularFireDatabase, AngularFireList, AngularFireObject} from 'angularfire2/database';
+import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 
 @Component({
@@ -48,14 +49,16 @@ export class NotesComponent implements OnInit {
     editRowValues = null;
     addChildRowValues = null;
 
-    ngOnInit() {
-    }
+    ngOnInit() {}
 
-    constructor(private afAuth: AngularFireAuth, private db: AngularFireDatabase) {
+    constructor(private afAuth: AngularFireAuth, private db: AngularFireDatabase, private router: Router) {
 
+        /* ToDo if no auth redirect to login page */
         this.afAuth.authState.subscribe(auth => {
 
-            if (auth) {
+            if (!auth) {
+                this.router.navigateByUrl('/login');
+            } else {
 
                 /* This observes workout notes for a user */
                 this.notesRef = this.getMemberDbList(auth.uid, '/notes');
@@ -71,6 +74,9 @@ export class NotesComponent implements OnInit {
                 this.weeklyWorkoutCollections.subscribe(weeks => {
 
                     const getCurrentWeek = weeks.filter(week => week.current);
+
+                    /* ToDo if no workouts exist error message and directions */
+                    /* ToDo create from popular workouts */
                     const upcomingWorkouts = getCurrentWeek[0].workouts;
 
                     this.upcomingWeek = getCurrentWeek[0].week;
@@ -84,6 +90,7 @@ export class NotesComponent implements OnInit {
     }
 
     /* Gets Firebase List */
+
     /* ToDo move to service */
     getMemberDbList(auth, path) {
         if (path) {
@@ -94,6 +101,7 @@ export class NotesComponent implements OnInit {
     }
 
     /* Gets Firebase Object */
+
     /* ToDo move to service */
     getMemberDbObject(auth, path) {
         if (path) {
@@ -104,6 +112,7 @@ export class NotesComponent implements OnInit {
     }
 
     /* Gets upcoming week */
+
     /* ToDo move to service */
     getWeeklyWorkoutNotes(notesRef, upcomingWorkouts) {
         /* Filters by selected upcoming workout key */
@@ -184,6 +193,7 @@ export class NotesComponent implements OnInit {
     /* Add a Weekly Workout Collection */
     /* ToDo update function and variables to use weekly namespace */
     /* ToDo move to service */
+
     /* Todo add edit or duplicate a week */
     addNewWorkoutCollection(workoutCollection) {
         this.afAuth.authState.subscribe(auth => {
@@ -216,6 +226,7 @@ export class NotesComponent implements OnInit {
     }
 
     /* Remove existing week toggle data */
+
     /* ToDo move to service */
     removeCurrentWeekToggleData(auth) {
         this.weeklyWorkoutCollections.subscribe(weeks => {
@@ -225,6 +236,7 @@ export class NotesComponent implements OnInit {
     }
 
     /* Remove existing week toggle data */
+
     /* ToDo move to service */
     updateCurrentWeekToggleData(auth, workoutCollection) {
         this.db.object('/members/' + auth + '/weeks/' + workoutCollection).update({
@@ -246,6 +258,7 @@ export class NotesComponent implements OnInit {
     }
 
     /* Update current week from dropdown */
+
     /* ToDo move to helper */
     selectNewWorkoutCollection(ev) {
         this.afAuth.authState.subscribe(auth => {
@@ -257,6 +270,7 @@ export class NotesComponent implements OnInit {
     }
 
     /* Get workout goal description from form */
+
     /* ToDo move to helper */
     newWorkoutCollectionDescriptionChange(ev) {
         this.newWeeklyGoalsTextareaValue = ev.target.value;
@@ -264,6 +278,7 @@ export class NotesComponent implements OnInit {
 
     /* Add a Note */
     /* Todo add first exercise/row to note */
+
     /* ToDo move to service */
     addNewNote(note) {
         this.afAuth.authState.subscribe(auth => {
@@ -284,6 +299,7 @@ export class NotesComponent implements OnInit {
     }
 
     /* Get Notes */
+
     /* ToDo move to service */
     getAllNotes(notes) {
         return notes.snapshotChanges().map(changes => {
@@ -292,6 +308,7 @@ export class NotesComponent implements OnInit {
     }
 
     /* Delete Note --- DONE */
+
     /* ToDo move to service */
     deleteNote(note: any) {
         this.afAuth.authState.subscribe(auth => {
@@ -302,6 +319,7 @@ export class NotesComponent implements OnInit {
     }
 
     /* Save New Note/Exercise Row --- DONE */
+
     /* ToDo move to service */
     createNewNoteRow(noteKey, rowsCount, rowTitle) {
         this.afAuth.authState.subscribe(auth => {
@@ -315,6 +333,7 @@ export class NotesComponent implements OnInit {
     }
 
     /* Delete a note row --- DONE */
+
     /* ToDo move to service */
     deleteNoteRow(noteKey, exercise, exerciseIndex): void {
         this.afAuth.authState.subscribe(auth => {
@@ -325,6 +344,7 @@ export class NotesComponent implements OnInit {
     }
 
     /* Add note description */
+
     /* ToDo move to helper */
     newNoteDescriptionChange(ev) {
         this.newNoteTextareaValue = ev.target.value;

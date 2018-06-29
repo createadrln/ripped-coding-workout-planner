@@ -1,22 +1,19 @@
 <!-- ToDo make sure everything works or there is a fallback when not connected to firebase -->
 <!-- ToDo add Alexa integration -->
 <!-- ToDo restore and make PWA -->
+<!-- ToDo look at UI for buttons (sidebar nav?) -->
 
 <!-- Form Toggles -->
 <nav>
     <div class="actions w-100 text-center">
-        <div class="btn btn-info d-inline-block m-1" (click)="addWorkoutCollection = true">Add Weekly Workouts<span
-                class="glyphicon glyphicon-plus"></span></div>
-        <div class="btn btn-info d-inline-block m-1" (click)="addNote = true; addWorkoutCollection = false">Add New Workout <span
-                class="glyphicon glyphicon-plus"></span></div>
-        <!-- todo create common exercise repository -->
-        <!--<div class="btn btn-info d-inline-block m-1" (click)="addExercise = true">Add New Exercise <span-->
-                <!--class="glyphicon glyphicon-plus"></span></div>-->
+        <div class="btn btn-info d-inline-block m-1" (click)="addWorkoutCollection = true">Add Weekly Workouts</div>
+        <div class="btn btn-info d-inline-block m-1" (click)="addNote = true; addWorkoutCollection = false">Add New Workout</div>
     </div>
 </nav>
 
 <!-- Weekly Form -->
-<form *ngIf="addWorkoutCollection" #newWorkoutCollectionForm="ngForm" (ngSubmit)="addNewWorkoutCollection(newWorkoutCollectionForm)">
+<form *ngIf="addWorkoutCollection" #newWorkoutCollectionForm="ngForm"
+      (ngSubmit)="addNewWorkoutCollection(newWorkoutCollectionForm)">
     <div class="container my-4">
         <div class="row">
 
@@ -28,7 +25,9 @@
                 <tbody>
                 <tr>
                     <td>
-                        <mat-checkbox (ngModel)="newWeeklyWorkoutCollectionCurrentToggle" #newWeeklyWorkoutCollectionCurrentToggle name="newWeeklyWorkoutCollectionCurrentToggle">
+                        <mat-checkbox (ngModel)="newWeeklyWorkoutCollectionCurrentToggle"
+                                      #newWeeklyWorkoutCollectionCurrentToggle
+                                      name="newWeeklyWorkoutCollectionCurrentToggle">
                             Set this to be current weekly workouts:
                         </mat-checkbox>
                     </td>
@@ -41,7 +40,8 @@
                                    (ngModel)="newWorkoutCollectionDate" #newWorkoutCollectionDate
                                    name="newWorkoutCollectionDate" value="{{ weeklyWorkoutNotesDate }}"
                                    placeholder="{{ weeklyWorkoutNotesDate }}">
-                            <mat-datepicker-toggle ng-model="ctrl.weeklyWorkoutNotesDate" matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker-toggle ng-model="ctrl.weeklyWorkoutNotesDate" matSuffix
+                                                   [for]="picker"></mat-datepicker-toggle>
                             <mat-datepicker #picker></mat-datepicker>
                         </mat-form-field>
                     </td>
@@ -72,13 +72,17 @@
 
                             <p>You selected: {{ selectedWorkouts }}</p>
 
+                            <!-- Submit Form -->
                             <footer>
                                 <div class="actions w-100">
-                                    <!-- Submit Form -->
-                                    <div class="btn btn-warning d-inline-block m-1" (click)="addNote = true">Add New Workout <span
-                                            class="glyphicon glyphicon-plus"></span></div>
-                                    <div *ngIf="addWorkoutCollection" class="btn btn-default" (click)="addWorkoutCollection = false">Cancel
+                                    <div class="d-inline-block m-1" (click)="addNote = true">
+                                        <div class="btn btn-warning">New Workout
+                                        <span class="glyphicon glyphicon-plus"></span></div>
+                                    </div>
+                                    <div *ngIf="addWorkoutCollection" (click)="addWorkoutCollection = false">
+                                        <div class="btn btn-default">Cancel
                                         <span class="glyphicon glyphicon-refresh"></span></div>
+                                    </div>
                                 </div>
                             </footer>
                         </div>
@@ -87,13 +91,15 @@
                 </tbody>
             </table>
 
+            <!-- Submit Form -->
             <footer>
-                <div class="actions w-100">
-                    <!-- Submit Form -->
-                    <button *ngIf="addWorkoutCollection" type="submit" class="btn btn-success">Save Weekly Workout Plan
+                <div *ngIf="addWorkoutCollection" class="actions w-100">
+                    <button type="submit" class="btn btn-success">Save Weekly Workout Plan
                         <span class="glyphicon glyphicon-ok"></span></button>
-                    <div *ngIf="addWorkoutCollection" class="btn btn-default" (click)="addWorkoutCollection = false">Cancel
+                    <div (click)="addWorkoutCollection = false">
+                        <div class="btn btn-default">Cancel
                         <span class="glyphicon glyphicon-refresh"></span></div>
+                    </div>
                 </div>
             </footer>
 
@@ -188,8 +194,10 @@
 <div class="container">
     <div class="row">
         <mat-form-field>
-            <mat-select placeholder="Change week selected" [(ngModel)]="selectedValue" (selectionChange)="selectNewWorkoutCollection($event)">
-                <mat-option *ngFor="let workoutCollection of weeklyWorkoutCollections | async" [value]="workoutCollection.key">
+            <mat-select placeholder="Change week selected" [(ngModel)]="selectedValue"
+                        (selectionChange)="selectNewWorkoutCollection($event)">
+                <mat-option *ngFor="let workoutCollection of weeklyWorkoutCollections | async"
+                            [value]="workoutCollection.key">
                     {{ workoutCollection.week }} - {{ workoutCollection.description }}
                 </mat-option>
             </mat-select>
@@ -200,12 +208,14 @@
 <!-- Titles and Descriptions -->
 <div class="container">
     <div class="row d-block">
-        <h2>This is my workout plan for the week of {{ upcomingWeek }}</h2>
-        <h4>Workout Description:  {{ upcomingWeekDescription }}</h4>
+        <h3>This is my workout plan for the week of {{ upcomingWeek }}</h3>
+        <h4>Workout Description: {{ upcomingWeekDescription }}</h4>
     </div>
 </div>
 
 <!-- Workout Notes -->
+<!-- ToDo glyiphicons not working -->
+<!-- ToDo remove glyiphicons? -->
 <div class="container my-4" *ngFor="let note of weeklyWorkouts | async | reverse; let n = index">
     <div class="row d-block">
 
@@ -230,46 +240,78 @@
             <div class="row">
                 <table class="table table-responsive table-bordered w-100 d-block d-md-table">
 
-                <thead class="thead-dark">
-                <tr>
-                    <th class="align-middle">Exercise Title</th>
-                    <th class="align-middle">Sets</th>
-                    <th class="align-middle">Reps</th>
-                    <th class="align-middle">Weight</th>
-                    <!--<th class="align-middle">Actions</th>-->
-                    <!--<th>&nbsp;</th>-->
-                </tr>
-                </thead>
+                    <thead class="thead-dark">
+                    <tr>
+                        <th class="align-middle">Exercise Title</th>
+                        <th class="align-middle">Sets</th>
+                        <th class="align-middle">Reps</th>
+                        <th class="align-middle">Weight</th>
+                        <th>&nbsp;</th>
+                    </tr>
+                    </thead>
 
-                <tbody>
-                <tr *ngFor="let exercise of note.exercises; let i = index">
+                    <tbody>
+                    <tr *ngFor="let exercise of note.exercises; let i = index">
 
-                    <td class="align-middle">{{ exercise.title }}</td>
-                    <td *ngFor="let col of exercise.cols; let j = index" class="align-middle">
-                        <!-- Main exercise info and input -->
-                        <!-- todo convert string to number and count -->
-                        <span *ngIf="editRowValues != [i]" >{{ col }}</span><br>
-                        <input *ngIf="editRowValues == [i]" class="form-control" value="{{ col }}" #rowCol
-                               (blur)="rowCols[j].$value = rowCol.value"
-                               (keyup.enter)="rowCols[j].$value = rowCol.value">
-                    </td>
-                </tr>
-                </tbody>
+                        <td class="align-middle">{{ exercise.title }}</td>
+                        <td *ngFor="let col of exercise.cols; let j = index" class="align-middle">
+                            <!-- Main exercise info and input -->
+                            <!-- todo convert string to number and count -->
+                            <span *ngIf="editRowValues != [i]">{{ col }}</span><br>
+                            <input *ngIf="editRowValues == [i]" class="form-control" value="{{ col }}" #rowCol
+                                   (blur)="rowCols[j].$value = rowCol.value"
+                                   (keyup.enter)="rowCols[j].$value = rowCol.value">
+                        </td>
+                        <td class="text-right">
+                            <div>
 
-                <tfoot>
-                <tr>
-                    <td class="align-middle">
-                        <input class="form-control" type="text" id="row-title" required #rowTitle name="row-title"
-                               placeholder="New Title">
-                    </td>
-                    <td *ngFor="let col of note.exercises[0].cols; let j = index" class="align-middle">
-                        <input class="form-control" placeholder="Row Col-{{ j }}" name="rowCol_{{ j }}" #rowCol
-                               (blur)="rowCols[j] = rowCol.value" (keyup.enter)="rowCols[j] = rowCol.value">
-                    </td>
-                </tr>
-                </tfoot>
+                                <!-- todo make sure only one note row is edited -->
+                                <!-- Main exercise actions -->
+                                <div *ngIf="editRowValues != [i]" id="edit-row-button" class="btn btn-info"
+                                     (click)="editRow(note.$key, i)">Edit <span
+                                        class="glyphicon glyphicon-pencil"></span></div>
+                                <div *ngIf="editRowValues == [i]" id="save-edit-row-button" class="btn btn-info"
+                                     (click)="saveRow(note.$key, i)">Save <span class="glyphicon glyphicon-ok"></span>
+                                </div>
+                                <div *ngIf="editRowValues == [i]" class="btn btn-default"
+                                     (click)="editRowValues = null">Cancel <span
+                                        class="glyphicon glyphicon-refresh"></span></div>
+                                <div id="delete-row-button" class="btn btn-danger"
+                                     (click)="deleteRow(note.$key, exercise, i)">Del <span
+                                        class="glyphicon glyphicon-trash"></span></div>
 
-            </table>
+                                <!-- Exercise extra set info actions -->
+                                <div *ngIf="addChildRowValues != [i]" class="btn btn-info"
+                                     (click)="addChildRow(note.$key, i)">Add Set <span
+                                        class="glyphicon glyphicon-plus"></span></div>
+                                <div *ngIf="addChildRowValues == [i]" class="btn btn-success"
+                                     (click)="saveChildRow(note.$key, i, exercise.child_cols.length)">+ Save Set
+                                </div>
+
+                            </div>
+                            <div>
+                                <span *ngIf="addChildRowValues == [i]" class="btn btn-link"
+                                      (click)="addChildRowValues = null">Cancel New Set</span>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+
+                    <tfoot>
+                    <tr>
+                        <td class="align-middle">
+                            <input class="form-control" type="text" id="row-title" required #rowTitle name="row-title"
+                                   placeholder="New Title">
+                        </td>
+                        <td *ngFor="let col of note.exercises[0].cols; let j = index" class="align-middle">
+                            <input class="form-control" placeholder="Row Col-{{ j }}" name="rowCol_{{ j }}" #rowCol
+                                   (blur)="rowCols[j] = rowCol.value" (keyup.enter)="rowCols[j] = rowCol.value">
+                        </td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    </tfoot>
+
+                </table>
             </div>
         </div>
     </div>
