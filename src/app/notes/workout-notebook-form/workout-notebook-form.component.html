@@ -1,0 +1,75 @@
+<form [formGroup]="workoutNotebookForm">
+
+    <div class="form-group form-check form-checkbox">
+        <label class="form-check-label" for="current">
+            Set as current workout plan
+            <input class="form-check-input" type="checkbox" formControlName="current"
+                   value="current" id="current">
+            <span class="form-checkmark"></span>
+        </label>
+    </div>
+
+    <div class="form-group">
+        <input class="form-control" formControlName="title"
+               placeholder="Enter a workout notebook title">
+    </div>
+    <div *ngIf="workoutNotebookForm.controls['title'].errors && !workoutNotebookForm.controls['title'].pristine"
+         class="error-msg">
+        <div [hidden]="!workoutNotebookForm.controls['title'].errors.required">
+            <div class="invalid-feedback">
+                Please enter a title
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <input class="form-control" formControlName="description"
+               placeholder="Enter workout goals">
+    </div>
+
+    <hr class="mt-4">
+
+    <div class="actions w-100 my-4">
+        <button class="btn btn-success w-100 d-block mx-auto"
+                [disabled]="workoutNotebookForm.invalid"
+                (click)="addWorkoutNotebook()">
+            Save Workout Notebook
+        </button>
+    </div>
+
+    <div class="form-group">
+
+        <!-- ToDo make this with angular search pipe for tags and title -->
+        <div *ngIf="workoutNotebookForm && workoutNotebookForm.controls && workoutNotebookForm.controls.workouts && workoutNotebookForm.controls.workouts.controls">
+            <div formArrayName="workouts">
+                <div *ngFor="let workouts of workoutNotebookForm.controls.workouts.controls; let n=index">
+                    <div [formGroupName]="n">
+                        <h5>Workout {{ n + 1 }}</h5>
+                        <div formArrayName="workoutGroup">
+                            <div class="form-group">
+                                <select id="workout" class="form-control"
+                                        (click)="addSelectedWorkout(n, $event.target.value)">
+                                    <option value="null">Select workout</option>
+                                    <option *ngFor="let workout of workouts.controls.workoutGroup.controls; let m=index"
+                                            value="{{ workout.get('key').value }}"
+                                            [formGroupName]="m">
+                                        {{ workout.get('title').value }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- ToDo add remove this workout (at Index) button to items -->
+                <!-- ToDo scroll to location of button -->
+                <!-- ToDo add disabled state -->
+                <div class="btn btn-success mt-2"
+                     (click)="addWorkoutToNotebook(workoutNotebookForm.controls.workouts.controls.length)">
+                    Add another workout
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</form>

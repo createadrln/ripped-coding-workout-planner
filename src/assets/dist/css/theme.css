@@ -1,0 +1,152 @@
+.btn.btn-primary {
+  background-color: #515F90 !important; }
+
+.btn.btn-secondary {
+  background-color: #FF3B30; }
+
+.btn.btn-accent {
+  background-color: #B9CF0B; }
+
+.btn.btn-success {
+  background-color: #3adb76; }
+
+body {
+  background-color: #f9f9f9; }
+
+.navbar {
+  z-index: 9999; }
+
+.text-primary {
+  color: #515F90 !important; }
+
+.text-accent {
+  color: #B9CF0B; }
+
+.navbar-brand {
+  margin-right: 0;
+  text-align: left; }
+  .navbar-brand img {
+    height: auto;
+    margin: 0 auto;
+    max-width: 200px;
+    width: 100%; }
+  @media screen and (min-width: 768px) {
+    .navbar-brand img {
+      margin: 0;
+      max-width: 100%;
+      width: 500px; } }
+
+.workout-form-container {
+  left: 0;
+  height: calc(100% - 58px);
+  overflow: scroll;
+  position: fixed;
+  top: 58px;
+  width: 100%;
+  z-index: 9999; }
+  @media screen and (min-width: 768px) {
+    .workout-form-container {
+      height: auto;
+      margin: 0 auto;
+      overflow: auto;
+      position: relative;
+      top: auto;
+      width: 60%; } }
+
+.close-button {
+  cursor: pointer;
+  position: absolute;
+  right: 20px;
+  top: 15px; }
+
+.modal-overlay {
+  background-color: rgba(0, 0, 0, 0.6);
+  cursor: pointer;
+  height: 100%;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 9998; }
+
+.modal-content {
+  border-color: #928f8f; }
+
+.navbar {
+  background-color: #222;
+  color: #E6E6E6; }
+  .navbar a {
+    color: #e6e6e6; }
+  .navbar-toggler {
+    padding: 0; }
+    .navbar-toggler .mat-icon {
+      height: 40px;
+      width: 40px; }
+    .navbar-toggler .material-icons {
+      color: #e6e6e6;
+      font-size: 40px; }
+
+.workout-note-actions .btn {
+  width: 100%; }
+
+@media screen and (min-width: 460px) {
+  .workout-note-actions .btn {
+    width: auto; } }
+
+.form-control {
+  border-color: #928f8f; }
+  @media screen and (min-width: 768px) {
+    .form-control {
+      font-size: 1.25rem;
+      padding: 0.5rem 1rem; } }
+
+@media screen and (min-width: 768px) {
+  select.form-control:not([size]):not([multiple]) {
+    height: calc(2.875rem + 2px); } }
+
+.form-checkbox {
+  cursor: pointer;
+  display: block;
+  margin-bottom: 20px;
+  padding-left: 35px;
+  position: relative;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none; }
+  .form-checkbox .form-check-input {
+    cursor: pointer;
+    opacity: 0;
+    position: absolute; }
+    .form-checkbox .form-check-input:checked ~ .form-checkmark {
+      border: 1px solid #928f8f;
+      color: #928f8f; }
+    .form-checkbox .form-check-input:checked ~ .form-checkmark:after {
+      display: block; }
+  .form-checkbox .form-check-label {
+    cursor: pointer; }
+  .form-checkbox .form-checkmark:after {
+    border: solid #928f8f;
+    border-width: 0 3px 3px 0;
+    content: '';
+    display: none;
+    height: 14px;
+    left: 8px;
+    position: absolute;
+    top: 3px;
+    transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+    width: 8px; }
+  .form-checkbox .form-checkmark {
+    border: 1px solid #928f8f;
+    height: 25px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 25px; }
+
+@media screen and (min-width: 768px) {
+  .workout-form-container .actions .btn-success {
+    font-size: 1.25rem;
+    padding: 0.5rem 1rem; } }

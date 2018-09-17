@@ -1,0 +1,49 @@
+[
+  {
+    "key": "-LDaclX8KdL8PBOO2ggk",
+    "exercises": [
+      {
+        "cols": {
+          "reps": 12,
+          "sets": 4,
+          "weight": 185
+        },
+        "title": "Bench Press"
+      }
+    ],
+    "title": "Chest Workout"
+  },
+  {
+    "key": "-LDae2ZbDmrhu4ZbALDw",
+    "exercises": [
+      {
+        "cols": {
+          "reps": 12,
+          "sets": 4,
+          "weight": "Body"
+        },
+        "title": "Rows"
+      }
+    ],
+    "title": "Back Workout"
+  },
+  {
+    "key": "-LGA-HIaqftvuq5kUGYX",
+    "description": "A Shoulder Workout",
+    "exercises": [
+      {
+        "reps": "12",
+        "sets": "5",
+        "title": "Overhead Shoulder Press",
+        "weight": "135"
+      },
+      {
+        "reps": "12",
+        "sets": "4",
+        "title": "DB Side Raises",
+        "weight": "15"
+      }
+    ],
+    "title": "Shoulder Workout"
+  }
+]

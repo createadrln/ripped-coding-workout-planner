@@ -1,0 +1,83 @@
+<form [formGroup]="workoutNoteForm">
+
+    <div class="bg-light border p-3 mb-2">
+        <div class="form-group">
+            <input class="form-control" formControlName="title"
+                   placeholder="Enter a Workout Title">
+        </div>
+        <div class="form-group mb-2">
+            <input class="form-control" formControlName="description"
+                   placeholder="Enter Short Description">
+        </div>
+        <div class="form-group mb-2">
+            <select class="form-control mt-3 mb-3" formControlName="selectedNotebook">
+                <option selected>Select Workout Notebook</option>
+                <option *ngFor="let workoutCollection of weeklyWorkoutCollections | async"
+                        [value]="workoutCollection.key">{{ workoutCollection.title }} - {{ workoutCollection.description }}
+                </option>
+            </select>
+        </div>
+        <div class="form-group form-check form-checkbox mb-2">
+            <label class="form-check-label" for="create-workout">
+                Create New Workout Notebook
+                <input class="form-check-input" type="checkbox" formControlName="createNewNotebook"
+                       (change)="toggleCreateNewWorkoutNotebookVisibility()"
+                       id="create-workout">
+                <span class="form-checkmark"></span>
+            </label>
+        </div>
+        <div *ngIf="addWorkoutNoteCreateNewNotebook == 'visible'" class="workout-note-actions">
+            <hr class="my-3">
+            <div class="form-group">
+                <input class="form-control" formControlName="notebookTitle"
+                       placeholder="Enter Workout Notebook Title">
+            </div>
+            <div class="form-group">
+                <input class="form-control" formControlName="notebookDescription"
+                       placeholder="Enter Workout Notebook Goals">
+            </div>
+        </div>
+    </div>
+
+    <!-- ToDo focus on new row title input -->
+    <div class="actions workout-note-actions w-100">
+        <button class="btn btn-success mt-2 mr-sm-2" (click)="saveWorkoutNoteForm()">Save and Close</button>
+        <button class="btn btn-success mt-2 mr-sm-2" (click)="saveWorkoutNoteForm()">Save and Add Another</button>
+        <button class="btn btn-success mt-2 mr-sm-2" (click)="addNewExercise()">Add Row</button>
+    </div>
+
+    <div *ngIf="workoutNoteForm && workoutNoteForm.controls && workoutNoteForm.controls.exercises && workoutNoteForm.controls.exercises.controls">
+        <div formArrayName="exercises">
+            <div *ngFor="let exercises of workoutNoteForm.controls.exercises.controls; let j=index">
+                <div [formGroupName]="j">
+                    <div class="bg-light border p-3 my-3">
+                        <!-- ToDo Update delete button action -->
+                        <div class="clearfix">
+                            <h5 class="float-left">Enter exercise {{ j + 1 }} details</h5>
+                            <button *ngIf="j > 0" class="btn btn-link float-right" (click)="addNote = false">Delete</button>
+                        </div>
+                        <div class="row mb-1">
+                            <div class="align-middle col-md-3">
+                                <input class="form-control" formControlName="title"
+                                       placeholder="Title">
+                            </div>
+                            <div class="align-middle col-4 col-md-3">
+                                <input class="form-control" formControlName="sets"
+                                       placeholder="Sets">
+                            </div>
+                            <div class="align-middle col-4 col-md-3">
+                                <input class="form-control" formControlName="reps"
+                                       placeholder="Reps">
+                            </div>
+                            <div class="align-middle col-4 col-md-3">
+                                <input class="form-control" formControlName="weight"
+                                       placeholder="Weight">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</form>

@@ -1,0 +1,18 @@
+.btn {
+
+  &.btn-primary {
+    background-color: $primary-brand !important;
+  }
+
+  &.btn-secondary {
+    background-color: $secondary-brand;
+  }
+
+  &.btn-accent {
+    background-color: $accent-brand;
+  }
+
+  &.btn-success {
+    background-color: $success;
+  }
+}

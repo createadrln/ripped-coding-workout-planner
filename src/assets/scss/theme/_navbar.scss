@@ -1,0 +1,22 @@
+.navbar {
+  background-color: $black;
+  color: #E6E6E6;
+
+  a {
+    color: $white;
+  }
+
+  &-toggler {
+    padding: 0;
+
+    .mat-icon {
+      height: 40px;
+      width: 40px;
+    }
+
+    .material-icons {
+      color: $white;
+      font-size: 40px;
+    }
+  }
+}

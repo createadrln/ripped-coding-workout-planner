@@ -8,7 +8,7 @@ import {SignupComponent} from './signup/signup.component';
 import {MembersComponent} from './members/members.component';
 
 import {NotesComponent} from './notes/notes.component';
-import {AuthGuard} from './auth.service';
+import {AuthGuard} from './services/auth.service';
 
 export const router: Routes = [
     {path: '', redirectTo: 'login', pathMatch: 'full'},
