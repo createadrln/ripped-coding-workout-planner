@@ -11,11 +11,11 @@ import {NotesComponent} from './notes/notes.component';
 import {AuthGuard} from './services/auth.service';
 
 export const router: Routes = [
-    {path: '', redirectTo: 'login', pathMatch: 'full'},
+    {path: '', redirectTo: 'notes', pathMatch: 'full'},
     {path: 'login', component: LoginComponent},
     {path: 'login-email', component: EmailComponent},
     {path: 'signup', component: SignupComponent},
-    {path: 'members', component: MembersComponent, canActivate: [AuthGuard]},
+    {path: 'settings', component: MembersComponent, canActivate: [AuthGuard]},
     {path: 'notes', component: NotesComponent},
 ];
 

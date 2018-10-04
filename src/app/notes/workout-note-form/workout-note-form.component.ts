@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, Output} from '@angular/core';
 import {AngularFireAuth} from 'angularfire2/auth';
 import {AngularFireDatabase, AngularFireList} from 'angularfire2/database';
 import {NotesService} from '../../services/notes.service';
@@ -6,7 +6,7 @@ import {FormControl, FormGroup, FormArray, Validators} from '@angular/forms';
 import {Observable} from 'rxjs/Observable';
 import {WorkoutNotebooksService} from '../../services/workout-notebooks.service';
 import {MembersService} from '../../services/members.service';
-import {map} from 'rxjs/operators';
+import {EventEmitter} from '@angular/core';
 
 /* ToDo use classes correctly in TS variables */
 /* ToDo add validation to form */
@@ -16,6 +16,8 @@ import {map} from 'rxjs/operators';
     templateUrl: './workout-note-form.component.html'
 })
 export class WorkoutNoteFormComponent implements OnInit {
+
+    @Output() closeEvent = new EventEmitter();
 
     workoutNoteForm: FormGroup;
     notesRef: AngularFireList<any>;
@@ -48,7 +50,7 @@ export class WorkoutNoteFormComponent implements OnInit {
             }
         });
     }
-
+    
     ngOnInit() {
 
         this.workoutNoteForm = new FormGroup({
@@ -84,6 +86,8 @@ export class WorkoutNoteFormComponent implements OnInit {
         this.addWorkoutNote();
         this.addWorkoutNoteCreateNewNotebook = 'hidden';
         this.workoutNoteForm.reset();
+        /* ToDo make sure the exercise formArray resets */
+        this.closeOnSave();
     }
 
     /* Save Workout Note */
@@ -147,5 +151,9 @@ export class WorkoutNoteFormComponent implements OnInit {
 
     toggleCreateNewWorkoutNotebookVisibility() {
         this.addWorkoutNoteCreateNewNotebook = this.addWorkoutNoteCreateNewNotebook === 'visible' ? 'hidden' : 'visible';
+    }
+
+    closeOnSave() {
+        this.closeEvent.emit();
     }
 }

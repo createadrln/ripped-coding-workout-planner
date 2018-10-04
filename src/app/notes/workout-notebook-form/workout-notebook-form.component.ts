@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, Output} from '@angular/core';
 import {AngularFireAuth} from 'angularfire2/auth';
 import {FormControl, FormGroup, FormBuilder, FormArray, Validators} from '@angular/forms';
 import {Note} from '../../classes/workout-notebook';

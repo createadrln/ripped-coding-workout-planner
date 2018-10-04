@@ -1,39 +1,40 @@
-<nav class="navbar navbar-expand-md sticky-top mb-3">
-    <div class="navbar-brand col-12 col-sm-8 text-left">
-        <!-- ToDo make mobile menu -->
-        <!--<button class="navbar-toggler" data-toggle="collapse" data-target="#navbarsExampleDefault"-->
-                <!--aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">-->
-            <!--<mat-icon>menu</mat-icon>-->
-        <!--</button>-->
-        <!-- ToDo where does this link route? -->
-        <a href="#" class="d-sm-inline-block">
-            <img src="assets/images/flexing365-text-header.svg"/>
-        </a>
+<nav class="navbar navbar-expand-md d-block sticky-top">
+    <div class="row">
+        <div class="navbar-brand col-8 text-left">
+            <!-- ToDo make mobile menu -->
+            <button class="navbar-toggler align-middle mr-3" data-toggle="collapse" data-target="#navbarsExampleDefault"
+                    aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+                <mat-icon>menu</mat-icon>
+            </button>
+            <!-- ToDo where does this link route? -->
+            <a href="#" class="d-sm-inline-block align-middle">
+                <img src="assets/images/flexing365-text-header.svg"/>
+            </a>
+        </div>
+        <div class="navbar-util col-4 text-right">
+            <ul class="d-inline-block list-unstyled m-0">
+                <li class="py-2 pl-2">
+                    <mat-icon class="navbar-settings align-middle" (click)="goToUserSettings()">settings</mat-icon>
+                </li>
+            </ul>
+        </div>
     </div>
-    <div class="navbar-util col-sm-4 text-right d-none d-sm-block">
-        <mat-icon>settings</mat-icon>
+    <div class="row">
+        <div class="collapse navbar-collapse col-12" id="navbarsExampleDefault">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/notes">Workout Notes</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Workout Collections</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="http://flexing365.com">About Flexing365</a>
+                </li>
+                <li class="nav-item">
+                    <span class="nav-link" (click)="goToUserSettings()">User Settings</span>
+                </li>
+            </ul>
+        </div>
     </div>
-    <!--<div class="collapse navbar-collapse" id="navbarsExampleDefault">-->
-    <!--<div class="d-sm-none" id="navbarsExampleDefault">-->
-        <!--<ul class="navbar-nav mr-auto">-->
-            <!--<li class="nav-item">-->
-                <!--<a class="nav-link" href="/members">User Settings<span class="sr-only">User Settings</span></a>-->
-            <!--</li>-->
-            <!--<li class="nav-item">-->
-            <!--<a class="nav-link disabled" href="#">Disabled</a>-->
-            <!--</li>-->
-            <!--<li class="nav-item dropdown" ngbDropdown>-->
-            <!--<a class="nav-link dropdown-toggle" id="dropdown01" ngbDropdownToggle>Category</a>-->
-            <!--<div class="dropdown-menu" aria-labelledby="dropdown01" ngbDropdownMenu>-->
-            <!--<a class="dropdown-item" href="#">Angular</a>-->
-            <!--<a class="dropdown-item" href="#">React</a>-->
-            <!--<a class="dropdown-item" href="#">Vue.js</a>-->
-            <!--</div>-->
-            <!--</li>-->
-        <!--</ul>-->
-        <!--<form class="form-inline my-2 my-lg-0">-->
-        <!--<input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">-->
-        <!--<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>-->
-        <!--</form>-->
-    <!--</div>-->
 </nav>

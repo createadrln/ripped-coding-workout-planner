@@ -1,10 +1,9 @@
 <!-- ToDo make sure everything works or there is a fallback when not connected to firebase -->
 <!-- ToDo add Alexa integration -->
-<!-- ToDo restore and make PWA -->
-<!-- ToDo look at UI for buttons (sidebar nav?) -->
-<!-- ToDo add edit selected weekly workouts -->
+<!-- ToDo Make PWA -->
 
-<div class="workout-form-container border shadow bg-white mb-0 mb-sm-5" [@formSlideIn]="formWorkoutNoteVisibilityState">
+<!-- New Workout Form -->
+<div class="workout-form-container border shadow bg-white mb-0 mb-sm-5 mt-3" [@formSlideIn]="formWorkoutNoteVisibilityState">
     <div class="p-3">
         <div class="modal-title mb-2 pr-5">
             <mat-icon class="close-button" (click)="toggleWorkoutNoteFormState()">cancel</mat-icon>
@@ -12,13 +11,14 @@
         </div>
         <div class="modal-content">
             <div class="modal-body">
-                <app-workout-note-form></app-workout-note-form>
+                <app-workout-note-form (closeEvent)="closeEventReceived($event)"></app-workout-note-form>
             </div>
         </div>
     </div>
 </div>
 
-<div class="workout-form-container workout-notebook-form border shadow bg-white mb-0 mb-sm-5" [@formSlideIn]="formWorkoutNotebookVisibilityState">
+<!-- New Workout Collection Form -->
+<div class="workout-form-container workout-notebook-form border shadow bg-white mb-0 mb-sm-5 mt-3" [@formSlideIn]="formWorkoutNotebookVisibilityState">
     <div class="p-3">
         <div class="modal-title mb-2 pr-5">
             <mat-icon class="close-button" (click)="toggleWorkoutNotebookFormState()">cancel</mat-icon>
@@ -31,37 +31,42 @@
         </div>
     </div>
 </div>
-<div *ngIf="formWorkoutNotebookVisibilityState == 'active'" class="d-sm-none modal-overlay" (click)="toggleWorkoutNotebookFormState()"></div>
-<div *ngIf="formWorkoutNoteVisibilityState == 'active'" class="d-sm-none modal-overlay" (click)="toggleWorkoutNoteFormState()"></div>
 
-
-<section class="px-3 px-sm-5 m-sm-5">
+<!-- Note Page Header and Titles -->
+<!-- ToDo Hide This Stuff on Mobile When Not Being Used -->
+<section class="my-4 px-3 px-sm-5 m-sm-5">
     <div class="row">
-        <div class="col-sm-6">
-            <h3 class="text-uppercase">{{ upcomingWeekTitle }}</h3>
-            <h4>Workout Description: {{ upcomingWeekDescription }}</h4>
-        </div>
-        <div class="col-sm-6">
+        <div class="col-md-6">
             <select class="form-control mb-3 my-sm-0"
-                    (selectionChange)="selectNewWorkoutCollection($event)">
+                    (change)="selectNewWorkoutCollection($event.target.value)">
                 <option>Change workout plan</option>
                 <option *ngFor="let workoutCollection of weeklyWorkoutCollections | async"
                         [value]="workoutCollection.key">{{ workoutCollection.title }} - {{ workoutCollection.description }}
                 </option>
             </select>
-            <!--<div class="workout-note-actions mx-3 px-3 px-sm-5 pb-2 pb-sm-5">-->
-            <div class="workout-note-actions mt-3 text-right">
-                <button class="btn btn-primary mr-sm-2 mb-2 mb-sm-0"
+            <div class="workout-note-actions my-3 text-right">
+                <button class="btn btn-outline-primary mr-sm-2 mb-2 mb-sm-0"
                         (click)="toggleWorkoutNoteFormState()">Add New Workout
                 </button>
-                <button class="btn btn-primary mr-sm-2 mb-2 mb-sm-0"
+                <!-- ToDo Why the fuck are you not adding the note to the collection anymore. -->
+                <button class="btn btn-outline-primary mr-sm-2 mb-2 mb-sm-0"
                         (click)="toggleWorkoutNotebookFormState()">Add Workout Notebook
                 </button>
             </div>
         </div>
+        <div *ngIf="hasCurrentWorkout === 'false'" class="col-12 my-4">
+            <!-- ToDo Please Wait While We Load Your Workout -->
+            <h2 class="text-center">Something went wrong and you do not have a current workout set.</h2>
+        </div>
+        <div *ngIf="hasCurrentWorkout === 'true'" class="col-md-6">
+            <h3 class="text-uppercase">{{ upcomingWeekTitle }}</h3>
+            <h4>Workout Description: {{ upcomingWeekDescription }}</h4>
+        </div>
     </div>
 </section>
 
+<!-- Workout Collections and Notes -->
+<!-- ToDo make exercise control page with delete notes action -->
 <div class="px-3 px-sm-5 mb-3 m-sm-5" *ngFor="let note of weeklyWorkouts | async | reverse; let n = index">
     <section>
         <div class="bg-dark text-white rounded-top rounded-left rounded-right p-3">
@@ -72,10 +77,9 @@
                         <h5>{{ note.title }}</h5>
                         <p>{{ note.description }}</p>
                     </div>
-                    <!-- ToDo make exercise control page with delete notes action -->
-                    <!--<div class="col-md-5 text-left">-->
-                    <!--<button class="btn btn-danger" (click)="deleteNote(note)">Delete Note</button>-->
-                    <!--</div>-->
+                    <div class="col-md-5 text-right">
+                        <button class="btn btn-danger" (click)="deleteNote(note.key)">Delete Note</button>
+                    </div>
                 </div>
             </header>
         </div>
@@ -83,17 +87,27 @@
 
     <section>
         <div class="d-block rounded-bottom rounded-left rounded-right w-100">
-            <div *ngFor="let exercise of note.exercises; let i = index" class="border-bottom bg-white p-3">
+            <div *ngIf="hasCurrentWorkout">
+                <div *ngFor="let exercise of note.exercises; let i=index" class="border-bottom bg-white p-3">
                 <div class="row">
                     <div class="align-middle col-12">
-                        <!-- ToDo edit exercises -->
-                        <mat-icon class="alert-danger float-right" (click)="editWorkoutNoteRow(exercise.$key, i)">edit</mat-icon>
-                        <!--<button class="btn btn-sm btn-danger float-right">Edit</button>-->
-                        <!-- ToDo add action for checkbox completed exercise -->
-                        <!--<span>-->
-                            <!--<mat-icon class="float-right">check_box</mat-icon>-->
-                            <!--<mat-icon class="float-right">check_box_outline_blank</mat-icon>-->
-                        <!--</span>-->
+                        <mat-icon [hidden]="hideWorkoutRowInputs[[note.key,i]]"
+                                  class="float-right edit-workout-row-icon"
+                                  (click)="hideWorkoutRowInputs[[note.key,i]] = !hideWorkoutRowInputs[[note.key,i]]">edit
+                        </mat-icon>
+                        <mat-icon [hidden]="!hideWorkoutRowInputs[[note.key,i]]"
+                                  class="float-right edit-workout-row-icon"
+                                  (click)="saveWorkoutNoteRowUpdate(
+                                  note.key,
+                                  i,
+                                  exercise.sets,
+                                  exercise.reps,
+                                  exercise.weight,
+                                  editRowSets.value,
+                                  editRowReps.value,
+                                  editRowWeight.value
+                                  )">save
+                        </mat-icon>
                         Exercise {{ i + 1 }}<br>
                         <span class="text-primary font-weight-bold">{{ exercise.title }}</span>
                     </div>
@@ -101,87 +115,37 @@
                 <div class="row">
                     <div class="align-middle col-4">
                         <div class="border-bottom mt-1 mb-2 pb-1">Sets</div>
-                        {{ exercise.sets }}
+                        <input [hidden]="hideWorkoutRowInputs[[note.key,i]]"
+                               class="form-control"
+                               value="{{ exercise.sets }}" disabled>
+                        <input [hidden]="!hideWorkoutRowInputs[[note.key,i]]"
+                               #editRowSets
+                               value="{{ exercise.sets }}"
+                               class="form-control">
                     </div>
                     <div class="align-middle col-4">
                         <div class="border-bottom mt-1 mb-2 pb-1">Reps</div>
-                        {{ exercise.reps }}
+                        <input [hidden]="hideWorkoutRowInputs[[note.key,i]]"
+                               class="form-control"
+                               value="{{ exercise.reps }}" disabled>
+                        <input [hidden]="!hideWorkoutRowInputs[[note.key,i]]"
+                               #editRowReps
+                               value="{{ exercise.reps }}"
+                               class="form-control">
                     </div>
                     <div class="align-middle col-4">
                         <div class="border-bottom mt-1 mb-2 pb-1">Weight</div>
-                        {{ exercise.weight }}
+                        <input [hidden]="hideWorkoutRowInputs[[note.key,i]]"
+                               class="form-control"
+                               value="{{ exercise.weight }}" disabled>
+                        <input [hidden]="!hideWorkoutRowInputs[[note.key,i]]"
+                               #editRowWeight
+                               value="{{ exercise.weight }}"
+                               class="form-control">
                     </div>
                 </div>
-                <!--<td *ngFor="let col of exercise.cols; let j = index" class="align-middle">-->
-                <!--&lt;!&ndash; Main exercise info and input &ndash;&gt;-->
-                <!--<span *ngIf="editRowValues != [i]">{{ col }}</span><br>-->
-                <!-- ToDo edit workout cells -->
-                <!-- ToDo convert string to number and count -->
-                <!--<input *ngIf="editRowValues == [i]" class="form-control" value="{{ col }}" #rowCol-->
-                <!--(blur)="rowCols[j].$value = rowCol.value"-->
-                <!--(keyup.enter)="rowCols[j].$value = rowCol.value">-->
-                <!--</td>-->
-                <!--<td class="text-right">-->
-                <!--<div>-->
-
-                <!-- todo make sure only one note row is edited -->
-                <!--&lt;!&ndash; Main exercise actions &ndash;&gt;-->
-                <!--<div *ngIf="editRowValues != [i]" id="edit-row-button" class="btn btn-info btn-sm"-->
-                <!--(click)="editRow(note.$key, i)">Edit <span-->
-                <!--class="glyphicon glyphicon-pencil"></span></div>-->
-                <!--<div *ngIf="editRowValues == [i]" id="save-edit-row-button" class="btn btn-info"-->
-                <!--(click)="saveRow(note.$key, i)">Save <span class="glyphicon glyphicon-ok"></span>-->
-                <!--</div>-->
-                <!--<div *ngIf="editRowValues == [i]" class="btn btn-default"-->
-                <!--(click)="editRowValues = null">Cancel <span-->
-                <!--class="glyphicon glyphicon-refresh"></span></div>-->
-                <!--<div id="delete-row-button" class="btn btn-danger btn-sm"-->
-                <!--(click)="deleteRow(note.$key, exercise, i)">Del <span-->
-                <!--class="glyphicon glyphicon-trash"></span></div>-->
-
-                <!--&lt;!&ndash; Exercise extra set info actions &ndash;&gt;-->
-                <!--<div *ngIf="addChildRowValues != [i]" class="btn btn-info btn-sm"-->
-                <!--(click)="addChildRow(note.$key, i)">Add Set <span-->
-                <!--class="glyphicon glyphicon-plus"></span></div>-->
-                <!--<div *ngIf="addChildRowValues == [i]" class="btn btn-success"-->
-                <!--(click)="saveChildRow(note.$key, i, exercise.child_cols.length)">+ Save Set-->
-                <!--</div>-->
-
-                <!--</div>-->
-                <!--<div>-->
-                <!--<span *ngIf="addChildRowValues == [i]" class="btn btn-link"-->
-                <!--(click)="addChildRowValues = null">Cancel New Set</span>-->
-                <!--</div>-->
-                <!--</td>-->
             </div>
-
-            <!--<tfoot>-->
-            <!--<tr>-->
-            <!--<td class="align-middle">-->
-            <!--<input class="form-control" type="text" id="row-title" required #rowTitle name="row-title"-->
-            <!--placeholder="Title">-->
-            <!--</td>-->
-            <!--<td class="align-middle">-->
-            <!--<input class="form-control" type="text" id="row-reps" required #rowReps name="row-reps"-->
-            <!--placeholder="Reps">-->
-            <!--</td>-->
-            <!--<td class="align-middle">-->
-            <!--<input class="form-control" type="text" id="row-sets" required #rowSets name="row-sets"-->
-            <!--placeholder="Sets">-->
-            <!--</td>-->
-            <!--<td class="align-middle">-->
-            <!--<input class="form-control" type="text" id="row-weight" required #rowWeight name="row-weight"-->
-            <!--placeholder="Weight">-->
-            <!--</td>-->
-            <!-- Iterating through any columns -->
-            <!--<td *ngFor="let col of note.exercises[0].cols; let j = index" class="align-middle">-->
-            <!--<input class="form-control" placeholder="Row Col-{{ j }}" name="rowCol_{{ j }}" #rowCol-->
-            <!--(blur)="rowCols[j] = rowCol.value" (keyup.enter)="rowCols[j] = rowCol.value">-->
-            <!--</td>-->
-            <!--<td>&nbsp;</td>-->
-            <!--</tr>-->
-            <!--</tfoot>-->
-
+            </div>
         </div>
     </section>
 </div>

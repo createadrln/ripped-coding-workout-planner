@@ -1,0 +1,121 @@
+{
+  "configVersion": 1,
+  "index": "/index.html",
+  "assetGroups": [
+    {
+      "name": "app",
+      "installMode": "prefetch",
+      "updateMode": "prefetch",
+      "urls": [
+        "/favicon.ico",
+        "/index.html",
+        "/main.740b164324a4db44d58c.js",
+        "/polyfills.af787ecd062ee36ad18c.js",
+        "/runtime.a66f828dca56eeb90e02.js",
+        "/styles.31991f849e8c772ef229.css"
+      ],
+      "patterns": []
+    },
+    {
+      "name": "assets",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "urls": [
+        "/assets/dist/css/theme.css",
+        "/assets/dist/css/theme.min.css",
+        "/assets/dist/css/theme.min.css.map",
+        "/assets/dist/images/calendar-icon.svg",
+        "/assets/dist/images/flexing365-text-header.svg",
+        "/assets/icons/android-chrome-512x512.png",
+        "/assets/icons/icon-128x128.png",
+        "/assets/icons/icon-144x144.png",
+        "/assets/icons/icon-152x152.png",
+        "/assets/icons/icon-192x192.png",
+        "/assets/icons/icon-384x384.png",
+        "/assets/icons/icon-512x512.png",
+        "/assets/icons/icon-72x72.png",
+        "/assets/icons/icon-96x96.png",
+        "/assets/icons/logo.svg",
+        "/assets/images/calendar-icon.svg",
+        "/assets/images/flexing365-text-header.svg",
+        "/assets/scss/_settings.scss",
+        "/assets/scss/actions/_navbar.scss",
+        "/assets/scss/base/_common.scss",
+        "/assets/scss/base/_fonts.scss",
+        "/assets/scss/base/_main.scss",
+        "/assets/scss/base/bootstrap-overrides/_buttons.scss",
+        "/assets/scss/components/_forms.scss",
+        "/assets/scss/layout/_modal.scss",
+        "/assets/scss/layout/_navbar.scss",
+        "/assets/scss/theme.scss",
+        "/assets/scss/theme/_buttons.scss",
+        "/assets/scss/theme/_forms.scss",
+        "/assets/scss/theme/_navbar.scss",
+        "/assets/scss/theme/_pages.scss",
+        "/assets/scss/theme/_type.scss",
+        "/assets/scss/utils/_mixins.scss"
+      ],
+      "patterns": []
+    }
+  ],
+  "dataGroups": [],
+  "hashTable": {
+    "/assets/dist/css/theme.css": "fed71c015f29e2c2cbebd02180ca2cc5380bf094",
+    "/assets/dist/css/theme.min.css": "1f507e745d38b0d6701368de161fff0443cbd117",
+    "/assets/dist/css/theme.min.css.map": "21240f8bbbe02930c054f22a02ca614d1e82e7a6",
+    "/assets/dist/images/calendar-icon.svg": "7d979739e5fddce842452aaa35ee3a846ebe72bc",
+    "/assets/dist/images/flexing365-text-header.svg": "53e60a85e2ac873dba8bb165cd8829cc613b365d",
+    "/assets/icons/android-chrome-512x512.png": "b7a5b040a49ebf8a8e175bc2d43c78dafed5f046",
+    "/assets/icons/icon-128x128.png": "dae3b6ed49bdaf4327b92531d4b5b4a5d30c7532",
+    "/assets/icons/icon-144x144.png": "b0bd89982e08f9bd2b642928f5391915b74799a7",
+    "/assets/icons/icon-152x152.png": "7479a9477815dfd9668d60f8b3b2fba709b91310",
+    "/assets/icons/icon-192x192.png": "1abd80d431a237a853ce38147d8c63752f10933b",
+    "/assets/icons/icon-384x384.png": "329749cd6393768d3131ed6304c136b1ca05f2fd",
+    "/assets/icons/icon-512x512.png": "559d9c4318b45a1f2b10596bbb4c960fe521dbcc",
+    "/assets/icons/icon-72x72.png": "c457e56089a36952cd67156f9996bc4ce54a5ed9",
+    "/assets/icons/icon-96x96.png": "3914125a4b445bf111c5627875fc190f560daa41",
+    "/assets/icons/logo.svg": "337b92e81447aa08cb28f1b2babb5da733982c85",
+    "/assets/images/calendar-icon.svg": "b7181247ea42e658aabde6215a388c179e8f4e5b",
+    "/assets/images/flexing365-text-header.svg": "a98913a92b557461d0f594b98daafe7483bcb92b",
+    "/assets/scss/_settings.scss": "7d93b2da36c5231c9210b049eb37f379e626d75d",
+    "/assets/scss/actions/_navbar.scss": "3bcb6c46dc5de55d83a71582b13394bb957840ec",
+    "/assets/scss/base/_common.scss": "a70e6cda21b5ff2a1cf38549399454a6ac1a749b",
+    "/assets/scss/base/_fonts.scss": "9c9ffeeed644127caed5917441cb049f1b9cec3a",
+    "/assets/scss/base/_main.scss": "fa016fe27019eaff1871d3ac0f6b83d81fcf4149",
+    "/assets/scss/base/bootstrap-overrides/_buttons.scss": "f4c36aba819b9e96cf503bba2f73dcfb8fca5879",
+    "/assets/scss/components/_forms.scss": "c846f8d216763b874d566d0f07039ea9c64899a5",
+    "/assets/scss/layout/_modal.scss": "a49ffa0da08167ec2f4ab13dc790e57397b74ae0",
+    "/assets/scss/layout/_navbar.scss": "f19b75e4ddbc1c497d952382ba793db58ac06db4",
+    "/assets/scss/theme.scss": "9c933b6ccf3670f267f8d75431970c1ec6cc7e69",
+    "/assets/scss/theme/_buttons.scss": "a9c0bc450568003c2e567c452528e6c4e3edf3a8",
+    "/assets/scss/theme/_forms.scss": "6a0501e0e61976cedf5834234c84a9a07b9f10ca",
+    "/assets/scss/theme/_navbar.scss": "5064b85318963f198bc160436de79bd932b49311",
+    "/assets/scss/theme/_pages.scss": "9962dd8e2547d00784f9ac02e0ebb0559a2e423b",
+    "/assets/scss/theme/_type.scss": "d9e67fb0b83e36f9a5417f216ea38e4d117abb6b",
+    "/assets/scss/utils/_mixins.scss": "177ca626d2497eb33cd52e6cbb7d11ba07d294b4",
+    "/favicon.ico": "84161b857f5c547e3699ddfbffc6d8d737542e01",
+    "/index.html": "b5232fa26e0b663bba85294e37b25105e632a8ff",
+    "/main.740b164324a4db44d58c.js": "ee3bc17a7b9b6df7a6a26caf2492cc4badd95fed",
+    "/polyfills.af787ecd062ee36ad18c.js": "9f0b8341c0a0caec1581da2f255eb5dbb8e12303",
+    "/runtime.a66f828dca56eeb90e02.js": "078e320cc6fdaf355836c3b1c52b059cdd33fc7e",
+    "/styles.31991f849e8c772ef229.css": "455ab835c959a07d2ab784d825716226e4c3f171"
+  },
+  "navigationUrls": [
+    {
+      "positive": true,
+      "regex": "^\\/.*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*\\.[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*\\/.*$"
+    }
+  ]
+}

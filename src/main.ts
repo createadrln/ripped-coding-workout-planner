@@ -1,21 +1,18 @@
-import { enableProdMode } from '@angular/core';
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import {enableProdMode} from '@angular/core';
+import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
 
-import { AppModule } from './app/app.module';
-import { environment } from './environments/environment';
+import {AppModule} from './app/app.module';
+import {environment} from './environments/environment';
 
 if (environment.production) {
-  enableProdMode();
+    enableProdMode();
 }
 
-
 platformBrowserDynamic().bootstrapModule(AppModule)
-  .then(() => {
-    try {
-      // if ('serviceWorker' in navigator) {
-      //   navigator.serviceWorker.register('/ngsw-worker.js') ;
-      // }
-    } catch (e) { }
+    .then(() => {
+        try {
+        } catch (e) {
+        }
 
-  })
-  .catch(err => console.log(err));
+    })
+    .catch(err => console.log(err));

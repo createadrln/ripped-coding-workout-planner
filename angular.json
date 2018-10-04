@@ -18,7 +18,14 @@
             "polyfills": "src/polyfills.ts",
             "assets": [
               "src/assets",
-              "src/favicon.ico"
+              "src/favicon.ico",
+              "src/manifest.json",
+              "src/manifest.json",
+              "src/manifest.json",
+              "src/manifest.json",
+              "src/manifest.json",
+              "src/manifest.json",
+              "src/manifest.json"
             ],
             "styles": [
               "src/styles.css",
@@ -38,7 +45,6 @@
               "vendorChunk": false,
               "buildOptimizer": true,
               "serviceWorker": true,
-              "ngswConfigPath": "/src/ngsw-config.json",
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
@@ -79,7 +85,14 @@
             ],
             "assets": [
               "src/assets",
-              "src/favicon.ico"
+              "src/favicon.ico",
+              "src/manifest.json",
+              "src/manifest.json",
+              "src/manifest.json",
+              "src/manifest.json",
+              "src/manifest.json",
+              "src/manifest.json",
+              "src/manifest.json"
             ]
           }
         },

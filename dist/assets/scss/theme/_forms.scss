@@ -1,0 +1,10 @@
+.form-group {
+
+  label {
+
+    &.label-underlined {
+      border-bottom: 1px solid $border-color;
+      width: 50%;
+    }
+  }
+}

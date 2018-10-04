@@ -1,12 +1,13 @@
-<div class="form-container">
-
-    <span class="error" *ngIf="error">{{ error }}</span>
-
-    <button (click)="signInWithFacebook()" id="fb">Login With Facebook</button>
-    <br>
-    <button (click)="signInWithGoogle()" id="google">Login With Google</button>
-    <br>
-    <button routerLink="/login-email" id="email">Email</button>
-
-    <a routerLink="/signup" routerLinkActive="active" class="alc">No account? <strong>Create one here</strong></a>
+<div class="container login-container vertically-centered horizontally-centered">
+    <div class="row justify-content-center my-2">
+        <span class="error" *ngIf="error">{{ error }}</span>
+    </div>
+    <div class="row justify-content-center my-2">
+        <button (click)="signInWithFacebook()" class="btn btn-lg btn-outline-primary align-self-center mx-1" id="fb">Login With Facebook</button>
+        <button (click)="signInWithGoogle()" class="btn btn-lg btn-outline-primary align-self-center mx-1" id="google">Login With Google</button>
+        <button routerLink="/login-email" class="btn btn-lg btn-outline-primary align-self-center mx-1" id="email">Email</button>
+    </div>
+    <div class="row justify-content-center my-2">
+        <a routerLink="/signup" routerLinkActive="active" class="alc">No account? <strong>Create one here</strong></a>
+    </div>
 </div>

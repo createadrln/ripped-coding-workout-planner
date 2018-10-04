@@ -2,8 +2,6 @@ import {Component, OnInit, HostBinding} from '@angular/core';
 import {AngularFireAuth} from 'angularfire2/auth';
 import {Router} from '@angular/router';
 
-// import {Member} from '../classes/member';
-
 @Component({
     selector: 'app-members',
     templateUrl: './members.component.html',

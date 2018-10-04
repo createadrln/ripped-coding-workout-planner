@@ -1,0 +1,40 @@
+.workout-form-container {
+  left: 0;
+  height: calc(100% - 58px);
+  overflow: scroll;
+  position: fixed;
+  top: 58px;
+  width: 100%;
+  z-index: 9999;
+
+  @media screen and (min-width: map-get($breakpoints, medium)) {
+    height: auto;
+    margin: 0 auto;
+    overflow: auto;
+    position: relative;
+    top: auto;
+    width: 60%;
+  }
+}
+
+.close-button {
+  cursor: pointer;
+  position: absolute;
+  right: 20px;
+  top: 15px;
+}
+
+.modal-overlay {
+  background-color: rgba(0,0,0,0.6);
+  cursor: pointer;
+  height: 100%;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 9998;
+}
+
+.modal-content {
+  border-color: $border-color;
+}

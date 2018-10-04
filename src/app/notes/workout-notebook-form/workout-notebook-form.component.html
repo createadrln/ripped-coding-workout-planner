@@ -40,7 +40,10 @@
     <div class="form-group">
 
         <!-- ToDo make this with angular search pipe for tags and title -->
-        <div *ngIf="workoutNotebookForm && workoutNotebookForm.controls && workoutNotebookForm.controls.workouts && workoutNotebookForm.controls.workouts.controls">
+        <div *ngIf="workoutNotebookForm &&
+        workoutNotebookForm['controls'] &&
+        workoutNotebookForm['controls']['workouts'] &&
+        workoutNotebookForm['controls']['workouts']['controls']">
             <div formArrayName="workouts">
                 <div *ngFor="let workouts of workoutNotebookForm.controls.workouts.controls; let n=index">
                     <div [formGroupName]="n">

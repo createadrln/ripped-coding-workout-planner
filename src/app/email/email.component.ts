@@ -29,7 +29,7 @@ export class EmailComponent implements OnInit {
             this.afAuth.auth.signInWithEmailAndPassword(formData.value.email, formData.value.password)
                 .then(
                     (success) => {
-                        this.router.navigate(['/members']);
+                        this.router.navigate(['/notes']);
                     }
                 ).catch(function (error) {
                     // Handle Errors here.

@@ -28,8 +28,6 @@ import {WorkoutNoteFormComponent} from './notes/workout-note-form/workout-note-f
 import {ReversePipe} from './pipes/reverse.pipe';
 import {FilterPipe} from './pipes/filter.pipe';
 
-// import { SearchPipe } from './pipes/search.pipe';
-
 @NgModule({
     declarations: [
         AppComponent,
@@ -46,9 +44,6 @@ import {FilterPipe} from './pipes/filter.pipe';
     ],
     imports: [
         BrowserModule,
-        ServiceWorkerModule.register('/ngsw-worker.js', {
-            enabled: environment.production
-        }),
         FormsModule,
         ReactiveFormsModule,
         AngularFireModule.initializeApp(environment.firebase),
@@ -57,7 +52,8 @@ import {FilterPipe} from './pipes/filter.pipe';
         BrowserAnimationsModule,
         MatIconModule,
         NgbModule.forRoot(),
-        routes
+        routes,
+        ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production })
     ],
     providers: [AuthGuard],
     bootstrap: [AppComponent]

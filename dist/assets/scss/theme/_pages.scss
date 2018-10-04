@@ -1,0 +1,13 @@
+.workout-note-actions {
+
+  .btn {
+    width: 100%;
+  }
+
+  @media screen and (min-width: map-get($breakpoints, med-sm)) {
+
+    .btn {
+      width: auto;
+    }
+  }
+}

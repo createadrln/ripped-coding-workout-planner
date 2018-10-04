@@ -36,7 +36,7 @@ export class SignupComponent implements OnInit {
                                 this.postSignIn(auth);
                             }
                         });
-                        this.router.navigate(['/members']);
+                        this.router.navigate(['/notes']);
                     }
                 ).catch(
                 (err) => {

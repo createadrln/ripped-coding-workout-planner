@@ -40,13 +40,14 @@
     </div>
 
     <!-- ToDo focus on new row title input -->
-    <div class="actions workout-note-actions w-100">
+    <div class="actions workout-note-actions w-100 text-right">
         <button class="btn btn-success mt-2 mr-sm-2" (click)="saveWorkoutNoteForm()">Save and Close</button>
         <button class="btn btn-success mt-2 mr-sm-2" (click)="saveWorkoutNoteForm()">Save and Add Another</button>
-        <button class="btn btn-success mt-2 mr-sm-2" (click)="addNewExercise()">Add Row</button>
     </div>
 
-    <div *ngIf="workoutNoteForm && workoutNoteForm.controls && workoutNoteForm.controls.exercises && workoutNoteForm.controls.exercises.controls">
+    <div *ngIf="workoutNoteForm && workoutNoteForm['controls'] &&
+    workoutNoteForm.controls.exercises &&
+    workoutNoteForm['controls']['exercises']['controls']">
         <div formArrayName="exercises">
             <div *ngFor="let exercises of workoutNoteForm.controls.exercises.controls; let j=index">
                 <div [formGroupName]="j">
@@ -57,26 +58,29 @@
                             <button *ngIf="j > 0" class="btn btn-link float-right" (click)="addNote = false">Delete</button>
                         </div>
                         <div class="row mb-1">
-                            <div class="align-middle col-md-3">
-                                <input class="form-control" formControlName="title"
-                                       placeholder="Title">
+                            <div class="form-group align-middle col-md-3">
+                                <label class="label-underlined">Title</label>
+                                <input class="form-control" formControlName="title">
                             </div>
-                            <div class="align-middle col-4 col-md-3">
-                                <input class="form-control" formControlName="sets"
-                                       placeholder="Sets">
+                            <div class="form-group align-middle col-4 col-md-3">
+                                <label class="label-underlined">Sets</label>
+                                <input class="form-control" formControlName="sets">
                             </div>
-                            <div class="align-middle col-4 col-md-3">
-                                <input class="form-control" formControlName="reps"
-                                       placeholder="Reps">
+                            <div class="form-group align-middle col-4 col-md-3">
+                                <label class="label-underlined">Reps</label>
+                                <input class="form-control" formControlName="reps">
                             </div>
-                            <div class="align-middle col-4 col-md-3">
-                                <input class="form-control" formControlName="weight"
-                                       placeholder="Weight">
+                            <div class="form-group align-middle col-4 col-md-3">
+                                <label class="label-underlined">Weight</label>
+                                <input class="form-control" formControlName="weight">
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="actions workout-note-actions w-100 text-right">
+            <button class="btn btn-success mt-2 mr-sm-2" (click)="addNewExercise()">Add Row</button>
         </div>
     </div>
 

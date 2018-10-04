@@ -1,0 +1,129 @@
+// 1. Global
+// ---------
+
+$global-font-size: 131.3%;
+$global-width: 1400px;
+$global-lineheight: 1.675;
+
+$primary-brand: #515F90;
+$secondary-brand: #FF3B30;
+$accent-brand: #B9CF0B;
+$success: #3adb76;
+$warning: #e62688;
+$alert: $secondary-brand;
+$muted-accent: rgba(229, 38, 135, .51);
+
+$lighter-gray: #f9f9f9;
+$light-gray: #e6e6e6;
+$medium-gray: #e7e5e4;
+$dark-gray: #525050;
+$navy-light: #2c569e;
+$navy: #112647;
+$navy-dark: #1e3b6d;
+$royal: #2c569f;
+$green: #3db8bf;
+$light-green: #9cdae7;
+$black: #222;
+$white: #e6e6e6;
+
+$border-color: lighten($dark-gray, 25%);
+
+$social-facebook: #4169af;
+$social-twitter: #0da4ee;
+$social-linkedin: #0079b2;
+$social-email: #3c3c3c;
+$body-background: $white;
+$body-font-color: $navy;
+$body-font-family: 'Montserrat', sans-serif;
+$body-antialiased: true;
+
+$font-size-base: 1rem !default;
+$font-size-lg: ($font-size-base * 1.25) !default;
+$font-size-sm: ($font-size-base * .875) !default;
+
+$line-height-base: 1.5 !default;
+$line-height-lg: 1.5 !default;
+$line-height-sm: 1.5 !default;
+
+$global-margin: 2rem;
+$global-margin-xlarge: 2.5rem;
+$global-no-margin: 0 !default;
+$global-padding: 1rem;
+$global-padding-large: 2rem;
+$global-padding-xlarge: 2.5rem;
+$new-padding: 0;
+$new-padding-large: .5rem;
+$new-padding-xlarge: 1.5rem;
+$global-position: 1rem;
+$global-weight-light: 300;
+$global-weight-normal: 400;
+$global-weight-medium: 500;
+$global-weight-bold: 600;
+$global-radius: 0;
+$global-menu-padding: .7rem 1rem;
+$global-menu-nested-margin: 1rem;
+$global-text-direction: ltr;
+
+// Breakpoints
+// --------------
+
+$breakpoints: (
+        small: 0,
+        med-sm: 460px,
+        medium: 768px,
+        large: 1024px,
+        xlarge: 1200px,
+        xxlarge: 1440px,
+);
+$print-breakpoint: large;
+$breakpoint-classes: (small medium large);
+
+// Buttons + Forms
+//
+// Shared variables that are reassigned to `$input-` and `$btn-` specific variables.
+// --------------
+
+$input-btn-padding-y:         .375rem !default;
+$input-btn-padding-x:         .75rem !default;
+$input-btn-line-height:       $line-height-base !default;
+
+$input-btn-padding-y-sm:      .25rem !default;
+$input-btn-padding-x-sm:      .5rem !default;
+$input-btn-line-height-sm:    $line-height-sm !default;
+
+$input-btn-padding-y-lg:      .5rem !default;
+$input-btn-padding-x-lg:      1rem !default;
+$input-btn-line-height-lg:    $line-height-lg !default;
+
+
+// Buttons
+//
+// For each of Bootstrap's buttons, define text, background, and border color.
+// --------------
+
+$btn-padding-y:               $input-btn-padding-y !default;
+$btn-padding-x:               $input-btn-padding-x !default;
+$btn-line-height:             $input-btn-line-height !default;
+
+$btn-padding-y-sm:            $input-btn-padding-y-sm !default;
+$btn-padding-x-sm:            $input-btn-padding-x-sm !default;
+$btn-line-height-sm:          $input-btn-line-height-sm !default;
+
+$btn-padding-y-lg:            $input-btn-padding-y-lg !default;
+$btn-padding-x-lg:            $input-btn-padding-x-lg !default;
+$btn-line-height-lg:          $input-btn-line-height-lg !default;
+
+// Forms
+// --------------
+
+$input-padding-y:                       $input-btn-padding-y !default;
+$input-padding-x:                       $input-btn-padding-x !default;
+$input-line-height:                     $input-btn-line-height !default;
+
+$input-padding-y-sm:                    $input-btn-padding-y-sm !default;
+$input-padding-x-sm:                    $input-btn-padding-x-sm !default;
+$input-line-height-sm:                  $input-btn-line-height-sm !default;
+
+$input-padding-y-lg:                    $input-btn-padding-y-lg !default;
+$input-padding-x-lg:                    $input-btn-padding-x-lg !default;
+$input-line-height-lg:                  $input-btn-line-height-lg !default;
