@@ -1,5 +1,13 @@
+.navbar {
+
+  &.sticky-top {
+    z-index: 1020;
+  }
+}
+
 .navbar-brand {
   margin-right: 0;
+  padding: 0;
   text-align: left;
 
   img {
@@ -14,7 +22,7 @@
     img {
       margin: 0;
       max-width: 100%;
-      width: 500px;
+      width: 300px;
     }
   }
 }

@@ -8,32 +8,27 @@ $global-lineheight: 1.675;
 $primary-brand: #515F90;
 $secondary-brand: #FF3B30;
 $accent-brand: #B9CF0B;
-$success: #3adb76;
+$success: darken(#3adb76, 15%);
 $warning: #e62688;
 $alert: $secondary-brand;
 $muted-accent: rgba(229, 38, 135, .51);
 
-$lighter-gray: #f9f9f9;
-$light-gray: #e6e6e6;
-$medium-gray: #e7e5e4;
+$lighter-gray: #e6e6e6;
+$light-gray: #c0c0c0;
+$medium-gray: #b1b7b6;
 $dark-gray: #525050;
-$navy-light: #2c569e;
-$navy: #112647;
-$navy-dark: #1e3b6d;
-$royal: #2c569f;
-$green: #3db8bf;
-$light-green: #9cdae7;
 $black: #222;
-$white: #e6e6e6;
+$white: #fff;
 
 $border-color: lighten($dark-gray, 25%);
 
+$social-google: #db4437;
 $social-facebook: #4169af;
 $social-twitter: #0da4ee;
 $social-linkedin: #0079b2;
 $social-email: #3c3c3c;
 $body-background: $white;
-$body-font-color: $navy;
+$body-font-color: $dark-gray;
 $body-font-family: 'Montserrat', sans-serif;
 $body-antialiased: true;
 

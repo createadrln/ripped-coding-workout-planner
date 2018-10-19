@@ -19,7 +19,6 @@ export class WorkoutNotebooksService {
     /* Remove existing week toggle data */
     removeCurrentWeekToggleData(authId, weeklyWorkoutCollections) {
         weeklyWorkoutCollections.subscribe(weeks => {
-            /* ToDo if more than one collection */
             const oldCurrentWeek = weeks.filter(week => week.current);
             return this.memberService.getMemberDbList(authId, '/weeks/' + oldCurrentWeek[0].key).remove('current');
         });

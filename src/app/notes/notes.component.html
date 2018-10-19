@@ -1,21 +1,129 @@
 <!-- ToDo make sure everything works or there is a fallback when not connected to firebase -->
 <!-- ToDo add Alexa integration -->
-<!-- ToDo Make PWA -->
+<!-- ToDo Fix Spinner -->
 
-<!-- New Workout Form -->
-<div class="workout-form-container border shadow bg-white mb-0 mb-sm-5 mt-3" [@formSlideIn]="formWorkoutNoteVisibilityState">
-    <div class="p-3">
-        <div class="modal-title mb-2 pr-5">
-            <mat-icon class="close-button" (click)="toggleWorkoutNoteFormState()">cancel</mat-icon>
-            <h5 class="text-uppercase">Add a new workout</h5>
+<ngx-spinner></ngx-spinner>
+
+<header>
+    <div class="px-3 my-3 my-sm-0 mx-sm-5 mt-sm-5 mb-sm-3 clearfix">
+        <div class="float-sm-left">
+            <h5 *ngIf="upcomingWeekTitle">
+                <strong class="mr-1">Current plan:</strong>
+                <span class="mr-1">{{ upcomingWeekTitle }}</span> - <span class="ml-1">{{ upcomingWeekDescription }}</span>
+            </h5>
         </div>
-        <div class="modal-content">
-            <div class="modal-body">
-                <app-workout-note-form (closeEvent)="closeEventReceived($event)"></app-workout-note-form>
-            </div>
+        <div class="btn btn-link text-success float-sm-right mt-2 mt-sm-0 p-0" (click)="openNewWorkoutModal(new_workout_modal)">
+            <mat-icon class="align-middle mr-1">description</mat-icon> <span class="align-middle">New Notebook</span>
         </div>
     </div>
+</header>
+
+<!-- Workout Collections and Notes -->
+<div>
+    <div class="current-workouts__list px-3 px-sm-5 mb-3 mb-sm-5" *ngFor="let note of weeklyWorkouts | async | reverse; let n = index">
+        <section>
+            <div class="bg-dark text-white p-3">
+                <header>
+                    <div class="current-workouts__row row">
+                        <div class="col-9 col-md-7">
+                            <span class="bold text-accent">Workout {{ n + 1 }}</span>
+                            <h5>{{ note.title }}</h5>
+                            <p class="mb-0">{{ note.description }}</p>
+                        </div>
+                        <div class="current-workouts__row-options col-3 col-md-5 text-right">
+                            <div ngbDropdown class="d-inline-block">
+                                <button class="btn btn-link p-0" id="workoutOptions[n]" ngbDropdownToggle>
+                                    <mat-icon class="mat-18">more_horiz</mat-icon>
+                                </button>
+                                <div ngbDropdownMenu aria-labelledby="workoutOptions[n]" class="text-center">
+                                    <button class="dropdown-item px-0" (click)="deleteNote(note.key)">Delete Note</button>
+                                    <!-- ToDo allow control to change order -->
+                                    <button class="dropdown-item px-0" (click)="updateNoteOrder(note.key)">Change Order</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </header>
+            </div>
+        </section>
+
+        <section>
+            <div class="d-block w-100">
+                <div *ngIf="hasCurrentWorkout">
+                    <div *ngFor="let exercise of note.exercises; let i=index" class="border-bottom bg-white p-3">
+                        <div class="row">
+                            <div class="align-middle col-12">
+                                <mat-icon [hidden]="hideWorkoutRowInputs[[note.key,i]]"
+                                          class="edit-workout-row-icon float-right p-0 text-danger"
+                                          (click)="hideWorkoutRowInputs[[note.key,i]] = !hideWorkoutRowInputs[[note.key,i]]">edit
+                                </mat-icon>
+                                <mat-icon [hidden]="!hideWorkoutRowInputs[[note.key,i]]"
+                                          class="save-workout-row-icon float-right p-0 text-success"
+                                          (click)="saveWorkoutNoteRowUpdate(
+                                  note.key,
+                                  i,
+                                  exercise.title,
+                                  exercise.sets,
+                                  exercise.reps,
+                                  exercise.weight,
+                                  editRowSets.value,
+                                  editRowReps.value,
+                                  editRowWeight.value
+                                  )">save
+                                </mat-icon>
+                                Exercise {{ i + 1 }}<br>
+                                <span class="text-primary font-weight-bold">{{ exercise.title }}</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="align-middle col-4">
+                                <div class="border-bottom mt-1 mb-2 pb-1">Sets</div>
+                                <input [hidden]="hideWorkoutRowInputs[[note.key,i]]"
+                                       class="form-control"
+                                       value="{{ exercise.sets }}" disabled>
+                                <input [hidden]="!hideWorkoutRowInputs[[note.key,i]]"
+                                       #editRowSets
+                                       value="{{ exercise.sets }}"
+                                       class="form-control" autofocus>
+                            </div>
+                            <div class="align-middle col-4">
+                                <div class="border-bottom mt-1 mb-2 pb-1">Reps</div>
+                                <input [hidden]="hideWorkoutRowInputs[[note.key,i]]"
+                                       class="form-control"
+                                       value="{{ exercise.reps }}" disabled>
+                                <input [hidden]="!hideWorkoutRowInputs[[note.key,i]]"
+                                       #editRowReps
+                                       value="{{ exercise.reps }}"
+                                       class="form-control">
+                            </div>
+                            <div class="align-middle col-4">
+                                <div class="border-bottom mt-1 mb-2 pb-1">Weight</div>
+                                <input [hidden]="hideWorkoutRowInputs[[note.key,i]]"
+                                       class="form-control"
+                                       value="{{ exercise.weight }}" disabled>
+                                <input [hidden]="!hideWorkoutRowInputs[[note.key,i]]"
+                                       #editRowWeight
+                                       value="{{ exercise.weight }}"
+                                       class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
 </div>
+
+<!-- New Workout Form -->
+<ng-template #new_workout_modal let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Add New Workout</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <app-workout-note-form></app-workout-note-form>
+</ng-template>
 
 <!-- New Workout Collection Form -->
 <div class="workout-form-container workout-notebook-form border shadow bg-white mb-0 mb-sm-5 mt-3" [@formSlideIn]="formWorkoutNotebookVisibilityState">
@@ -30,122 +138,4 @@
             </div>
         </div>
     </div>
-</div>
-
-<!-- Note Page Header and Titles -->
-<!-- ToDo Hide This Stuff on Mobile When Not Being Used -->
-<section class="my-4 px-3 px-sm-5 m-sm-5">
-    <div class="row">
-        <div class="col-md-6">
-            <select class="form-control mb-3 my-sm-0"
-                    (change)="selectNewWorkoutCollection($event.target.value)">
-                <option>Change workout plan</option>
-                <option *ngFor="let workoutCollection of weeklyWorkoutCollections | async"
-                        [value]="workoutCollection.key">{{ workoutCollection.title }} - {{ workoutCollection.description }}
-                </option>
-            </select>
-            <div class="workout-note-actions my-3 text-right">
-                <button class="btn btn-outline-primary mr-sm-2 mb-2 mb-sm-0"
-                        (click)="toggleWorkoutNoteFormState()">Add New Workout
-                </button>
-                <!-- ToDo Why the fuck are you not adding the note to the collection anymore. -->
-                <button class="btn btn-outline-primary mr-sm-2 mb-2 mb-sm-0"
-                        (click)="toggleWorkoutNotebookFormState()">Add Workout Notebook
-                </button>
-            </div>
-        </div>
-        <div *ngIf="hasCurrentWorkout === 'false'" class="col-12 my-4">
-            <!-- ToDo Please Wait While We Load Your Workout -->
-            <h2 class="text-center">Something went wrong and you do not have a current workout set.</h2>
-        </div>
-        <div *ngIf="hasCurrentWorkout === 'true'" class="col-md-6">
-            <h3 class="text-uppercase">{{ upcomingWeekTitle }}</h3>
-            <h4>Workout Description: {{ upcomingWeekDescription }}</h4>
-        </div>
-    </div>
-</section>
-
-<!-- Workout Collections and Notes -->
-<!-- ToDo make exercise control page with delete notes action -->
-<div class="px-3 px-sm-5 mb-3 m-sm-5" *ngFor="let note of weeklyWorkouts | async | reverse; let n = index">
-    <section>
-        <div class="bg-dark text-white rounded-top rounded-left rounded-right p-3">
-            <header>
-                <div class="row">
-                    <div class="col-md-7">
-                        <span class="bold text-accent">Workout {{ n + 1 }}</span>
-                        <h5>{{ note.title }}</h5>
-                        <p>{{ note.description }}</p>
-                    </div>
-                    <div class="col-md-5 text-right">
-                        <button class="btn btn-danger" (click)="deleteNote(note.key)">Delete Note</button>
-                    </div>
-                </div>
-            </header>
-        </div>
-    </section>
-
-    <section>
-        <div class="d-block rounded-bottom rounded-left rounded-right w-100">
-            <div *ngIf="hasCurrentWorkout">
-                <div *ngFor="let exercise of note.exercises; let i=index" class="border-bottom bg-white p-3">
-                <div class="row">
-                    <div class="align-middle col-12">
-                        <mat-icon [hidden]="hideWorkoutRowInputs[[note.key,i]]"
-                                  class="float-right edit-workout-row-icon"
-                                  (click)="hideWorkoutRowInputs[[note.key,i]] = !hideWorkoutRowInputs[[note.key,i]]">edit
-                        </mat-icon>
-                        <mat-icon [hidden]="!hideWorkoutRowInputs[[note.key,i]]"
-                                  class="float-right edit-workout-row-icon"
-                                  (click)="saveWorkoutNoteRowUpdate(
-                                  note.key,
-                                  i,
-                                  exercise.sets,
-                                  exercise.reps,
-                                  exercise.weight,
-                                  editRowSets.value,
-                                  editRowReps.value,
-                                  editRowWeight.value
-                                  )">save
-                        </mat-icon>
-                        Exercise {{ i + 1 }}<br>
-                        <span class="text-primary font-weight-bold">{{ exercise.title }}</span>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="align-middle col-4">
-                        <div class="border-bottom mt-1 mb-2 pb-1">Sets</div>
-                        <input [hidden]="hideWorkoutRowInputs[[note.key,i]]"
-                               class="form-control"
-                               value="{{ exercise.sets }}" disabled>
-                        <input [hidden]="!hideWorkoutRowInputs[[note.key,i]]"
-                               #editRowSets
-                               value="{{ exercise.sets }}"
-                               class="form-control">
-                    </div>
-                    <div class="align-middle col-4">
-                        <div class="border-bottom mt-1 mb-2 pb-1">Reps</div>
-                        <input [hidden]="hideWorkoutRowInputs[[note.key,i]]"
-                               class="form-control"
-                               value="{{ exercise.reps }}" disabled>
-                        <input [hidden]="!hideWorkoutRowInputs[[note.key,i]]"
-                               #editRowReps
-                               value="{{ exercise.reps }}"
-                               class="form-control">
-                    </div>
-                    <div class="align-middle col-4">
-                        <div class="border-bottom mt-1 mb-2 pb-1">Weight</div>
-                        <input [hidden]="hideWorkoutRowInputs[[note.key,i]]"
-                               class="form-control"
-                               value="{{ exercise.weight }}" disabled>
-                        <input [hidden]="!hideWorkoutRowInputs[[note.key,i]]"
-                               #editRowWeight
-                               value="{{ exercise.weight }}"
-                               class="form-control">
-                    </div>
-                </div>
-            </div>
-            </div>
-        </div>
-    </section>
 </div>

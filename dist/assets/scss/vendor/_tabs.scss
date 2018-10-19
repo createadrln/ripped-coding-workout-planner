@@ -1,0 +1,15 @@
+.accordion {
+
+  .card-header {
+    background-color: $black;
+    font-size: $font-size-lg;
+
+    .btn-link {
+      color: $white;
+
+      &:hover {
+        text-decoration: none;
+      }
+    }
+  }
+}

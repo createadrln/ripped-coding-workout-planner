@@ -1,0 +1,63 @@
+<!-- ToDo Add Search Filter -->
+<!-- ToDo Add Set To Current Workout -->
+
+<header>
+  <div class="px-3 mx-sm-5 mt-sm-5 mb-sm-3 clearfix">
+    <div class="float-sm-left">
+      <strong>My Workout Notebooks</strong>
+    </div>
+    <div class="btn btn-link text-success float-sm-right p-0" (click)="openNewWorkoutModal(new_workout_modal)">
+      <mat-icon class="align-middle mr-1">description</mat-icon> <span class="align-middle">New Notebook</span>
+    </div>
+  </div>
+</header>
+
+<section>
+  <div class="workout-notebooks px-3 px-sm-5 mb-3 mb-sm-5">
+    <div *ngFor="let notebook of workoutNotebooks | async | reverse; let i = index" class="workout-notebooks-row row rounded-top rounded-left rounded-right p-4">
+      <div class="col-md-9">
+        <h5>{{ notebook.title }}</h5>
+        <p *ngIf="notebook.description" class="m-0">{{ notebook.description }}</p>
+
+        <div class="mt-3">
+          <div *ngFor="let workout of notebook.workouts">
+
+            <ul *ngFor="let note of notes | async | key:workout.selected" class="list-group">
+              <li class="list-group-item">
+                <div class="clearfix pb-2">
+                  <span class="float-left"><strong>{{ note.title }}</strong></span>
+                  <!-- ToDo Add removeWorkoutFromNotebook function -->
+                  <span class="btn btn-link text-secondary p-0 float-right" (click)="removeWorkoutFromNotebook()">
+                  [ Remove from notebook ]
+                  <mat-icon class="text-secondary align-middle mr-1">remove_circle</mat-icon>
+                </span>
+                </div>
+                <ul *ngFor="let exercise of note.exercises" class="list-group list-group-flush">
+                  <li class="list-group-item border-bottom-0">
+                    {{ exercise.title }}
+                  </li>
+                </ul>
+              </li>
+            </ul>
+
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 text-right">
+        <button class="btn btn-danger" (click)="editNotebook(note.key)">Edit</button>
+        <button class="btn btn-danger" (click)="deleteNotebook(notebook.key)">Delete Notebook</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- New Workout Form -->
+<ng-template #new_workout_modal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Add New Workout</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <app-workout-note-form></app-workout-note-form>
+</ng-template>

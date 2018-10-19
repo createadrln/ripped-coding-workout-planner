@@ -2,8 +2,23 @@
   background-color: $black;
   color: #E6E6E6;
 
-  a {
-    color: $white;
+  a,
+  .btn-link {
+    color: $light-gray;
+  }
+
+  .dropdown-menu {
+
+    .nav-link {
+      color: $black;
+    }
+  }
+
+  &-brand {
+
+    a:not(.nav-link) {
+      font-size: 0;
+    }
   }
 
   &-toggler {
@@ -17,6 +32,18 @@
     .material-icons {
       color: $white;
       font-size: 30px;
+    }
+  }
+
+  &-collapse {
+
+    a {
+      color: $medium-gray;
+      font-size: $font-size-sm;
+    }
+
+    .nav-link {
+      padding: 0.25rem 1rem;
     }
   }
 }

@@ -1,3 +1,18 @@
+form {
+
+  label {
+
+    &.required {
+
+      &::after {
+        color: $secondary-brand;
+        content: '(required) *';
+        margin: 0 0 0 5px;
+      }
+    }
+  }
+}
+
 .form-control {
   border-color: $border-color;
 

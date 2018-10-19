@@ -35,7 +35,6 @@ export class WorkoutNoteFormComponent implements OnInit {
         private notesService: NotesService,
         private workoutNotebooksService: WorkoutNotebooksService
     ) {
-
         this.afAuth.authState.subscribe(auth => {
             if (auth) {
                 this.notesRef = this.notesService.getNotesListRef(auth.uid);
@@ -50,29 +49,28 @@ export class WorkoutNoteFormComponent implements OnInit {
             }
         });
     }
-    
-    ngOnInit() {
 
+    ngOnInit() {
         this.workoutNoteForm = new FormGroup({
-            title: new FormControl(),
-            description: new FormControl(),
+            title: new FormControl(null, Validators.required),
+            description: new FormControl(null, Validators.required),
             exercises: new FormArray([
                 new FormGroup({
-                    title: new FormControl(),
-                    reps: new FormControl(),
-                    sets: new FormControl(),
-                    weight: new FormControl()
+                    title: new FormControl(null, Validators.required),
+                    reps: new FormControl(null, Validators.required),
+                    sets: new FormControl(null, Validators.required),
+                    weight: new FormControl(null, Validators.required)
                 })
             ]),
             createNewNotebook: new FormControl(),
-            notebookTitle: new FormControl(),
-            notebookDescription: new FormControl(),
-            selectedNotebook: new FormControl('Select Workout Notebook')
+            notebookTitle: new FormControl(null, Validators.required),
+            notebookTags: new FormControl(null, Validators.required),
+            selectedNotebook: new FormControl(null, Validators.required)
         });
     }
 
     /* Add Workout Note */
-    addNewExercise() {
+    addNewExercise(target) {
         (<FormArray>this.workoutNoteForm.controls['exercises']).push(new FormGroup({
             title: new FormControl(),
             reps: new FormControl(),
@@ -81,12 +79,12 @@ export class WorkoutNoteFormComponent implements OnInit {
         }));
     }
 
+    /* ToDo make sure the exercise formArray resets */
     /* Submit and Close Form */
     saveWorkoutNoteForm() {
         this.addWorkoutNote();
         this.addWorkoutNoteCreateNewNotebook = 'hidden';
         this.workoutNoteForm.reset();
-        /* ToDo make sure the exercise formArray resets */
         this.closeOnSave();
     }
 
@@ -95,30 +93,33 @@ export class WorkoutNoteFormComponent implements OnInit {
         const noteTitle = this.workoutNoteForm.value.title;
         const noteDescription = this.workoutNoteForm.value.description;
         const noteExercises = this.workoutNoteForm.value.exercises;
-
-        let newNoteKey: string;
-
-        this.notesRef.push({
-            'title': noteTitle,
-            'description': noteDescription,
-            'exercises': noteExercises
-        }).then((note => {
-            newNoteKey = note.key;
-        }));
-
         const notebookTitle = this.workoutNoteForm.value.notebookTitle;
-        const notebookDescription = this.workoutNoteForm.value.notebookDescription;
+
+        // const notebookDescription = this.workoutNoteForm.value.notebookDescription;
+        const notebookTags = this.workoutNoteForm.value.notebookTags;
         const notebookSelected = this.workoutNoteForm.value.selectedNotebook;
         const notebookCreateNew = this.workoutNoteForm.value.createNewNotebook;
 
         let notebookKey: string;
+        let newNoteKey: string;
+
+        console.log(notebookTags);
 
         this.afAuth.authState.subscribe(auth => {
             if (auth) {
+
+                this.db.list('/members/' + auth.uid + '/notes/').push({
+                    'title': noteTitle,
+                    'description': noteDescription,
+                    'exercises': noteExercises
+                }).then(note => {
+                    newNoteKey = note.key;
+                });
+
                 if (notebookCreateNew) {
                     this.db.list('/members/' + auth.uid + '/weeks/').push({
                         'title': notebookTitle,
-                        'description': notebookDescription,
+                        'tags': notebookTags,
                     }).then((notebook => {
                         notebookKey = notebook.key;
                     }));
@@ -126,8 +127,9 @@ export class WorkoutNoteFormComponent implements OnInit {
                     notebookKey = notebookSelected;
                 }
 
+                /* Needs to run after timeout so that the note and notebook keys are available in Firebase */
                 setTimeout(() => {
-                    if (this.addWorkoutNoteCreateNewNotebook === 'visible') {
+                    if (notebookCreateNew) {
                         const notebookWorkoutIndex = '/weeks/' + notebookKey + '/workouts/0';
 
                         this.memberService.getMemberDbObject(auth.uid, notebookWorkoutIndex).set({

@@ -5,8 +5,11 @@ import {AngularFireDatabase, AngularFireList, AngularFireObject} from 'angularfi
 import {Observable} from 'rxjs/Observable';
 
 import {trigger, transition, animate, style, state} from '@angular/animations';
+import {NgxSpinnerService} from 'ngx-spinner';
+import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 
 import {NotesService} from '../services/notes.service';
+import {NotebooksService} from '../services/notebooks.service';
 import {WorkoutNotebooksService} from '../services/workout-notebooks.service';
 import {MembersService} from '../services/members.service';
 
@@ -51,17 +54,29 @@ export class NotesComponent implements OnInit {
 
     formWorkoutNoteVisibilityState = 'inactive';
     formWorkoutNotebookVisibilityState = 'inactive';
+    workoutRowOptionsVisibilityState = 'inactive';
     hideWorkoutRowInputs = [];
 
+    closeResult: string;
+
+    /* ToDo Fix Loading Spinner */
     ngOnInit() {
+        // this.spinner.show();
+        //
+        // setTimeout(() => {
+        //     this.spinner.hide();
+        // }, 5000);
     }
 
     constructor(
+        private spinner: NgxSpinnerService,
         private afAuth: AngularFireAuth,
         private db: AngularFireDatabase,
         private router: Router,
+        private modalService: NgbModal,
         private membersService: MembersService,
         private notesService: NotesService,
+        private notebooksService: NotebooksService,
         private workoutNotebooksService: WorkoutNotebooksService
     ) {
 
@@ -70,6 +85,7 @@ export class NotesComponent implements OnInit {
             if (!auth) {
                 this.router.navigateByUrl('/login');
             } else {
+                // this.spinner.hide();
 
                 /* Workout Note Observables */
                 this.notesRef = this.notesService.getNotesListRef(auth.uid);
@@ -94,19 +110,10 @@ export class NotesComponent implements OnInit {
                         this.hasCurrentWorkout = 'true';
                         this.upcomingWeekTitle = getCurrentCollection[0].title;
                         this.upcomingWeekDescription = getCurrentCollection[0].description;
-                        this.weeklyWorkouts = this.getWeeklyWorkoutNotes(this.notesRef, upcomingWorkouts);
+                        this.weeklyWorkouts = this.notesService.getWeeklyWorkoutNotes(this.notesRef, upcomingWorkouts);
                     }
                 });
             }
-        });
-    }
-
-    /* ToDo move to service */
-    getWeeklyWorkoutNotes(notesRef, upcomingWorkouts) {
-        const upcomingWorkoutsVal = upcomingWorkouts.map(val => val.selected);
-        return notesRef.snapshotChanges().map(notes => {
-            const filtered = notes.filter(note => upcomingWorkoutsVal.includes(note.key));
-            return filtered.map(c => ({key: c.payload.key, ...c.payload.val()}));
         });
     }
 
@@ -123,7 +130,7 @@ export class NotesComponent implements OnInit {
             this.upcomingWeek = getCurrentCollection[0].week;
             this.upcomingWeekDescription = getCurrentCollection[0].description;
 
-            return this.weeklyWorkouts = this.getWeeklyWorkoutNotes(this.notesRef, upcomingWorkouts);
+            return this.weeklyWorkouts = this.notesService.getWeeklyWorkoutNotes(this.notesRef, upcomingWorkouts);
         });
     }
 
@@ -141,6 +148,7 @@ export class NotesComponent implements OnInit {
     saveWorkoutNoteRowUpdate(
         noteKey,
         exerciseRowIndex,
+        currentTitle,
         currentSets,
         currentReps,
         currentWeight,
@@ -159,6 +167,7 @@ export class NotesComponent implements OnInit {
         this.afAuth.authState.subscribe(auth => {
             if (auth) {
                 this.membersService.getMemberDbObject(auth.uid, '/notes/' + noteKey + '/exercises/' + exerciseRowIndex).set({
+                    'title': currentTitle,
                     'reps': updateReps,
                     'sets': updateSets,
                     'weight': updateWeight
@@ -169,15 +178,9 @@ export class NotesComponent implements OnInit {
         this.hideWorkoutRowInputs = [];
     }
 
-    /* ToDo move to service */
+    /* ToDo change function name to deleteNotebook and test */
     deleteNote(noteKey: string) {
-        this.afAuth.authState.subscribe(auth => {
-            if (auth) {
-                /* ToDo add 'are you sure you want to do this' message */
-                /* https://www.npmjs.com/package/angular-alert-module */
-                this.db.list('/members/' + auth.uid + '/notes').remove(noteKey);
-            }
-        });
+        this.notebooksService.deleteNotebook(noteKey);
     }
 
     /* ToDo move to service */
@@ -207,11 +210,29 @@ export class NotesComponent implements OnInit {
         this.formWorkoutNotebookVisibilityState = this.formWorkoutNotebookVisibilityState === 'active' ? 'inactive' : 'active';
     }
 
-    toggleWorkoutNoteFormState() {
-        this.formWorkoutNoteVisibilityState = this.formWorkoutNoteVisibilityState === 'active' ? 'inactive' : 'active';
+    openNewWorkoutModal(content) {
+        this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+            this.closeResult = `Closed with: ${result}`;
+        }, (reason) => {
+            this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+        });
+    }
+
+    private getDismissReason(reason: any): string {
+        if (reason === ModalDismissReasons.ESC) {
+            return 'by pressing ESC';
+        } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+            return 'by clicking on a backdrop';
+        } else {
+            return  `with: ${reason}`;
+        }
     }
 
     closeEventReceived($event) {
         this.formWorkoutNoteVisibilityState = 'inactive';
+    }
+
+    toggleWorkoutRowOptions(index) {
+        this.workoutRowOptionsVisibilityState = this.workoutRowOptionsVisibilityState === 'active' ? 'inactive' : 'active';
     }
 }

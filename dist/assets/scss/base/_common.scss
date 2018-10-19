@@ -5,3 +5,11 @@
 .horizontally-centered {
   @include horizontally-centered;
 }
+
+.horiz-and-vert-centered {
+  @include horiz-vert-centered;
+}
+
+.show-hover {
+  cursor: pointer;
+}

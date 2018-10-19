@@ -15,4 +15,12 @@ export class NotesService {
     getNotesListRef(authId) {
         return this.memberService.getMemberDbList(authId, '/notes');
     }
+
+    getWeeklyWorkoutNotes(notesRef, upcomingWorkouts) {
+        const upcomingWorkoutsVal = upcomingWorkouts.map(val => val.selected);
+        return notesRef.snapshotChanges().map(notes => {
+            const filtered = notes.filter(note => upcomingWorkoutsVal.includes(note.key));
+            return filtered.map(c => ({key: c.payload.key, ...c.payload.val()}));
+        });
+    }
 }

@@ -1,87 +1,150 @@
-<form [formGroup]="workoutNoteForm">
-
-    <div class="bg-light border p-3 mb-2">
-        <div class="form-group">
-            <input class="form-control" formControlName="title"
-                   placeholder="Enter a Workout Title">
-        </div>
-        <div class="form-group mb-2">
-            <input class="form-control" formControlName="description"
-                   placeholder="Enter Short Description">
-        </div>
-        <div class="form-group mb-2">
-            <select class="form-control mt-3 mb-3" formControlName="selectedNotebook">
-                <option selected>Select Workout Notebook</option>
-                <option *ngFor="let workoutCollection of weeklyWorkoutCollections | async"
-                        [value]="workoutCollection.key">{{ workoutCollection.title }} - {{ workoutCollection.description }}
-                </option>
-            </select>
-        </div>
-        <div class="form-group form-check form-checkbox mb-2">
-            <label class="form-check-label" for="create-workout">
-                Create New Workout Notebook
-                <input class="form-check-input" type="checkbox" formControlName="createNewNotebook"
-                       (change)="toggleCreateNewWorkoutNotebookVisibility()"
-                       id="create-workout">
-                <span class="form-checkmark"></span>
-            </label>
-        </div>
-        <div *ngIf="addWorkoutNoteCreateNewNotebook == 'visible'" class="workout-note-actions">
-            <hr class="my-3">
-            <div class="form-group">
-                <input class="form-control" formControlName="notebookTitle"
-                       placeholder="Enter Workout Notebook Title">
-            </div>
-            <div class="form-group">
-                <input class="form-control" formControlName="notebookDescription"
-                       placeholder="Enter Workout Notebook Goals">
-            </div>
-        </div>
-    </div>
-
-    <!-- ToDo focus on new row title input -->
-    <div class="actions workout-note-actions w-100 text-right">
-        <button class="btn btn-success mt-2 mr-sm-2" (click)="saveWorkoutNoteForm()">Save and Close</button>
-        <button class="btn btn-success mt-2 mr-sm-2" (click)="saveWorkoutNoteForm()">Save and Add Another</button>
-    </div>
-
-    <div *ngIf="workoutNoteForm && workoutNoteForm['controls'] &&
+<div class="workout-form-container">
+    <div class="modal-body">
+        <form [formGroup]="workoutNoteForm">
+            <ngb-accordion #acc="ngbAccordion" activeIds="workout-note" [closeOthers]="true">
+                <ngb-panel id="workout-note" title="Step 1 - Create Workout Note">
+                    <ng-template ngbPanelContent>
+                        <div class="py-2">
+                            <div class="form-group">
+                                <label class="required">Title</label>
+                                <input class="form-control" formControlName="title" required autofocus>
+                            </div>
+                            <div *ngIf="workoutNoteForm.controls['title'].errors && !workoutNoteForm.controls['title'].pristine"
+                                 class="error-msg">
+                                <div [hidden]="!workoutNoteForm.controls['title'].errors.required">
+                                    <div class="invalid-feedback">
+                                        Title is Required
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="required">Description</label>
+                                <input class="form-control" formControlName="description" required>
+                            </div>
+                            <div *ngIf="workoutNoteForm.controls['description'].errors && !workoutNoteForm.controls['description'].pristine"
+                                 class="error-msg">
+                                <div [hidden]="!workoutNoteForm.controls['description'].errors.required">
+                                    <div class="invalid-feedback">
+                                        Description is Required
+                                    </div>
+                                </div>
+                            </div>
+                            <div *ngIf="addWorkoutNoteCreateNewNotebook == 'hidden'"
+                                 class="form-group">
+                                <label class="required">Notebook</label>
+                                <select class="form-control" formControlName="selectedNotebook" required>
+                                    <option *ngFor="let workoutCollection of weeklyWorkoutCollections | async"
+                                            [value]="workoutCollection.key">{{ workoutCollection.title }} - {{
+                                        workoutCollection.description }}
+                                    </option>
+                                </select>
+                            </div>
+                            <div *ngIf="workoutNoteForm.controls['selectedNotebook'].errors && !workoutNoteForm.controls['selectedNotebook'].pristine"
+                                 class="error-msg">
+                                <div [hidden]="!workoutNoteForm.controls['selectedNotebook'].errors.required">
+                                    <div class="invalid-feedback">
+                                        Title is Required
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group form-check form-checkbox mt-4">
+                                <label class="form-check-label" for="create-workout">
+                                    Or Create A New Workout Notebook
+                                    <input class="form-check-input" type="checkbox"
+                                           formControlName="createNewNotebook"
+                                           (change)="toggleCreateNewWorkoutNotebookVisibility()"
+                                           id="create-workout">
+                                    <span class="form-checkmark"></span>
+                                </label>
+                            </div>
+                            <div *ngIf="addWorkoutNoteCreateNewNotebook == 'visible'"
+                                 class="workout-note-actions">
+                                <hr class="my-4">
+                                <div class="form-group">
+                                    <label class="required">Notebook Title</label>
+                                    <input class="form-control" formControlName="notebookTitle" required>
+                                </div>
+                                <div *ngIf="workoutNoteForm.controls['notebookTitle'].errors && !workoutNoteForm.controls['notebookTitle'].pristine"
+                                     class="error-msg">
+                                    <div [hidden]="!workoutNoteForm.controls['notebookTitle'].errors.required">
+                                        <div class="invalid-feedback">
+                                            Title is Required
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- ToDo Change This To Tags -->
+                                <div class="form-group">
+                                    <label class="required">Tags</label>
+                                    <tag-input class="form-control" formControlName="notebookTags"
+                                               [maxItems]="5"></tag-input>
+                                </div>
+                                <div *ngIf="workoutNoteForm.controls['notebookTags'].errors && !workoutNoteForm.controls['notebookTags'].pristine"
+                                     class="error-msg">
+                                    <div [hidden]="!workoutNoteForm.controls['notebookTags'].errors.required">
+                                        <div class="invalid-feedback">
+                                            Description is Required
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="actions workout-note-actions w-100 left">
+                            <button class="btn btn-success mt-2 mr-sm-2 w-100"
+                                    (click)="acc.toggle('workout-exercises')">Next - Add Exercises
+                            </button>
+                        </div>
+                    </ng-template>
+                </ngb-panel>
+                <ngb-panel id="workout-exercises" title="Step 2 - Add Exercises To Workout">
+                    <ng-template ngbPanelContent>
+                        <div *ngIf="workoutNoteForm && workoutNoteForm['controls'] &&
     workoutNoteForm.controls.exercises &&
     workoutNoteForm['controls']['exercises']['controls']">
-        <div formArrayName="exercises">
-            <div *ngFor="let exercises of workoutNoteForm.controls.exercises.controls; let j=index">
-                <div [formGroupName]="j">
-                    <div class="bg-light border p-3 my-3">
-                        <!-- ToDo Update delete button action -->
-                        <div class="clearfix">
-                            <h5 class="float-left">Enter exercise {{ j + 1 }} details</h5>
-                            <button *ngIf="j > 0" class="btn btn-link float-right" (click)="addNote = false">Delete</button>
+                            <div formArrayName="exercises">
+                                <div *ngFor="let exercises of workoutNoteForm.controls.exercises.controls; let j=index">
+                                    <div [formGroupName]="j">
+                                        <div class="py-1">
+                                            <div class="clearfix">
+                                                <h5 class="float-left">Enter exercise {{ j + 1 }} details</h5>
+                                            </div>
+                                            <div class="row mb-1">
+                                                <div class="form-group align-middle col-md-3">
+                                                    <label>Title</label>
+                                                    <input class="form-control" formControlName="title">
+                                                </div>
+                                                <div class="form-group align-middle col-4 col-md-3">
+                                                    <label>Sets</label>
+                                                    <input class="form-control" formControlName="sets">
+                                                </div>
+                                                <div class="form-group align-middle col-4 col-md-3">
+                                                    <label>Reps</label>
+                                                    <input class="form-control" formControlName="reps">
+                                                </div>
+                                                <div class="form-group align-middle col-4 col-md-3">
+                                                    <label>Weight</label>
+                                                    <input class="form-control" formControlName="weight">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="row mb-1">
-                            <div class="form-group align-middle col-md-3">
-                                <label class="label-underlined">Title</label>
-                                <input class="form-control" formControlName="title">
-                            </div>
-                            <div class="form-group align-middle col-4 col-md-3">
-                                <label class="label-underlined">Sets</label>
-                                <input class="form-control" formControlName="sets">
-                            </div>
-                            <div class="form-group align-middle col-4 col-md-3">
-                                <label class="label-underlined">Reps</label>
-                                <input class="form-control" formControlName="reps">
-                            </div>
-                            <div class="form-group align-middle col-4 col-md-3">
-                                <label class="label-underlined">Weight</label>
-                                <input class="form-control" formControlName="weight">
-                            </div>
+                        <div class="actions workout-note-actions w-100 left">
+                            <button class="btn btn-success mt-2 mr-sm-2 w-100" (click)="addNewExercise()">Add Another Exercise
+                            </button>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="actions workout-note-actions w-100 text-right">
-            <button class="btn btn-success mt-2 mr-sm-2" (click)="addNewExercise()">Add Row</button>
-        </div>
+                    </ng-template>
+                </ngb-panel>
+            </ngb-accordion>
+            <!--<div class="actions workout-note-actions w-100 my-4">-->
+            <!--<button class="btn btn-success mt-2 w-100" [disabled]="workoutNoteForm.invalid"-->
+            <!--(click)="saveWorkoutNoteForm()">Save and Close-->
+            <!--</button>-->
+            <!--<button class="btn btn-success mt-2 w-100" [disabled]="workoutNoteForm.invalid"-->
+            <!--(click)="saveWorkoutNoteForm()">Save and Add Another-->
+            <!--</button>-->
+            <!--</div>-->
+        </form>
     </div>
-
-</form>
+</div>

@@ -7,8 +7,7 @@ import {AngularFireDatabase} from 'angularfire2/database';
 
 @Component({
     selector: 'app-signup',
-    templateUrl: './signup.component.html',
-    // animations: [moveIn(), fallIn()],
+    templateUrl: './signup.component.html'
 })
 
 export class SignupComponent implements OnInit {
@@ -22,7 +21,10 @@ export class SignupComponent implements OnInit {
     ngOnInit() {
     }
 
-    constructor(private afAuth: AngularFireAuth, private router: Router, private db: AngularFireDatabase) {
+    constructor(
+        private afAuth: AngularFireAuth,
+        private router: Router,
+        private db: AngularFireDatabase) {
     }
 
     onSubmit(formData) {
@@ -46,51 +48,37 @@ export class SignupComponent implements OnInit {
         }
     }
 
-    /* ToDo move to helper */
+    /* ToDo this is duplicate of what is in the social login component */
+    /* Todo send an email validation message */
     private postSignIn(auth): void {
-        /* Todo check to see if the account is already in the system */
-
         this.addNewUserAccount(auth);
-        /* Todo send an email validation message */
-        /* Todo if not make a new user node */
-        /* Todo move this to the different login (email, facebook, google) functions? */
     }
 
-    /* ToDo move to helper */
     private addNewUserAccount(auth): void {
-
-        /* Todo change programs to use service */
-        this.db.object('/members/' + auth.uid)
-            .set({
-                'email': this.name.auth.email,
-                'displayName': this.name.auth.displayName,
-            });
-
-        const newNoteSetup = {
-            'title': 'Your First Note Title',
-            'exercises': {
-                'cols': ['Enter', 'Some', 'Data'],
-                'title': 'Your First Exercise Title'
+        this.db.object('/members/' + auth.uid).set({
+            'email': auth.email,
+            'notes': {
+                'defaultNote' : {
+                    'description' : 'Chest',
+                    'title' : 'Day 1 Workout',
+                    'exercises' : [{
+                        'reps' : '6-10',
+                        'sets' : '4',
+                        'title' : 'Bench Press',
+                        'weight' : '185'
+                    }],
+                }
+            },
+            'weeks': {
+                'defaultWeek' : {
+                    'current' : true,
+                    'description' : 'We Like Goals',
+                    'title' : 'Default Workout Notebook',
+                    'workouts' : [{
+                        'selected' : 'defaultNote'
+                    }]
+                }
             }
-        };
-
-        /* ToDo move to helper */
-        this.db.list('/members/' + auth.uid + '/notes/')
-            .push(newNoteSetup);
-
-        /* Other attempts */
-        function otherStuff() {
-            // this.af.database.object('/members/' + auth.uid + '/notes/0/exercises').set({
-            //     'title': 'Your First Note Title'
-            // });
-            //
-            // this.af.database.object('/members/' + auth.uid + '/notes/0/exercises/0').set({
-            //     'cols': ['Enter', 'Some', 'Data'],
-            //     'child_cols': ['Enter', 'Some', 'Data'],
-            //     'title': 'Your First Exercise Title'
-            // });
-            // this.af.database.object('/members/' + auth.uid + '/notes/0/exercises/0/child_cols/0')
-            //     .set(['Enter', 'Some', 'Data']);
-        }
+        });
     }
 }

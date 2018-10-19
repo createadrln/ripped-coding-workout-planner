@@ -13,6 +13,7 @@ import {AngularFireDatabase} from 'angularfire2/database';
 export class LoginComponent implements OnInit {
     error: any;
     name: any;
+    date = new Date();
 
     constructor(
         private afAuth: AngularFireAuth,
@@ -24,19 +25,21 @@ export class LoginComponent implements OnInit {
 
     signInWithFacebook() {
         this.afAuth.auth
-            .signInWithPopup(
-                new firebase.auth.FacebookAuthProvider()
-            )
-            // .then(res => console.log(res));
+            .signInWithPopup(new firebase.auth.FacebookAuthProvider())
             .then(
                 (success) => {
                     this.afAuth.authState.subscribe(auth => {
                         if (auth) {
-                            this.name = auth;
-                            this.postSignIn(auth);
+                            if (new Date(auth.metadata.creationTime) === new Date(auth.metadata.lastSignInTime)) {
+                                this.postSignIn(auth);
+                                this.name = auth;
+                            }
+
+                            setTimeout(() => {
+                                this.router.navigate(['/current']);
+                            }, 5000);
                         }
                     });
-                    this.router.navigate(['/notes']);
                 }).catch(
             (err) => {
                 this.error = err;
@@ -45,18 +48,24 @@ export class LoginComponent implements OnInit {
 
     signInWithGoogle() {
         this.afAuth.auth
-            .signInWithPopup(
-                new firebase.auth.GoogleAuthProvider()
-            )
+            .signInWithPopup(new firebase.auth.GoogleAuthProvider())
             .then(
                 (success) => {
                     this.afAuth.authState.subscribe(auth => {
                         if (auth) {
-                            this.name = auth;
-                            this.postSignIn(auth);
+                            const accountCreationTime = new Date(auth.metadata.creationTime);
+                            const accountLastLoginTime = new Date(auth.metadata.lastSignInTime);
+
+                            if (accountCreationTime.getTime() === accountLastLoginTime.getTime()) {
+                                this.postSignIn(auth);
+                                this.name = auth;
+                            }
+
+                            setTimeout(() => {
+                                this.router.navigate(['/current']);
+                            }, 2000);
                         }
                     });
-                    this.router.navigate(['/notes']);
                 }).catch(
             (err) => {
                 this.error = err;

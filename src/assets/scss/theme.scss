@@ -3,13 +3,15 @@
 
 // Base
 @import "base/bootstrap-overrides/buttons";
+@import "base/bootstrap-overrides/colors";
+@import "base/bootstrap-overrides/text";
 @import 'base/common';
 @import "base/main";
 @import "base/fonts";
+@import "base/colors";
 
 // Layout
 @import 'layout/navbar';
-@import 'layout/modal';
 
 // Theme
 @import 'theme/navbar';
@@ -20,6 +22,11 @@
 
 // Components
 @import 'components/forms';
+@import 'components/notebooks';
 
 // Actions
 @import 'actions/navbar';
+
+// Vendor
+@import 'vendor/tags';
+@import 'vendor/tabs';

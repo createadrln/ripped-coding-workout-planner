@@ -11,3 +11,83 @@
     }
   }
 }
+
+.current-workouts {
+
+  &__row {
+
+    &-options {
+
+      .dropdown-menu {
+        left: auto !important;
+        right: 0;
+      }
+
+      .btn-link {
+        color: $white;
+
+        &::after {
+          display: none;
+        }
+      }
+    }
+  }
+
+  &__list {
+
+    .edit-workout-row-icon,
+    .save-workout-row-icon {
+      font-size: 30px;
+      height: 30px;
+      width: 30px;
+    }
+  }
+}
+
+.splash-page {
+
+  .flexman-logo {
+    height: auto;
+    width: 300px;
+  }
+
+  .btn-facebook-login {
+    background-color: $social-facebook;
+    color: $white;
+  }
+
+  .btn-google-login {
+    background-color: $social-google;
+    color: $white;
+  }
+
+  .icon-social {
+    height: auto;
+    width: 25px;
+  }
+
+  @media screen and (min-width: map-get($breakpoints, medium)) {
+
+    .login-container {
+
+      .btn {
+        width: auto !important;
+      }
+    }
+  }
+}
+
+.email-login-page,
+.email-signup-page,
+.splash-page {
+
+  @media screen and (min-width: map-get($breakpoints, medium)) {
+
+    .login-container {
+      @include vertically-centered;
+      margin-left: 30%;
+      margin-top: 35px;
+      width: 40%;
+    }
+  }
+}
