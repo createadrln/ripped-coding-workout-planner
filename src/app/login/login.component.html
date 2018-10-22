@@ -1,4 +1,4 @@
-<div class="splash-page">
+<div class="splash-page bg-secondary">
     <div class="login-container p-3">
         <div class="bg-secondary p-3">
             <img class="flexman-logo d-block mx-auto" src="assets/images/flexman.svg">
@@ -22,19 +22,26 @@
                 </button>
             </div>
             <div class="row justify-content-center mt-2">
-                <a href="#" class="text-primary">
+                <span (click)="openModal(more_modal)" class="btn btn-link text-primary">
                     Learn More
-                </a>
+                </span>
             </div>
-            <!-- ToDo Put This Into Modal -->
-            <div class="my-2 px-4 text-center d-none">
-                <p>We get it...you want to go workout.</p>
-                <p>Just sign up with an existing account, or enter your email address and a password and get to it.</p>
-                <p>This application is being offered as a Beta test with limited space for users.<br>
-                    We can take about 100 right now, but if you aren't using your account after a few weeks it will probably
-                    be disabled.</p>
-                <p>If you have any bugs or requests please check out the contact forms in the About menu.</p>
-            </div>
+            <ng-template #more_modal let-modal>
+                <div class="modal-header">
+                    <h4 class="modal-title" id="modal-basic-title">About Flexing365 Workouts</h4>
+                    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>We get it...you just want to go get that workout.</p>
+                    <p>Just sign up with an existing account, or enter your email address and a password and get to it.</p>
+                    <p>This application is being offered as a Beta test with limited space for users.<br>
+                        We can take about 100 right now, but if you aren't using your account after a few weeks it will probably
+                        be disabled.</p>
+                    <p>If you have any bugs or requests please check out the contact forms in the About menu.</p>
+                </div>
+            </ng-template>
         </div>
         <div *ngIf="error" class="row justify-content-center my-2 px-4 text-center">
             <span class="error">{{ error }}</span>

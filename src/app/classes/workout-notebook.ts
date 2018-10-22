@@ -1,3 +1,5 @@
+/* ToDo find these and use them */
+
 export class Notebook {
     key: string;
     week: Date;
@@ -28,15 +30,6 @@ export class ExerciseTableCols {
     sets: number;
     weight: number;
 }
-
-// export class Form {
-//     constructor(public state = 'inactive') { }
-//
-//     toggleState() {
-//         console.log(this.state);
-//         this.state = this.state === 'active' ? 'inactive' : 'active';
-//     }
-// }
 
 /* ToDo create popular workouts */
 export const popularWorkouts = [];

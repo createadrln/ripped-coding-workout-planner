@@ -3,6 +3,7 @@ import {AngularFireAuth} from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
 import {Router} from '@angular/router';
 import {AngularFireDatabase} from 'angularfire2/database';
+import {ModalDismissReasons, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'app-login',
@@ -15,10 +16,13 @@ export class LoginComponent implements OnInit {
     name: any;
     date = new Date();
 
+    closeResult: string;
+
     constructor(
         private afAuth: AngularFireAuth,
         private router: Router,
-        private db: AngularFireDatabase
+        private db: AngularFireDatabase,
+        private modalService: NgbModal
     ) {}
 
     ngOnInit() {}
@@ -72,7 +76,7 @@ export class LoginComponent implements OnInit {
             });
     }
 
-    /* Todo send an email validation message */
+    /* ToDo send an email validation message or something */
     private postSignIn(auth): void {
         this.addNewUserAccount(auth);
     }
@@ -103,6 +107,12 @@ export class LoginComponent implements OnInit {
                     }]
                 }
             }
+        });
+    }
+
+    openModal(content) {
+        this.modalService.open(content, {
+            centered: true
         });
     }
 }

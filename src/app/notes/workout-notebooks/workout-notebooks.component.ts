@@ -24,8 +24,6 @@ export class WorkoutNotebooksComponent implements OnInit {
     workoutNotebooksRef: AngularFireList<any>;
     workoutNotebooks: Observable<any[]>;
 
-    closeResult: string;
-
     constructor(
         private spinner: NgxSpinnerService,
         private afAuth: AngularFireAuth,
@@ -67,25 +65,24 @@ export class WorkoutNotebooksComponent implements OnInit {
     ngOnInit() {
     }
 
-    deleteNotebook(noteKey: string) {
-        this.notebooksService.deleteNotebook(noteKey);
+    deleteNotebook(key: string) {
+        this.notebooksService.deleteNotebook(key);
     }
 
-    openNewWorkoutModal(content) {
-        this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
-            this.closeResult = `Closed with: ${result}`;
-        }, (reason) => {
-            this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    removeWorkoutFromNotebook(notebookKey: string, noteKey: string, index: number) {
+        this.notebooksService.deleteNotebook(noteKey);https://www.npmjs.com/package/angular-alert-module
+        this.afAuth.authState.subscribe(auth => {
+            if (auth) {
+                /* ToDo add 'are you sure you want to do this' message */
+                this.db.list('/members/' + auth.uid + '/notes').remove(noteKey);
+            }
         });
     }
 
-    private getDismissReason(reason: any): string {
-        if (reason === ModalDismissReasons.ESC) {
-            return 'by pressing ESC';
-        } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-            return 'by clicking on a backdrop';
-        } else {
-            return  `with: ${reason}`;
-        }
+    openNewWorkoutModal(content) {
+        this.modalService.open(content, {
+            size: 'lg',
+            centered: true
+        });
     }
 }

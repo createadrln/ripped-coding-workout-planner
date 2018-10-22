@@ -13,7 +13,7 @@
             </h5>
         </div>
         <div class="btn btn-link text-success float-sm-right mt-2 mt-sm-0 p-0" (click)="openNewWorkoutModal(new_workout_modal)">
-            <mat-icon class="align-middle mr-1">description</mat-icon> <span class="align-middle">New Notebook</span>
+            <mat-icon class="align-middle mr-1">description</mat-icon> <span class="align-middle">Add New Notebook</span>
         </div>
     </div>
 </header>
@@ -54,7 +54,7 @@
                         <div class="row">
                             <div class="align-middle col-12">
                                 <mat-icon [hidden]="hideWorkoutRowInputs[[note.key,i]]"
-                                          class="edit-workout-row-icon float-right p-0 text-danger"
+                                          class="edit-workout-row-icon float-right p-0 text-secondary"
                                           (click)="hideWorkoutRowInputs[[note.key,i]] = !hideWorkoutRowInputs[[note.key,i]]">edit
                                 </mat-icon>
                                 <mat-icon [hidden]="!hideWorkoutRowInputs[[note.key,i]]"
