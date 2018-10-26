@@ -1,3 +1,21 @@
 .edit-workout-row-icon {
   cursor: pointer;
 }
+
+.workout-notebooks-row {
+
+  .dropdown-toggle {
+
+    &::after {
+      border: none;
+    }
+  }
+
+  .dropdown-menu {
+
+    &.show {
+      left: auto !important;
+      right: 0;
+    }
+  }
+}

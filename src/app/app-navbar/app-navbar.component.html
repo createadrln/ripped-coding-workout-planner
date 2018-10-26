@@ -10,21 +10,21 @@
                         <li ngbDropdown class="nav-item">
                             <button class="btn btn-link" id="workoutMenu" ngbDropdownToggle>Workouts</button>
                             <div ngbDropdownMenu aria-labelledby="workoutMenu">
-                                <a class="nav-link dropdown-item" routerLink="/current">Current Workouts</a>
-                                <a class="nav-link dropdown-item" routerLink="/notes">Workout Notes</a>
-                                <a class="nav-link dropdown-item" routerLink="/notebooks">Workout Notebooks</a>
+                                <a class="nav-link dropdown-item" routerLink="/current" (click)="navbarOpen = false">Current Workouts</a>
+                                <a class="nav-link dropdown-item" routerLink="/notes" (click)="navbarOpen = false">Workout Notes</a>
+                                <a class="nav-link dropdown-item" routerLink="/notebooks" (click)="navbarOpen = false">Workout Notebooks</a>
                             </div>
                         </li>
                         <li ngbDropdown class="nav-item">
                             <button class="btn btn-link" id="aboutMenu" ngbDropdownToggle>Flexing365</button>
                             <div ngbDropdownMenu aria-labelledby="aboutMenu">
                                 <a class="nav-link dropdown-item" href="https://flexing365.com">About Flexing365</a>
-                                <a class="nav-link dropdown-item" routerLink="/bugs">Report Bugs</a>
-                                <a class="nav-link dropdown-item" routerLink="/contact">Contact</a>
+                                <a class="nav-link dropdown-item" routerLink="/bugs" (click)="navbarOpen = false">Report Bugs</a>
+                                <a class="nav-link dropdown-item" routerLink="/contact" (click)="navbarOpen = false">Contact</a>
                             </div>
                         </li>
                         <li class="nav-item align-middle">
-                            <button class="btn btn-link nav-item" routerLink="/settings">Settings</button>
+                            <button class="btn btn-link nav-item" routerLink="/settings" (click)="navbarOpen = false">Settings</button>
                         </li>
                     </ul>
                 </div>

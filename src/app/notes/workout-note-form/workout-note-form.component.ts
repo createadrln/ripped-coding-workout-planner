@@ -9,7 +9,6 @@ import {MembersService} from '../../services/members.service';
 import {EventEmitter} from '@angular/core';
 
 /* ToDo use classes correctly in TS variables */
-/* ToDo add validation to form */
 
 @Component({
     selector: 'app-workout-note-form',
@@ -27,6 +26,10 @@ export class WorkoutNoteFormComponent implements OnInit {
     weeklyWorkoutCollections: Observable<any[]>;
 
     addWorkoutNoteCreateNewNotebook = 'hidden';
+
+    workoutSelectField = new FormControl(null, Validators.required);
+    newNotebookTitleField = new FormControl(null, Validators.required);
+    newNotebookTagField = new FormControl(null, Validators.required);
 
     constructor(
         private afAuth: AngularFireAuth,
@@ -48,6 +51,14 @@ export class WorkoutNoteFormComponent implements OnInit {
                 });
             }
         });
+
+        if (this.addWorkoutNoteCreateNewNotebook === 'visible') {
+            this.workoutSelectField = new FormControl();
+        }
+        if (this.addWorkoutNoteCreateNewNotebook === 'hidden') {
+            this.newNotebookTitleField = new FormControl();
+            this.newNotebookTagField = new FormControl();
+        }
     }
 
     ngOnInit() {
@@ -63,9 +74,9 @@ export class WorkoutNoteFormComponent implements OnInit {
                 })
             ]),
             createNewNotebook: new FormControl(),
-            notebookTitle: new FormControl(null, Validators.required),
-            notebookTags: new FormControl(null, Validators.required),
-            selectedNotebook: new FormControl(null, Validators.required)
+            notebookTitle: this.newNotebookTitleField,
+            notebookTags: this.newNotebookTagField,
+            selectedNotebook: this.workoutSelectField
         });
     }
 
@@ -83,9 +94,8 @@ export class WorkoutNoteFormComponent implements OnInit {
     /* Submit and Close Form */
     saveWorkoutNoteForm() {
         this.addWorkoutNote();
-        this.addWorkoutNoteCreateNewNotebook = 'hidden';
-        this.workoutNoteForm.reset();
-        this.closeOnSave();
+        // this.workoutNoteForm.reset();
+        // this.closeOnSave();
     }
 
     /* Save Workout Note */
@@ -102,8 +112,6 @@ export class WorkoutNoteFormComponent implements OnInit {
 
         let notebookKey: string;
         let newNoteKey: string;
-
-        console.log(notebookTags);
 
         this.afAuth.authState.subscribe(auth => {
             if (auth) {
@@ -155,6 +163,7 @@ export class WorkoutNoteFormComponent implements OnInit {
         this.addWorkoutNoteCreateNewNotebook = this.addWorkoutNoteCreateNewNotebook === 'visible' ? 'hidden' : 'visible';
     }
 
+    /* ToDo update this to close modal */
     closeOnSave() {
         this.closeEvent.emit();
     }

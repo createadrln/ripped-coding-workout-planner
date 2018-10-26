@@ -24,6 +24,9 @@ export class WorkoutNotebooksComponent implements OnInit {
     workoutNotebooksRef: AngularFireList<any>;
     workoutNotebooks: Observable<any[]>;
 
+    deleteWorkoutAlert = 'inactive';
+    hideWorkoutExercises = [];
+
     constructor(
         private spinner: NgxSpinnerService,
         private afAuth: AngularFireAuth,
@@ -59,6 +62,8 @@ export class WorkoutNotebooksComponent implements OnInit {
                     const workouts = notebook[0].workouts;
                 });
             }
+
+            this.hideWorkoutExercises = [];
         });
     }
 
@@ -67,16 +72,21 @@ export class WorkoutNotebooksComponent implements OnInit {
 
     deleteNotebook(key: string) {
         this.notebooksService.deleteNotebook(key);
+        this.deleteWorkoutAlert = 'inactive';
     }
 
     removeWorkoutFromNotebook(notebookKey: string, noteKey: string, index: number) {
-        this.notebooksService.deleteNotebook(noteKey);https://www.npmjs.com/package/angular-alert-module
+        this.notebooksService.deleteNotebook(noteKey);
         this.afAuth.authState.subscribe(auth => {
             if (auth) {
                 /* ToDo add 'are you sure you want to do this' message */
                 this.db.list('/members/' + auth.uid + '/notes').remove(noteKey);
             }
         });
+    }
+
+    toggleDeleteWorkoutAlert(index) {
+        this.deleteWorkoutAlert = this.deleteWorkoutAlert === 'active' ? 'inactive' : 'active';
     }
 
     openNewWorkoutModal(content) {

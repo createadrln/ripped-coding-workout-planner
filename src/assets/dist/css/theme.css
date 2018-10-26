@@ -72,6 +72,9 @@ a {
 .text-accent {
   color: #B9CF0B; }
 
+.text-medium-gray {
+  color: #b1b7b6; }
+
 .bg-dark-gray {
   background-color: #525050; }
 
@@ -136,10 +139,9 @@ a {
   .current-workouts__row-options .btn-link::after {
     display: none; }
 
-.current-workouts__list .edit-workout-row-icon,
-.current-workouts__list .save-workout-row-icon {
+.current-workouts__list .current-workouts-list-icon {
+  height: 28px;
   font-size: 30px;
-  height: 30px;
   width: 30px; }
 
 .splash-page .flexman-logo {
@@ -178,6 +180,10 @@ a {
 .text-underlined {
   text-decoration: underline; }
 
+.workout-page-header h2 em {
+  font-size: 14px;
+  font-weight: 400; }
+
 .form-group label.label-underlined {
   border-bottom: 1px solid #928f8f;
   width: 50%; }
@@ -185,13 +191,21 @@ a {
 .edit-workout-row-icon {
   cursor: pointer; }
 
+.workout-notebooks-row .dropdown-toggle::after {
+  border: none; }
+
+.workout-notebooks-row .dropdown-menu.show {
+  left: auto !important;
+  right: 0; }
+
 form label.required::after {
   color: #FF3B30;
   content: '(required) *';
   margin: 0 0 0 5px; }
 
 .form-control {
-  border-color: #928f8f; }
+  border-color: #928f8f;
+  height: calc(2.875rem + 2px); }
   @media screen and (min-width: 768px) {
     .form-control {
       font-size: 1.25rem;

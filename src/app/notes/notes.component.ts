@@ -49,12 +49,14 @@ export class NotesComponent implements OnInit {
 
     hasCurrentWorkout = 'false';
     upcomingWeekTitle: string;
+    upcomingWeekTags: any;
     upcomingWeekDescription: string;
     weeklyWorkouts: Observable<any>;
 
     formWorkoutNoteVisibilityState = 'inactive';
     formWorkoutNotebookVisibilityState = 'inactive';
     workoutRowOptionsVisibilityState = 'inactive';
+    hideWorkoutRows = [];
     hideWorkoutRowInputs = [];
 
     /* ToDo Fix Loading Spinner */
@@ -107,6 +109,7 @@ export class NotesComponent implements OnInit {
 
                         this.hasCurrentWorkout = 'true';
                         this.upcomingWeekTitle = getCurrentCollection[0].title;
+                        this.upcomingWeekTags = getCurrentCollection[0].tags;
                         this.upcomingWeekDescription = getCurrentCollection[0].description;
                         this.weeklyWorkouts = this.notesService.getWeeklyWorkoutNotes(this.notesRef, upcomingWorkouts);
                     }
@@ -173,6 +176,7 @@ export class NotesComponent implements OnInit {
             }
         });
 
+        this.hideWorkoutRows = [];
         this.hideWorkoutRowInputs = [];
     }
 
@@ -215,6 +219,7 @@ export class NotesComponent implements OnInit {
         });
     }
 
+    /* ToDo change to close modal */
     closeEventReceived($event) {
         this.formWorkoutNoteVisibilityState = 'inactive';
     }

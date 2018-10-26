@@ -13,8 +13,11 @@ form {
   }
 }
 
+$formInputHeight: calc(2.875rem + 2px);
+
 .form-control {
   border-color: $border-color;
+  height: $formInputHeight;
 
   @media screen and (min-width: map-get($breakpoints, medium)) {
     font-size: $font-size-lg;
@@ -27,7 +30,7 @@ select {
   &.form-control:not([size]):not([multiple]) {
 
     @media screen and (min-width: map-get($breakpoints, medium)) {
-      height: calc(2.875rem + 2px);
+      height: $formInputHeight;
     }
   }
 }
