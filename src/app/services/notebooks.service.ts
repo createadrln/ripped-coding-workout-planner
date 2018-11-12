@@ -14,11 +14,10 @@ export class NotebooksService {
     ) {
     }
 
-    deleteNotebook(noteKey: string) {
+    deleteNotebook(key: string) {
         this.afAuth.authState.subscribe(auth => {
             if (auth) {
-                /* ToDo add 'are you sure you want to do this' message */
-                this.db.list('/members/' + auth.uid + '/notes').remove(noteKey);
+                this.db.list('/members/' + auth.uid + '/weeks').remove(key);
             }
         });
     }

@@ -16,7 +16,7 @@
 
   &-brand {
 
-    a:not(.nav-link) {
+    .navbar-brand-logo {
       font-size: 0;
     }
   }
@@ -37,13 +37,20 @@
 
   &-collapse {
 
-    a {
-      color: $medium-gray;
-      font-size: $font-size-sm;
-    }
+    .nav-item {
 
-    .nav-link {
-      padding: 0.25rem 1rem;
+
+      &.dropdown {
+
+        a {
+          color: $medium-gray;
+          font-size: $font-size-sm;
+        }
+      }
+
+      .nav-link {
+        padding: 0.25rem 1rem;
+      }
     }
   }
 }

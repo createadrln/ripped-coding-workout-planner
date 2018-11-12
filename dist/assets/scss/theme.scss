@@ -15,7 +15,6 @@
 
 // Theme
 @import 'theme/navbar';
-@import 'theme/pages';
 @import 'theme/type';
 @import 'theme/forms';
 @import 'theme/buttons';
@@ -23,6 +22,7 @@
 // Components
 @import 'components/forms';
 @import 'components/notebooks';
+@import 'components/pages';
 
 // Actions
 @import 'actions/navbar';

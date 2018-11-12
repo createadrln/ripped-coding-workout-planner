@@ -6,12 +6,12 @@ import {Observable} from 'rxjs/Observable';
 
 import {trigger, transition, animate, style, state} from '@angular/animations';
 import {NgxSpinnerService} from 'ngx-spinner';
-import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 
 import {NotesService} from '../services/notes.service';
 import {NotebooksService} from '../services/notebooks.service';
 import {WorkoutNotebooksService} from '../services/workout-notebooks.service';
 import {MembersService} from '../services/members.service';
+import {ModalService} from '../services/modal.service';
 
 @Component({
     selector: 'app-notes',
@@ -45,8 +45,6 @@ export class NotesComponent implements OnInit {
     weeklyWorkoutCollectionRef: AngularFireList<any>;
     weeklyWorkoutCollections: Observable<any[]>;
 
-    upcomingWeek = new Date();
-
     hasCurrentWorkout = 'false';
     upcomingWeekTitle: string;
     upcomingWeekTags: any;
@@ -59,13 +57,8 @@ export class NotesComponent implements OnInit {
     hideWorkoutRows = [];
     hideWorkoutRowInputs = [];
 
-    /* ToDo Fix Loading Spinner */
     ngOnInit() {
-        // this.spinner.show();
-        //
-        // setTimeout(() => {
-        //     this.spinner.hide();
-        // }, 5000);
+        this.spinner.show();
     }
 
     constructor(
@@ -73,7 +66,7 @@ export class NotesComponent implements OnInit {
         private afAuth: AngularFireAuth,
         private db: AngularFireDatabase,
         private router: Router,
-        private modalService: NgbModal,
+        private modalService: ModalService,
         private membersService: MembersService,
         private notesService: NotesService,
         private notebooksService: NotebooksService,
@@ -85,7 +78,7 @@ export class NotesComponent implements OnInit {
             if (!auth) {
                 this.router.navigateByUrl('/login');
             } else {
-                // this.spinner.hide();
+                this.spinner.hide();
 
                 /* Workout Note Observables */
                 this.notesRef = this.notesService.getNotesListRef(auth.uid);
@@ -103,7 +96,6 @@ export class NotesComponent implements OnInit {
                 this.weeklyWorkoutCollections.subscribe(collections => {
                     const getCurrentCollection = collections.filter(collection => collection.current);
 
-                    /* ToDo create from popular workouts */
                     if (getCurrentCollection.length > 0) {
                         const upcomingWorkouts = getCurrentCollection[0].workouts;
 
@@ -114,33 +106,6 @@ export class NotesComponent implements OnInit {
                         this.weeklyWorkouts = this.notesService.getWeeklyWorkoutNotes(this.notesRef, upcomingWorkouts);
                     }
                 });
-            }
-        });
-    }
-
-    /* ToDo move to service or helper */
-    updateCurrentWeekToggleData(auth, workoutCollection) {
-        this.db.object('/members/' + auth + '/weeks/' + workoutCollection).update({
-            'current': true
-        });
-
-        this.weeklyWorkoutCollections.subscribe(weeks => {
-            const getCurrentCollection = weeks.filter(week => week.current);
-            const upcomingWorkouts = getCurrentCollection[0].workouts;
-
-            this.upcomingWeek = getCurrentCollection[0].week;
-            this.upcomingWeekDescription = getCurrentCollection[0].description;
-
-            return this.weeklyWorkouts = this.notesService.getWeeklyWorkoutNotes(this.notesRef, upcomingWorkouts);
-        });
-    }
-
-    /* ToDo move to helper */
-    selectNewWorkoutCollection(ev) {
-        this.afAuth.authState.subscribe(auth => {
-            if (auth) {
-                this.workoutNotebooksService.removeCurrentWeekToggleData(auth.uid, this.weeklyWorkoutCollections);
-                this.updateCurrentWeekToggleData(auth.uid, ev);
             }
         });
     }
@@ -180,48 +145,12 @@ export class NotesComponent implements OnInit {
         this.hideWorkoutRowInputs = [];
     }
 
-    /* ToDo change function name to deleteNotebook and test */
-    deleteNote(noteKey: string) {
-        this.notebooksService.deleteNotebook(noteKey);
-    }
-
-    /* ToDo move to service */
-    createNewNoteRow(noteKey, rowsCount, rowTitle, rowReps, rowSets, rowWeight) {
-        this.afAuth.authState.subscribe(auth => {
-            if (auth) {
-                this.db.object('/members/' + auth.uid + '/notes/' + noteKey + /exercises/ + rowsCount).set({
-                    'title': rowTitle,
-                    'reps': rowReps,
-                    'sets': rowSets,
-                    'weight': rowWeight
-                });
-            }
-        });
-    }
-
-    /* ToDo move to service */
-    deleteNoteRow(noteKey, exercise, exerciseIndex): void {
-        this.afAuth.authState.subscribe(auth => {
-            if (auth) {
-                this.db.list('/members/' + auth.uid + '/notes/' + noteKey + '/exercises/');
-            }
-        });
+    openLargeModal(content) {
+        this.modalService.openLargeModal(content);
     }
 
     toggleWorkoutNotebookFormState() {
         this.formWorkoutNotebookVisibilityState = this.formWorkoutNotebookVisibilityState === 'active' ? 'inactive' : 'active';
-    }
-
-    openNewWorkoutModal(content) {
-        this.modalService.open(content, {
-            size: 'lg',
-            centered: true
-        });
-    }
-
-    /* ToDo change to close modal */
-    closeEventReceived($event) {
-        this.formWorkoutNoteVisibilityState = 'inactive';
     }
 
     toggleWorkoutRowOptions(index) {

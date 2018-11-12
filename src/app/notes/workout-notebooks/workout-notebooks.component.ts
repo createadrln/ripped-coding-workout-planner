@@ -9,7 +9,7 @@ import {MembersService} from '../../services/members.service';
 import {NotesService} from '../../services/notes.service';
 import {NotebooksService} from '../../services/notebooks.service';
 import {WorkoutNotebooksService} from '../../services/workout-notebooks.service';
-import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import {ModalService} from '../../services/modal.service';
 
 @Component({
     selector: 'app-workout-notebooks',
@@ -24,8 +24,11 @@ export class WorkoutNotebooksComponent implements OnInit {
     workoutNotebooksRef: AngularFireList<any>;
     workoutNotebooks: Observable<any[]>;
 
-    deleteWorkoutAlert = 'inactive';
+    current: boolean;
+
     hideWorkoutExercises = [];
+
+    public searchText: string;
 
     constructor(
         private spinner: NgxSpinnerService,
@@ -36,14 +39,13 @@ export class WorkoutNotebooksComponent implements OnInit {
         private notesService: NotesService,
         private notebooksService: NotebooksService,
         private workoutNotebooksService: WorkoutNotebooksService,
-        private modalService: NgbModal
+        private modalService: ModalService
     ) {
         this.afAuth.authState.subscribe(auth => {
 
             if (!auth) {
                 this.router.navigateByUrl('/login');
             } else {
-                // this.spinner.hide();
 
                 /* Workout Note Observables */
                 this.notesRef = this.notesService.getNotesListRef(auth.uid);
@@ -52,14 +54,11 @@ export class WorkoutNotebooksComponent implements OnInit {
                 });
 
                 /* Workout Collection Observables */
-                this.workoutNotebooksRef = this.workoutNotebooksService.getWorkoutNotebookListRef(auth.uid);
+                this.workoutNotebooksRef = this.db.list('/members/' + auth.uid + '/weeks/', notebooks => {
+                    return notebooks.orderByChild('current');
+                });
                 this.workoutNotebooks = this.workoutNotebooksRef.snapshotChanges().map(changes => {
                     return changes.map(c => ({key: c.payload.key, ...c.payload.val()}));
-                });
-
-                /* Get Workouts From Observable */
-                this.workoutNotebooks.subscribe(notebook => {
-                    const workouts = notebook[0].workouts;
                 });
             }
 
@@ -72,27 +71,24 @@ export class WorkoutNotebooksComponent implements OnInit {
 
     deleteNotebook(key: string) {
         this.notebooksService.deleteNotebook(key);
-        this.deleteWorkoutAlert = 'inactive';
+        this.modalService.dismissAllModals();
     }
 
-    removeWorkoutFromNotebook(notebookKey: string, noteKey: string, index: number) {
-        this.notebooksService.deleteNotebook(noteKey);
+    setCurrentWorkout(key: string) {
         this.afAuth.authState.subscribe(auth => {
-            if (auth) {
-                /* ToDo add 'are you sure you want to do this' message */
-                this.db.list('/members/' + auth.uid + '/notes').remove(noteKey);
-            }
+            this.workoutNotebooksService.removeCurrentWeekToggleData(auth.uid, this.workoutNotebooks);
+            this.db.object('/members/' + auth.uid + '/weeks/' + key).update({
+                'current': true
+            });
         });
+        this.modalService.dismissAllModals();
     }
 
-    toggleDeleteWorkoutAlert(index) {
-        this.deleteWorkoutAlert = this.deleteWorkoutAlert === 'active' ? 'inactive' : 'active';
+    openLargeModal(content) {
+        this.modalService.openLargeModal(content);
     }
 
-    openNewWorkoutModal(content) {
-        this.modalService.open(content, {
-            size: 'lg',
-            centered: true
-        });
+    openWarningModal(content) {
+        this.modalService.openWarningModal(content);
     }
 }

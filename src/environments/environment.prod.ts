@@ -1,5 +1,6 @@
 export const environment = {
     production: true,
+    hmr: false,
     firebase: {
         apiKey: 'AIzaSyCgH6Cq5vketCNarnnTJ12yTB1_oOj_RaE',
         authDomain: 'max-iron-workout-planner.firebaseapp.com',

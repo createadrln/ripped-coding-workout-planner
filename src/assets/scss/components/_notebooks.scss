@@ -10,4 +10,53 @@
       background-color: $white;
     }
   }
+
+  &__current-status {
+
+    .mat-icon {
+      height: 35px;
+      font-size: 35px;
+      width: 35px;
+    }
+  }
+}
+
+.workout-notebook {
+
+  &-actions {
+
+    @media screen and (min-width: map-get($breakpoints, medium)) {
+
+      .btn {
+        width: auto !important;
+      }
+    }
+  }
+}
+
+.current-workouts {
+
+  &__row-options {
+
+    .icon-arrow-drop-down,
+    .icon-cancel {
+      font-size: 40px;
+      height: 40px;
+      width: 40px;
+    }
+  }
+}
+
+.workout-note-actions {
+
+  .btn {
+    width: 100%;
+  }
+
+  @media screen and (min-width: map-get($breakpoints, med-sm)) {
+
+    .btn {
+      width: auto;
+    }
+  }
 }

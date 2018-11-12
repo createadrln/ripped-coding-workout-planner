@@ -25,6 +25,9 @@ import {WorkoutNotebooksComponent} from './notes/workout-notebooks/workout-noteb
 import {WorkoutNotesComponent} from './notes/workout-notes/workout-notes.component';
 import {WorkoutNotebookFormComponent} from './notes/workout-notebook-form/workout-notebook-form.component';
 import {WorkoutNoteFormComponent} from './notes/workout-note-form/workout-note-form.component';
+import {TermsAndConditionsComponent} from './content/terms-and-conditions/terms-and-conditions.component';
+import {PrivacyComponent} from './content/privacy/privacy.component';
+import {RulesComponent} from './content/rules/rules.component';
 
 import {ReversePipe} from './pipes/reverse.pipe';
 import {FilterPipe} from './pipes/filter.pipe';
@@ -46,7 +49,10 @@ import { KeyPipe } from './pipes/key.pipe';
         WorkoutNoteFormComponent,
         WorkoutNotebooksComponent,
         WorkoutNotesComponent,
-        KeyPipe
+        KeyPipe,
+        TermsAndConditionsComponent,
+        PrivacyComponent,
+        RulesComponent
     ],
     imports: [
         BrowserModule,

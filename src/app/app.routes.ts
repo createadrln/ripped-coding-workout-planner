@@ -9,6 +9,9 @@ import {MembersComponent} from './members/members.component';
 import {NotesComponent} from './notes/notes.component';
 import {WorkoutNotebooksComponent} from './notes/workout-notebooks/workout-notebooks.component';
 import {WorkoutNotesComponent} from './notes/workout-notes/workout-notes.component';
+import {TermsAndConditionsComponent} from './content/terms-and-conditions/terms-and-conditions.component';
+import {PrivacyComponent} from './content/privacy/privacy.component';
+import {RulesComponent} from './content/rules/rules.component';
 
 const routes: Routes = [
     {path: '', redirectTo: 'login', pathMatch: 'full'},
@@ -19,6 +22,9 @@ const routes: Routes = [
     {path: 'current', component: NotesComponent},
     {path: 'notebooks', component: WorkoutNotebooksComponent},
     {path: 'notes', component: WorkoutNotesComponent},
+    {path: 'terms-and-conditions', component: TermsAndConditionsComponent},
+    {path: 'privacy-policy', component: PrivacyComponent},
+    {path: 'rules', component: RulesComponent},
 ];
 
 @NgModule({

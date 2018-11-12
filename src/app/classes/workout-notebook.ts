@@ -2,7 +2,6 @@
 
 export class Notebook {
     key: string;
-    week: Date;
     current: boolean;
     description: string;
     title: string;

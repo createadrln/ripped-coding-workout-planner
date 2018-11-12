@@ -16,7 +16,7 @@
             </h2>
         </div>
         <div class="btn btn-link text-success float-sm-right mt-2 mt-sm-0 p-0"
-             (click)="openNewWorkoutModal(new_workout_modal)">
+             (click)="openLargeModal(new_workout_modal)">
             <mat-icon class="align-middle mr-1">description</mat-icon>
             <span class="align-middle">Add New Notebook</span>
         </div>
@@ -39,12 +39,12 @@
                         </div>
                         <div class="current-workouts__row-options col-3 col-md-5 text-right">
                             <div [hidden]="hideWorkoutRows[note.key]" class="align-top">
-                                <mat-icon class="current-workouts-list-icon icon-arrow-drop-down">
-                                    arrow_drop_down
+                                <mat-icon class="current-workouts-list-icon icon-arrow-drop-down text-white show-hover">
+                                    arrow_drop_down_circle
                                 </mat-icon>
                             </div>
                             <div [hidden]="!hideWorkoutRows[note.key]" class="align-top">
-                                <mat-icon class="current-workouts-list-icon icon-cancel">
+                                <mat-icon class="current-workouts-list-icon icon-cancel show-hover">
                                     cancel
                                 </mat-icon>
                             </div>
@@ -131,21 +131,6 @@
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
-    <app-workout-note-form></app-workout-note-form>
+    <app-workout-note-form (closeEvent)="modal.dismiss()"></app-workout-note-form>
 </ng-template>
 
-<!-- New Workout Collection Form -->
-<div class="workout-form-container workout-notebook-form border shadow bg-white mb-0 mb-sm-5 mt-3"
-     [@formSlideIn]="formWorkoutNotebookVisibilityState">
-    <div class="p-3">
-        <div class="modal-title mb-2 pr-5">
-            <mat-icon class="close-button" (click)="toggleWorkoutNotebookFormState()">cancel</mat-icon>
-            <h5 class="text-uppercase">Add workout notebook</h5>
-        </div>
-        <div class="modal-content">
-            <div class="modal-body">
-                <app-workout-notebook-form></app-workout-notebook-form>
-            </div>
-        </div>
-    </div>
-</div>

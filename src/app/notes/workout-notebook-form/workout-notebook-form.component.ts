@@ -9,7 +9,6 @@ import {NotesService} from '../../services/notes.service';
 import {WorkoutNotebooksService} from '../../services/workout-notebooks.service';
 
 /* ToDo use classes correctly in TS variables */
-/* ToDo add validation to form */
 
 @Component({
     selector: 'app-workout-notebook-form',

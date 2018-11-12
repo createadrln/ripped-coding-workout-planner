@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, HostBinding, OnInit} from '@angular/core';
 import {AngularFireAuth} from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
 import {Router} from '@angular/router';
@@ -12,6 +12,8 @@ import {ModalDismissReasons, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 })
 
 export class LoginComponent implements OnInit {
+    @HostBinding('class') class = 'h-100 d-flex flex-column';
+
     error: any;
     name: any;
     date = new Date();

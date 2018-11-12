@@ -29,14 +29,13 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- ToDo this submits the exercise a million times -->
-                            <!-- ToDo this looks like it's fixed but make sure -->
                             <div *ngIf="addWorkoutNoteCreateNewNotebook == 'hidden'"
                                  class="form-group">
                                 <label class="required">Notebook</label>
-                                <select class="form-control" formControlName="selectedNotebook" required>
-                                    <option *ngFor="let workoutCollection of weeklyWorkoutCollections | async"
-                                            [value]="workoutCollection.key">
+                                <select class="form-control" formControlName="selectedNotebook">
+                                    <option [ngValue]="null">Select A Workout</option>
+                                    <option *ngFor="let workoutCollection of weeklyWorkoutCollectionsObs | async"
+                                            [value]="[workoutCollection.key, workoutCollection.workouts.length]">
                                         {{ workoutCollection.title }}
                                     </option>
                                 </select>
@@ -64,7 +63,7 @@
                                 <hr class="my-4">
                                 <div class="form-group">
                                     <label class="required">Notebook Title</label>
-                                    <input class="form-control" formControlName="notebookTitle" required>
+                                    <input class="form-control" formControlName="notebookTitle">
                                 </div>
                                 <div *ngIf="workoutNoteForm.controls['notebookTitle'].errors && !workoutNoteForm.controls['notebookTitle'].pristine"
                                      class="error-msg">
@@ -74,7 +73,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!-- ToDo Finish Styling the Tags Input -->
                                 <div class="form-group">
                                     <label class="required">Tags</label><br>
                                     <small>Click enter between tags</small>
@@ -129,13 +127,14 @@
                             </div>
                         </div>
                         <div class="actions workout-note-actions w-100 left">
-                            <button class="btn btn-success mt-2 mr-sm-2 w-100" (click)="addNewExercise()">Add Another Exercise
+                            <button class="btn btn-success mt-2 mr-sm-2 w-100"
+                                    [disabled]="workoutNoteForm.invalid"
+                                    (click)="addNewExercise()">Add Another Exercise
                             </button>
                         </div>
                     </ng-template>
                 </ngb-panel>
             </ngb-accordion>
-            <!-- ToDo fix toggle validation or disabled -->
             <div class="actions workout-note-actions w-100 my-4">
                 <button class="btn btn-success mt-2 w-100"
                         [disabled]="workoutNoteForm.invalid"

@@ -16,3 +16,17 @@
   transform: translate(-50%);
   top: 25%;
 }
+
+@mixin horiz-vert-centered-mobile {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%);
+  top: 25%;
+
+  @media screen and (min-width: map-get($breakpoints, medium)) {
+    position: relative;
+    left: auto;
+    transform: none;
+    top: auto;
+  }
+}

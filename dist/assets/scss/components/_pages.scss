@@ -1,54 +1,13 @@
-.workout-note-actions {
-
-  .btn {
-    width: 100%;
-  }
-
-  @media screen and (min-width: map-get($breakpoints, med-sm)) {
-
-    .btn {
-      width: auto;
-    }
-  }
-}
-
-.current-workouts {
-
-  &__row {
-
-    &-options {
-
-      .dropdown-menu {
-        left: auto !important;
-        right: 0;
-      }
-
-      .btn-link {
-        color: $white;
-
-        &::after {
-          display: none;
-        }
-      }
-    }
-  }
-
-  &__list {
-
-    .edit-workout-row-icon,
-    .save-workout-row-icon {
-      font-size: 30px;
-      height: 30px;
-      width: 30px;
-    }
-  }
-}
-
 .splash-page {
 
   .flexman-logo {
     height: auto;
-    width: 300px;
+    width: 150px;
+  }
+
+  .btn-lg {
+    font-size: 1rem;
+    padding: 0.75rem 1.25rem;
   }
 
   .btn-facebook-login {
@@ -64,6 +23,14 @@
   .icon-social {
     height: auto;
     width: 25px;
+  }
+
+  .display-4.btn-link {
+    font-size: 1.25rem;
+  }
+
+  .fine-print {
+    line-height: 1;
   }
 
   @media screen and (min-width: map-get($breakpoints, medium)) {

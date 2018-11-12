@@ -12,7 +12,6 @@ export class MembersService {
     }
 
     /* Gets Firebase List */
-
     getMemberDbList(auth, path) {
         if (path) {
             return this.db.list('/members/' + auth + path);
@@ -22,7 +21,6 @@ export class MembersService {
     }
 
     /* Gets Firebase Object */
-
     getMemberDbObject(auth, path) {
         if (path) {
             return this.db.object('/members/' + auth + path);

@@ -20,4 +20,8 @@
   &.btn-success {
     background-color: $success;
   }
+
+  &-lg {
+    border-radius: 2rem !important;
+  }
 }

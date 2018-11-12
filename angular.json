@@ -34,6 +34,14 @@
             "scripts": []
           },
           "configurations": {
+            "hmr":{
+              "fileReplacements":[
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.hmr.ts"
+                }
+              ]
+            },
             "production": {
               "optimization": true,
               "outputHashing": "all",
@@ -60,6 +68,9 @@
             "browserTarget": "ang5-bootstrap:build"
           },
           "configurations": {
+            "hmr": {
+              "browserTarget": "ang5-bootstrap:build:hmr"
+            },
             "production": {
               "browserTarget": "ang5-bootstrap:build:production"
             }

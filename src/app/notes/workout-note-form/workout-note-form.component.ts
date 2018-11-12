@@ -4,6 +4,7 @@ import {AngularFireDatabase, AngularFireList} from 'angularfire2/database';
 import {NotesService} from '../../services/notes.service';
 import {FormControl, FormGroup, FormArray, Validators} from '@angular/forms';
 import {Observable} from 'rxjs/Observable';
+import {takeUntil} from 'rxjs/operators';
 import {WorkoutNotebooksService} from '../../services/workout-notebooks.service';
 import {MembersService} from '../../services/members.service';
 import {EventEmitter} from '@angular/core';
@@ -23,13 +24,9 @@ export class WorkoutNoteFormComponent implements OnInit {
     notes: Observable<any[]>;
 
     weeklyWorkoutCollectionRef: AngularFireList<any>;
-    weeklyWorkoutCollections: Observable<any[]>;
+    weeklyWorkoutCollectionsObs: Observable<any[]>;
 
     addWorkoutNoteCreateNewNotebook = 'hidden';
-
-    workoutSelectField = new FormControl(null, Validators.required);
-    newNotebookTitleField = new FormControl(null, Validators.required);
-    newNotebookTagField = new FormControl(null, Validators.required);
 
     constructor(
         private afAuth: AngularFireAuth,
@@ -46,19 +43,11 @@ export class WorkoutNoteFormComponent implements OnInit {
                 });
 
                 this.weeklyWorkoutCollectionRef = this.workoutNotebooksService.getWorkoutNotebookListRef(auth.uid);
-                this.weeklyWorkoutCollections = this.weeklyWorkoutCollectionRef.snapshotChanges().map(changes => {
+                this.weeklyWorkoutCollectionsObs = this.weeklyWorkoutCollectionRef.snapshotChanges().map(changes => {
                     return changes.map(c => ({key: c.payload.key, ...c.payload.val()}));
                 });
             }
         });
-
-        if (this.addWorkoutNoteCreateNewNotebook === 'visible') {
-            this.workoutSelectField = new FormControl();
-        }
-        if (this.addWorkoutNoteCreateNewNotebook === 'hidden') {
-            this.newNotebookTitleField = new FormControl();
-            this.newNotebookTagField = new FormControl();
-        }
     }
 
     ngOnInit() {
@@ -73,15 +62,15 @@ export class WorkoutNoteFormComponent implements OnInit {
                     weight: new FormControl(null, Validators.required)
                 })
             ]),
+            selectedNotebook:  new FormControl(),
             createNewNotebook: new FormControl(),
-            notebookTitle: this.newNotebookTitleField,
-            notebookTags: this.newNotebookTagField,
-            selectedNotebook: this.workoutSelectField
+            notebookTitle: new FormControl(),
+            notebookTags: new FormControl()
         });
     }
 
     /* Add Workout Note */
-    addNewExercise(target) {
+    addNewExercise() {
         (<FormArray>this.workoutNoteForm.controls['exercises']).push(new FormGroup({
             title: new FormControl(),
             reps: new FormControl(),
@@ -94,8 +83,8 @@ export class WorkoutNoteFormComponent implements OnInit {
     /* Submit and Close Form */
     saveWorkoutNoteForm() {
         this.addWorkoutNote();
-        // this.workoutNoteForm.reset();
-        // this.closeOnSave();
+        this.workoutNoteForm.reset();
+        this.closeOnSave();
     }
 
     /* Save Workout Note */
@@ -105,7 +94,6 @@ export class WorkoutNoteFormComponent implements OnInit {
         const noteExercises = this.workoutNoteForm.value.exercises;
         const notebookTitle = this.workoutNoteForm.value.notebookTitle;
 
-        // const notebookDescription = this.workoutNoteForm.value.notebookDescription;
         const notebookTags = this.workoutNoteForm.value.notebookTags;
         const notebookSelected = this.workoutNoteForm.value.selectedNotebook;
         const notebookCreateNew = this.workoutNoteForm.value.createNewNotebook;
@@ -135,7 +123,7 @@ export class WorkoutNoteFormComponent implements OnInit {
                     notebookKey = notebookSelected;
                 }
 
-                /* Needs to run after timeout so that the note and notebook keys are available in Firebase */
+                /* Runs after timeout so that the note and notebook keys are available in Firebase */
                 setTimeout(() => {
                     if (notebookCreateNew) {
                         const notebookWorkoutIndex = '/weeks/' + notebookKey + '/workouts/0';
@@ -144,14 +132,12 @@ export class WorkoutNoteFormComponent implements OnInit {
                             'selected': newNoteKey
                         });
                     } else {
-                        this.weeklyWorkoutCollections.subscribe(workouts => {
-                            const workoutNotebooksFilteredBySelectedKey = workouts.filter(workout => notebookKey.includes(workout.key));
-                            const selectedWorkoutNotebookWorkoutsIndex = workoutNotebooksFilteredBySelectedKey[0].workouts.length;
-                            const notebookWorkoutIndex = '/weeks/' + notebookKey + '/workouts/' + selectedWorkoutNotebookWorkoutsIndex;
+                        const notebookArray = notebookKey.split(',');
+                        const notebookWorkoutCount = notebookArray[1];
+                        const notebookWorkoutIndex = '/weeks/' + notebookArray[0] + '/workouts/' + notebookWorkoutCount;
 
-                            this.memberService.getMemberDbObject(auth.uid, notebookWorkoutIndex).set({
-                                'selected': newNoteKey
-                            });
+                        this.memberService.getMemberDbObject(auth.uid, notebookWorkoutIndex).set({
+                            'selected': newNoteKey
                         });
                     }
                 }, 2000);
@@ -163,7 +149,6 @@ export class WorkoutNoteFormComponent implements OnInit {
         this.addWorkoutNoteCreateNewNotebook = this.addWorkoutNoteCreateNewNotebook === 'visible' ? 'hidden' : 'visible';
     }
 
-    /* ToDo update this to close modal */
     closeOnSave() {
         this.closeEvent.emit();
     }

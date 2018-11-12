@@ -8,8 +8,14 @@
 
 .horiz-and-vert-centered {
   @include horiz-vert-centered;
+
+  &-mobile {
+    @include horiz-vert-centered-mobile;
+  }
 }
 
 .show-hover {
-  cursor: pointer;
+  @media screen and (min-width: map-get($breakpoints, medium)) {
+    cursor: pointer;
+  }
 }
