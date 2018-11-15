@@ -25,7 +25,7 @@
       <input [(ngModel)]="searchText" type="text" class="form-control" placeholder="Search Workout Notes">
     </div>
     <div *ngFor="let note of notes | async | filter: { title: searchText }; let i = index"
-         class="workout-notebooks-row row p-4">
+         class="workout-notebooks-row p-4">
       <div class="col-12">
         <h3 class="h5">{{ note.title }}</h3>
       </div>

@@ -89,13 +89,33 @@ export class LoginComponent implements OnInit {
             'displayName': auth.displayName,
             'notes': {
                 'defaultNote' : {
-                    'description' : 'Chest',
-                    'title' : 'Day 1 Workout',
-                    'exercises' : [{
-                        'reps' : '6-10',
-                        'sets' : '4',
-                        'title' : 'Bench Press',
-                        'weight' : '185'
+                    'description': 'Chest',
+                    'title': 'Day 1 Workout',
+                    'exercises': [{
+                        'reps': '6-10',
+                        'sets': '4',
+                        'title': 'Bench Press',
+                        'weight': '185'
+                    }],
+                },
+                'defaultNote2' : {
+                    'description': 'Back',
+                    'title': 'Day 2 Workout',
+                    'exercises': [{
+                        'reps': '8-12',
+                        'sets': '4',
+                        'title': 'Lat Pull Downs',
+                        'weight': '70'
+                    }],
+                },
+                'defaultNote3' : {
+                    'description': 'Shoulders',
+                    'title': 'Day 3 Workout',
+                    'exercises': [{
+                        'reps': '8-12',
+                        'sets': '3',
+                        'title': 'Shoulder Press',
+                        'weight': '115'
                     }],
                 }
             },

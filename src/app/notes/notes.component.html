@@ -3,6 +3,11 @@
 <!-- ToDo Fix Spinner -->
 <!-- ToDo Add Timer -->
 <!-- ToDo Add Buy Me A Coffee -->
+<!-- ToDo Add Firebase Access Rules -->
+<!-- ToDo Add Splash or Intro Instructions When Only Default Workouts -->
+<!-- ToDo Allow Change Workout Row Order -->
+<!-- ToDo Create Banner On Flexing365 Site -->
+
 
 <ngx-spinner></ngx-spinner>
 
@@ -28,13 +33,16 @@
     <div class="current-workouts__list px-3 px-sm-5 mb-1 mb-sm-3"
          *ngFor="let note of weeklyWorkouts | async | reverse; let n = index">
         <section>
-            <div class="bg-dark text-white p-3">
+            <div class="bg-dark text-white shadow p-3">
                 <header>
                     <div class="current-workouts__row row" (click)="hideWorkoutRows[note.key] = !hideWorkoutRows[note.key]">
                         <div class="col-9 col-md-7">
                             <div class="d-inline-block align-top">
                                 <h3 class="h5 mb-0">{{ note.title }}</h3>
                                 <p class="my-0 text-medium-gray">{{ note.description }}</p>
+                                <!--<span *ngFor="let order of note.order | key: order.notebook">-->
+                                    <!--{{ order.notebook | json }}<br>-->
+                                <!--</span>-->
                             </div>
                         </div>
                         <div class="current-workouts__row-options col-3 col-md-5 text-right">
@@ -55,7 +63,7 @@
         </section>
 
         <section>
-            <div class="d-block w-100 bg-white">
+            <div class="d-block w-100 bg-white shadow">
                 <div *ngIf="hasCurrentWorkout">
                     <div [hidden]="!hideWorkoutRows[note.key]">
                         <div *ngFor="let exercise of note.exercises; let i=index" class="border-bottom p-3">

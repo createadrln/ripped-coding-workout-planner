@@ -47,6 +47,7 @@ export class NotesComponent implements OnInit {
 
     hasCurrentWorkout = 'false';
     upcomingWeekTitle: string;
+    upcomingWeekKey: string;
     upcomingWeekTags: any;
     upcomingWeekDescription: string;
     weeklyWorkouts: Observable<any>;
@@ -58,7 +59,7 @@ export class NotesComponent implements OnInit {
     hideWorkoutRowInputs = [];
 
     ngOnInit() {
-        this.spinner.show();
+        // this.spinner.show();
     }
 
     constructor(
@@ -101,6 +102,7 @@ export class NotesComponent implements OnInit {
 
                         this.hasCurrentWorkout = 'true';
                         this.upcomingWeekTitle = getCurrentCollection[0].title;
+                        this.upcomingWeekKey = getCurrentCollection[0].key;
                         this.upcomingWeekTags = getCurrentCollection[0].tags;
                         this.upcomingWeekDescription = getCurrentCollection[0].description;
                         this.weeklyWorkouts = this.notesService.getWeeklyWorkoutNotes(this.notesRef, upcomingWorkouts);
@@ -143,6 +145,10 @@ export class NotesComponent implements OnInit {
 
         this.hideWorkoutRows = [];
         this.hideWorkoutRowInputs = [];
+    }
+
+    updatePosition() {
+
     }
 
     openLargeModal(content) {
