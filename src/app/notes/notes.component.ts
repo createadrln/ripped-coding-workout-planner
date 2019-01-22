@@ -100,12 +100,13 @@ export class NotesComponent implements OnInit {
                     if (getCurrentCollection.length > 0) {
                         const upcomingWorkouts = getCurrentCollection[0].workouts;
 
+                        this.weeklyWorkouts = this.notesService.getWeeklyWorkoutNotes(this.notesRef, upcomingWorkouts);
+
                         this.hasCurrentWorkout = 'true';
                         this.upcomingWeekTitle = getCurrentCollection[0].title;
                         this.upcomingWeekKey = getCurrentCollection[0].key;
                         this.upcomingWeekTags = getCurrentCollection[0].tags;
                         this.upcomingWeekDescription = getCurrentCollection[0].description;
-                        this.weeklyWorkouts = this.notesService.getWeeklyWorkoutNotes(this.notesRef, upcomingWorkouts);
                     }
                 });
             }

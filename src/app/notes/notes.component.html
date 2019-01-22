@@ -31,7 +31,7 @@
 <!-- Workout Collections and Notes -->
 <div>
     <div class="current-workouts__list px-3 px-sm-5 mb-1 mb-sm-3"
-         *ngFor="let note of weeklyWorkouts | async | reverse; let n = index">
+         *ngFor="let note of weeklyWorkouts | async; let n = index">
         <section>
             <div class="bg-dark text-white shadow p-3">
                 <header>
@@ -40,9 +40,6 @@
                             <div class="d-inline-block align-top">
                                 <h3 class="h5 mb-0">{{ note.title }}</h3>
                                 <p class="my-0 text-medium-gray">{{ note.description }}</p>
-                                <!--<span *ngFor="let order of note.order | key: order.notebook">-->
-                                    <!--{{ order.notebook | json }}<br>-->
-                                <!--</span>-->
                             </div>
                         </div>
                         <div class="current-workouts__row-options col-3 col-md-5 text-right">
