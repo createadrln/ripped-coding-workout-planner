@@ -3,6 +3,7 @@ import {Router} from '@angular/router';
 import {AngularFireAuth} from 'angularfire2/auth';
 import {AngularFireDatabase, AngularFireList, AngularFireObject} from 'angularfire2/database';
 import {Observable} from 'rxjs/Observable';
+import {map} from 'rxjs/operators';
 
 import {trigger, transition, animate, style, state} from '@angular/animations';
 import {NgxSpinnerService} from 'ngx-spinner';

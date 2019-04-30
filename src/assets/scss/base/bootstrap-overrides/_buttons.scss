@@ -21,6 +21,10 @@
     background-color: $success;
   }
 
+  &.btn-info {
+    background-color: $info;
+  }
+
   &-lg {
     border-radius: 2rem !important;
   }

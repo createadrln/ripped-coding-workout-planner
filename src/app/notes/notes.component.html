@@ -8,7 +8,6 @@
 <!-- ToDo Allow Change Workout Row Order -->
 <!-- ToDo Create Banner On Flexing365 Site -->
 
-
 <ngx-spinner></ngx-spinner>
 
 <header class="current-workouts__header workout-page-header">
@@ -16,8 +15,8 @@
         <div class="float-sm-left">
             <h1 class="h5">Current Plan:</h1>
             <h2 class="h4">
-                <span class="mr-1">{{ upcomingWeekTitle }}</span><br>
-                <em *ngFor="let tag of upcomingWeekTags" class="mr-2">{{ tag.display }}</em>
+                <span class="mr-1 pr-3">{{ upcomingWeekTitle }}</span><br>
+                <em *ngFor="let tag of upcomingWeekTags" class="mr-2"><span class="rounded-pill">{{ tag.display }}</span></em>
             </h2>
         </div>
         <div class="btn btn-link text-success float-sm-right mt-2 mt-sm-0 p-0"
@@ -32,92 +31,134 @@
 <div>
     <div class="current-workouts__list px-3 px-sm-5 mb-1 mb-sm-3"
          *ngFor="let note of weeklyWorkouts | async; let n = index">
-        <section>
+
+        <header>
             <div class="bg-dark text-white shadow p-3">
-                <header>
-                    <div class="current-workouts__row row" (click)="hideWorkoutRows[note.key] = !hideWorkoutRows[note.key]">
-                        <div class="col-9 col-md-7">
-                            <div class="d-inline-block align-top">
-                                <h3 class="h5 mb-0">{{ note.title }}</h3>
-                                <p class="my-0 text-medium-gray">{{ note.description }}</p>
-                            </div>
-                        </div>
-                        <div class="current-workouts__row-options col-3 col-md-5 text-right">
-                            <div [hidden]="hideWorkoutRows[note.key]" class="align-top">
-                                <mat-icon class="current-workouts-list-icon icon-arrow-drop-down text-white show-hover">
-                                    arrow_drop_down_circle
-                                </mat-icon>
-                            </div>
-                            <div [hidden]="!hideWorkoutRows[note.key]" class="align-top">
-                                <mat-icon class="current-workouts-list-icon icon-cancel show-hover">
-                                    cancel
-                                </mat-icon>
-                            </div>
+                <div class="current-workouts__row row" (click)="hideWorkoutRows[note.key] = !hideWorkoutRows[note.key]">
+                    <div class="col-9 col-md-7">
+                        <div class="d-inline-block align-top">
+                            <h3 class="h5 mb-0">{{ note.title }}</h3>
+                            <p class="my-0 text-medium-gray">{{ note.description }}</p>
                         </div>
                     </div>
-                </header>
+                    <div class="current-workouts__row-options col-3 col-md-5 text-right">
+                        <div [hidden]="hideWorkoutRows[note.key]" class="align-top">
+                            <mat-icon class="current-workouts-list-icon icon-arrow-drop-down text-medium-gray show-hover">
+                                arrow_drop_down_circle
+                            </mat-icon>
+                        </div>
+                        <div [hidden]="!hideWorkoutRows[note.key]" class="align-top">
+                            <mat-icon class="current-workouts-list-icon icon-cancel show-hover">
+                                cancel
+                            </mat-icon>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </section>
+        </header>
 
         <section>
-            <div class="d-block w-100 bg-white shadow">
+            <div class="current-workouts__exercises d-block w-100 bg-white shadow">
                 <div *ngIf="hasCurrentWorkout">
-                    <div [hidden]="!hideWorkoutRows[note.key]">
-                        <div *ngFor="let exercise of note.exercises; let i=index" class="border-bottom p-3">
+                    <div [hidden]="hideWorkoutRows[note.key]">
+
+                        <!-- Display exercises in workout -->
+                        <div *ngFor="let exercise of note.exercises; let i=index" class="border-left border-right border-bottom ml-3 mr-3 p-3">
+
                             <div class="row">
+                                <!-- Edit and Save Row Icons -->
                                 <div class="align-middle col-12">
-                                    <mat-icon [hidden]="hideWorkoutRowInputs[[note.key,i]]"
-                                              class="edit-workout-row-icon float-right p-0 text-secondary"
-                                              (click)="hideWorkoutRowInputs[[note.key,i]] = !hideWorkoutRowInputs[[note.key,i]]">
-                                        edit
-                                    </mat-icon>
-                                    <mat-icon [hidden]="!hideWorkoutRowInputs[[note.key,i]]"
-                                              class="save-workout-row-icon float-right p-0 text-success"
-                                              (click)="saveWorkoutNoteRowUpdate(
-                                  note.key,
-                                  i,
-                                  exercise.title,
-                                  exercise.sets,
-                                  exercise.reps,
-                                  exercise.weight,
-                                  editRowSets.value,
-                                  editRowReps.value,
-                                  editRowWeight.value
-                                  )">save
-                                    </mat-icon>
+                                    <!--<mat-icon [hidden]="hideWorkoutRowInputs[[note.key,i]]"-->
+                                              <!--class="edit-workout-row-icon float-right p-0 text-secondary"-->
+                                              <!--(click)="hideWorkoutRowInputs[[note.key,i]] = !hideWorkoutRowInputs[[note.key,i]]">-->
+                                        <!--edit-->
+                                    <!--</mat-icon>-->
+                                    <!--<mat-icon [hidden]="!hideWorkoutRowInputs[[note.key,i]]"-->
+                                              <!--class="save-workout-row-icon float-right p-0 text-success"-->
+                                              <!--(click)="saveWorkoutNoteRowUpdate-->
+                                              <!--(-->
+                                                  <!--note.key,-->
+                                                  <!--i,-->
+                                                  <!--exercise.title,-->
+                                                  <!--exercise.sets,-->
+                                                  <!--exercise.reps,-->
+                                                  <!--exercise.weight,-->
+                                                  <!--editRowSets.value,-->
+                                                  <!--editRowReps.value,-->
+                                                  <!--editRowWeight.value-->
+                                              <!--)">-->
+                                        <!--save-->
+                                    <!--</mat-icon>-->
                                     Exercise {{ i + 1 }}: <span class="text-primary font-weight-bold">{{ exercise.title }}</span>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="align-middle col-4">
-                                    <div class="border-bottom mt-1 mb-2 pb-1">Sets</div>
-                                    <input [hidden]="hideWorkoutRowInputs[[note.key,i]]"
-                                           class="form-control"
-                                           value="{{ exercise.sets }}" disabled>
-                                    <input [hidden]="!hideWorkoutRowInputs[[note.key,i]]"
-                                           #editRowSets
-                                           value="{{ exercise.sets }}"
-                                           class="form-control" autofocus>
+                                <div class="current-workouts__exercises__exercise-sets align-middle col-4">
+                                    <div class="mt-1 mb-1">Sets</div>
+                                    <div class="border pt-1 pb-1 pl-2 pr-2 text-left">
+                                        {{ exercise.sets }}
+                                    </div>
+                                    <!--<input [hidden]="hideWorkoutRowInputs[[note.key,i]]"-->
+                                           <!--class="form-control"-->
+                                           <!--value="{{ exercise.sets }}" disabled>-->
+                                    <!--<input [hidden]="!hideWorkoutRowInputs[[note.key,i]]"-->
+                                           <!--#editRowSets-->
+                                           <!--value="{{ exercise.sets }}"-->
+                                           <!--class="form-control" autofocus>-->
                                 </div>
-                                <div class="align-middle col-4">
-                                    <div class="border-bottom mt-1 mb-2 pb-1">Reps</div>
-                                    <input [hidden]="hideWorkoutRowInputs[[note.key,i]]"
-                                           class="form-control"
-                                           value="{{ exercise.reps }}" disabled>
-                                    <input [hidden]="!hideWorkoutRowInputs[[note.key,i]]"
-                                           #editRowReps
-                                           value="{{ exercise.reps }}"
-                                           class="form-control">
+                                <div class="current-workouts__exercises__exercise-reps align-middle col-4">
+                                    <div class="mt-1 mb-1">Reps</div>
+                                    <div class="border pt-1 pb-1 pl-2 pr-2 text-left">
+                                        {{ exercise.reps }}
+                                    </div>
+                                    <!--<input [hidden]="hideWorkoutRowInputs[[note.key,i]]"-->
+                                           <!--class="form-control"-->
+                                           <!--value="{{ exercise.reps }}" disabled>-->
+                                    <!--<input [hidden]="!hideWorkoutRowInputs[[note.key,i]]"-->
+                                           <!--#editRowReps-->
+                                           <!--value="{{ exercise.reps }}"-->
+                                           <!--class="form-control">-->
                                 </div>
-                                <div class="align-middle col-4">
-                                    <div class="border-bottom mt-1 mb-2 pb-1">Weight</div>
-                                    <input [hidden]="hideWorkoutRowInputs[[note.key,i]]"
-                                           class="form-control"
-                                           value="{{ exercise.weight }}" disabled>
-                                    <input [hidden]="!hideWorkoutRowInputs[[note.key,i]]"
-                                           #editRowWeight
-                                           value="{{ exercise.weight }}"
-                                           class="form-control">
+                                <div class="current-workouts__exercises__exercise-weight align-middle col-4">
+                                    <div class="mt-1 mb-1">Weight</div>
+                                    <div class="border pt-1 pb-1 pl-2 pr-2 text-left">
+                                        {{ exercise.weight }}
+                                    </div>
+                                    <!--<input [hidden]="hideWorkoutRowInputs[[note.key,i]]"-->
+                                           <!--class="form-control"-->
+                                           <!--value="" disabled>-->
+                                    <!--<input [hidden]="!hideWorkoutRowInputs[[note.key,i]]"-->
+                                           <!--#editRowWeight-->
+                                           <!--value="{{ exercise.weight }}"-->
+                                           <!--class="form-control">-->
+                                </div>
+                            </div>
+                            <div class="current-workouts__exercises__exercise-actions">
+                                <div class="row mt-3 pt-3 border-top">
+                                    <div class="align-middle col-12 text-right">
+                                        <div class="btn btn-sm btn-info ml-2">View Info</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div hidden class="current-workouts__exercises__exercise-tray">
+                                <!-- @todo buttons not accessible and greyed out if changes have not been made -->
+                                <div class="row mt-3 pt-3 border-top">
+                                    <div class="align-middle col-12 text-right">
+                                        <div class="btn btn-sm btn-info ml-2">Save</div>
+                                        <div class="btn btn-sm btn-info ml-2">Edit</div>
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="align-middle col-12 text-right">
+                                        <div class="btn btn-sm btn-info ml-2">Replace</div>
+                                        <div class="btn btn-sm btn-info ml-2">Remove</div>
+                                    </div>
+                                </div>
+                                <div class="row mt-3 pt-3 border-top">
+                                    <div class="align-middle col-12 text-right">
+                                        <!-- @todo buttons not accessible and greyed out if changes have not been made -->
+                                        <div class="btn btn-sm btn-info ml-2">Add Exercise After</div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
