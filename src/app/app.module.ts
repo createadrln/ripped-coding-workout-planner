@@ -39,6 +39,9 @@ import { CommonComponent } from './common/common.component';
 import { SharedComponent } from './shared/shared.component';
 import { ComponentsComponent } from './notebooks/components/components.component';
 import { PagesComponent } from './notebooks/pages/pages.component';
+import { ApiComponent } from './shared/api/api.component';
+import { ModelsComponent } from './shared/models/models.component';
+import { ClassesComponent } from './shared/classes/classes.component';
 
 @NgModule({
     declarations: [
@@ -64,7 +67,10 @@ import { PagesComponent } from './notebooks/pages/pages.component';
         CommonComponent,
         SharedComponent,
         ComponentsComponent,
-        PagesComponent
+        PagesComponent,
+        ApiComponent,
+        ModelsComponent,
+        ClassesComponent
     ],
     imports: [
         BrowserModule,
