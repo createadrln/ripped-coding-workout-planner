@@ -39,9 +39,9 @@ import { PagesComponent } from './notebooks/pages/pages.component';
 import { ApiComponent } from './shared/api/api.component';
 import { ModelsComponent } from './shared/models/models.component';
 import { ClassesComponent } from './shared/classes/classes.component';
-import { ReversePipe } from './pipes/reverse.pipe';
-import { FilterPipe } from './pipes/filter.pipe';
-import { KeyPipe } from './pipes/key.pipe';
+import { ReversePipe } from './shared/pipes/reverse/reverse.pipe';
+import { FilterPipe } from './shared/pipes/filter/filter.pipe';
+import { KeyPipe } from './shared/pipes/key/key.pipe';
 
 @NgModule({
     declarations: [

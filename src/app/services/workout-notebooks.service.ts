@@ -1,5 +1,5 @@
-import {Injectable} from '@angular/core';
-import {MembersService} from './members.service';
+import { Injectable } from '@angular/core';
+import { MembersService } from './members.service';
 
 @Injectable({
     providedIn: 'root'
