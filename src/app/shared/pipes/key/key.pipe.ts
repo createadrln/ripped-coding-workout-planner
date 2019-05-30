@@ -5,8 +5,13 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class KeyPipe implements PipeTransform {
 
-  transform(value: any, args?: any): any {
-    return null;
+  transform(items: any[], key: string): any {
+    if (items != null) {
+      return items.filter(item => {
+        return item.key === key;
+      });
+    } else {
+      return null;
+    }
   }
-
 }
