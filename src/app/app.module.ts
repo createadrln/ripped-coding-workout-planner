@@ -36,6 +36,9 @@ import { KeyPipe } from './pipes/key.pipe';
 import { NotebooksComponent } from './notebooks/notebooks.component';
 import { UsersComponent } from './users/users.component';
 import { CommonComponent } from './common/common.component';
+import { SharedComponent } from './shared/shared.component';
+import { ComponentsComponent } from './notebooks/components/components.component';
+import { PagesComponent } from './notebooks/pages/pages.component';
 
 @NgModule({
     declarations: [
@@ -58,7 +61,10 @@ import { CommonComponent } from './common/common.component';
         RulesComponent,
         NotebooksComponent,
         UsersComponent,
-        CommonComponent
+        CommonComponent,
+        SharedComponent,
+        ComponentsComponent,
+        PagesComponent
     ],
     imports: [
         BrowserModule,
