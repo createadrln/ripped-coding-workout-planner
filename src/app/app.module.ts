@@ -33,6 +33,9 @@ import {ReversePipe} from './pipes/reverse.pipe';
 import {FilterPipe} from './pipes/filter.pipe';
 import {TagInputModule} from 'ngx-chips';
 import { KeyPipe } from './pipes/key.pipe';
+import { NotebooksComponent } from './notebooks/notebooks.component';
+import { UsersComponent } from './users/users.component';
+import { CommonComponent } from './common/common.component';
 
 @NgModule({
     declarations: [
@@ -52,7 +55,10 @@ import { KeyPipe } from './pipes/key.pipe';
         KeyPipe,
         TermsAndConditionsComponent,
         PrivacyComponent,
-        RulesComponent
+        RulesComponent,
+        NotebooksComponent,
+        UsersComponent,
+        CommonComponent
     ],
     imports: [
         BrowserModule,
