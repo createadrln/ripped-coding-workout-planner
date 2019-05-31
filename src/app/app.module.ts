@@ -26,13 +26,12 @@ import { WorkoutNotebooksComponent } from './notes/workout-notebooks/workout-not
 import { WorkoutNotesComponent } from './notes/workout-notes/workout-notes.component';
 import { WorkoutNotebookFormComponent } from './notes/workout-notebook-form/workout-notebook-form.component';
 import { WorkoutNoteFormComponent } from './notes/workout-note-form/workout-note-form.component';
-import { TermsAndConditionsComponent } from './content/terms-and-conditions/terms-and-conditions.component';
-import { PrivacyComponent } from './content/privacy/privacy.component';
-import { RulesComponent } from './content/rules/rules.component';
+import { TermsAndConditionsComponent } from './pages/terms-and-conditions/terms-and-conditions.component';
+import { PrivacyComponent } from './pages/privacy/privacy.component';
+import { RulesComponent } from './pages/rules/rules.component';
 
 import { NotebooksComponent } from './notebooks/notebooks.component';
 import { UsersComponent } from './users/users.component';
-import { CommonComponent } from './common/common.component';
 import { ComponentsComponent } from './notebooks/components/components.component';
 import { PagesComponent } from './notebooks/pages/pages.component';
 import { ApiComponent } from './shared/api/api.component';
@@ -62,7 +61,6 @@ import { KeyPipe } from './shared/pipes/key/key.pipe';
         RulesComponent,
         NotebooksComponent,
         UsersComponent,
-        CommonComponent,
         ComponentsComponent,
         PagesComponent,
         ApiComponent,
