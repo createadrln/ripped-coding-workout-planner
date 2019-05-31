@@ -1,4 +1,4 @@
-export class Member {
+export class User {
 
     constructor(
         public name: string,

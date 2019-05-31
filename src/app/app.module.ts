@@ -33,12 +33,10 @@ import { RulesComponent } from './content/rules/rules.component';
 import { NotebooksComponent } from './notebooks/notebooks.component';
 import { UsersComponent } from './users/users.component';
 import { CommonComponent } from './common/common.component';
-import { SharedComponent } from './shared/shared.component';
 import { ComponentsComponent } from './notebooks/components/components.component';
 import { PagesComponent } from './notebooks/pages/pages.component';
 import { ApiComponent } from './shared/api/api.component';
 import { ModelsComponent } from './shared/models/models.component';
-import { ClassesComponent } from './shared/classes/classes.component';
 import { ReversePipe } from './shared/pipes/reverse/reverse.pipe';
 import { FilterPipe } from './shared/pipes/filter/filter.pipe';
 import { KeyPipe } from './shared/pipes/key/key.pipe';
@@ -65,12 +63,10 @@ import { KeyPipe } from './shared/pipes/key/key.pipe';
         NotebooksComponent,
         UsersComponent,
         CommonComponent,
-        SharedComponent,
         ComponentsComponent,
         PagesComponent,
         ApiComponent,
-        ModelsComponent,
-        ClassesComponent
+        ModelsComponent
     ],
     imports: [
         BrowserModule,
