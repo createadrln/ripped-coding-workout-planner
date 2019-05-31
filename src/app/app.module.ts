@@ -39,6 +39,9 @@ import { ModelsComponent } from './shared/models/models.component';
 import { ReversePipe } from './shared/pipes/reverse/reverse.pipe';
 import { FilterPipe } from './shared/pipes/filter/filter.pipe';
 import { KeyPipe } from './shared/pipes/key/key.pipe';
+import { LoginFormComponent } from './users/components/login-form/login-form.component';
+import { CreateAccountFormComponent } from './users/components/create-account-form/create-account-form.component';
+import { CreateAccountComponent } from './users/pages/create-account/create-account.component';
 
 @NgModule({
     declarations: [
@@ -64,7 +67,10 @@ import { KeyPipe } from './shared/pipes/key/key.pipe';
         ComponentsComponent,
         PagesComponent,
         ApiComponent,
-        ModelsComponent
+        ModelsComponent,
+        LoginFormComponent,
+        CreateAccountFormComponent,
+        CreateAccountComponent
     ],
     imports: [
         BrowserModule,
