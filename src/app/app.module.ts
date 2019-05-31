@@ -31,7 +31,6 @@ import { PrivacyComponent } from './pages/privacy/privacy.component';
 import { RulesComponent } from './pages/rules/rules.component';
 
 import { NotebooksComponent } from './notebooks/notebooks.component';
-import { UsersComponent } from './users/users.component';
 import { ComponentsComponent } from './notebooks/components/components.component';
 import { PagesComponent } from './notebooks/pages/pages.component';
 import { ApiComponent } from './shared/api/api.component';
@@ -39,9 +38,9 @@ import { ModelsComponent } from './shared/models/models.component';
 import { ReversePipe } from './shared/pipes/reverse/reverse.pipe';
 import { FilterPipe } from './shared/pipes/filter/filter.pipe';
 import { KeyPipe } from './shared/pipes/key/key.pipe';
-import { LoginFormComponent } from './users/components/login-form/login-form.component';
-import { CreateAccountFormComponent } from './users/components/create-account-form/create-account-form.component';
-import { CreateAccountComponent } from './users/pages/create-account/create-account.component';
+import { LoginFormComponent } from './user/components/login-form/login-form.component';
+import { CreateAccountFormComponent } from './user/components/create-account-form/create-account-form.component';
+import { CreateAccountComponent } from './user/pages/create-account/create-account.component';
 
 @NgModule({
     declarations: [
@@ -63,7 +62,6 @@ import { CreateAccountComponent } from './users/pages/create-account/create-acco
         PrivacyComponent,
         RulesComponent,
         NotebooksComponent,
-        UsersComponent,
         ComponentsComponent,
         PagesComponent,
         ApiComponent,
