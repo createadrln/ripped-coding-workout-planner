@@ -1,12 +1,12 @@
-import {Component, OnInit, Output} from '@angular/core';
-import {AngularFireAuth} from 'angularfire2/auth';
-import {FormControl, FormGroup, FormBuilder, FormArray, Validators} from '@angular/forms';
-import {Note} from '../../classes/workout-notebook';
-import {MembersService} from '../../services/members.service';
-import {AngularFireList} from 'angularfire2/database';
-import {Observable} from 'rxjs/Observable';
-import {NotesService} from '../../services/notes.service';
-import {WorkoutNotebooksService} from '../../services/workout-notebooks.service';
+import { Component, OnInit, Output } from '@angular/core';
+import { AngularFireAuth } from 'angularfire2/auth';
+import { FormControl, FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
+import { Note } from '../../shared/classes/notebook';
+import { MembersService } from '../../services/members.service';
+import { AngularFireList } from 'angularfire2/database';
+import { Observable } from 'rxjs/Observable';
+import { NotesService } from '../../services/notes.service';
+import { WorkoutNotebooksService } from '../../services/workout-notebooks.service';
 
 /* ToDo use classes correctly in TS variables */
 
@@ -24,7 +24,7 @@ export class WorkoutNotebookFormComponent implements OnInit {
     weeklyWorkoutCollectionRef: AngularFireList<any>;
     weeklyWorkoutCollections: Observable<any[]>;
 
-    addWorkoutNotebookFormSubmitted =  false;
+    addWorkoutNotebookFormSubmitted = false;
 
     constructor(
         private afAuth: AngularFireAuth,
@@ -39,11 +39,11 @@ export class WorkoutNotebookFormComponent implements OnInit {
             if (auth) {
                 this.notesRef = this.notesService.getNotesListRef(auth.uid);
                 this.notes = this.notesRef.snapshotChanges().map(changes => {
-                    return changes.map(c => ({key: c.payload.key, ...c.payload.val()}));
+                    return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
                 });
                 this.weeklyWorkoutCollectionRef = this.workoutNotebooksService.getWorkoutNotebookListRef(auth.uid);
                 this.weeklyWorkoutCollections = this.weeklyWorkoutCollectionRef.snapshotChanges().map(changes => {
-                    return changes.map(c => ({key: c.payload.key, ...c.payload.val()}));
+                    return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
                 });
                 this.notes.subscribe(res => {
                     const workoutGroup = (<FormArray>this.workoutNotebookForm.controls['workouts']).at(0).get('workoutGroup') as FormArray;
@@ -114,9 +114,9 @@ export class WorkoutNotebookFormComponent implements OnInit {
         workoutsArr['controls'].selected.setValue(value);
     }
 
-     /*
-    Save Workout Notebook Form
-     */
+    /*
+   Save Workout Notebook Form
+    */
     addWorkoutNotebook() {
         this.afAuth.authState.subscribe(auth => {
             if (auth) {
