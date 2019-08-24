@@ -1,27 +1,26 @@
 <div class="splash-page h-100">
-    <div class="login-container h-100">
-        <div class="d-flex flex-column justify-content-center text-center h-100 px-5">
-            <img class="flexman-logo d-block mx-auto" src="assets/images/flexman.svg">
-            <button (click)="signInWithGoogle()"
-                class="btn btn-lg btn-google-login align-self-center mx-sm-1 my-1 w-100" id="google">
-                <img class="icon icon-social icon-social__google align-middle mr-2" src="assets/images/google.svg">
-                <span class="align-middle">Login With Google</span>
-            </button>
-            <button routerLink="/login-email"
-                class="btn btn-lg btn-white border border-dark align-self-center mx-sm-1 my-1 w-100" id="email">Create
-                New Account
-            </button>
-            <div class="fine-print justify-content-center mt-4">
-                <div class="text-primary">
-                    <small>
-                        By signing in you agree to the <a routerLink="/terms-and-conditions">Terms of Use</a>, <a
-                            routerLink="/privacy-policy">Privacy Policy</a>, and <a routerLink="/rules">Rules.</a>
-                    </small>
-                </div>
-            </div>
+  <div class="login-container h-100">
+    <div class="d-flex flex-column justify-content-center text-center h-100 px-5">
+      <img class="flexman-logo d-block mx-auto" src="assets/images/flexman.svg">
+      <button (click)="signInWithGoogle()" class="btn btn-lg btn-google-login align-self-center mx-sm-1 my-1 w-100"
+        id="google">
+        <img class="icon icon-social icon-social__google align-middle mr-2" src="assets/images/google.svg">
+        <span class="align-middle">Login With Google</span>
+      </button>
+      <button routerLink="/login-email"
+        class="btn btn-lg btn-white border border-dark align-self-center mx-sm-1 my-1 w-100" id="email">Login with Email
+      </button>
+      <div class="fine-print justify-content-center mt-4">
+        <div class="text-primary">
+          <small>
+            By signing in you agree to the <a routerLink="/terms-and-conditions">Terms of Use</a>, <a
+              routerLink="/privacy-policy">Privacy Policy</a>, and <a routerLink="/rules">Rules.</a>
+          </small>
         </div>
+      </div>
     </div>
-    <div *ngIf="error" class="row justify-content-center my-2 px-4 text-center">
-        <span class="error">{{ error }}</span>
-    </div>
+  </div>
+  <div *ngIf="error" class="row justify-content-center my-2 px-4 text-center">
+    <span class="error">{{ error }}</span>
+  </div>
 </div>

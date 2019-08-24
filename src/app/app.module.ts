@@ -41,6 +41,7 @@ import { KeyPipe } from './shared/pipes/key/key.pipe';
 import { LoginFormComponent } from './user/components/login-form/login-form.component';
 import { CreateAccountFormComponent } from './user/components/create-account-form/create-account-form.component';
 import { CreateAccountComponent } from './user/pages/create-account/create-account.component';
+import { DailyComponent } from './notes/components/daily/daily.component';
 
 @NgModule({
     declarations: [
@@ -68,7 +69,8 @@ import { CreateAccountComponent } from './user/pages/create-account/create-accou
         ModelsComponent,
         LoginFormComponent,
         CreateAccountFormComponent,
-        CreateAccountComponent
+        CreateAccountComponent,
+        DailyComponent
     ],
     imports: [
         BrowserModule,

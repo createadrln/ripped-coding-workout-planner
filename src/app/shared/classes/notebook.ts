@@ -20,7 +20,7 @@ export class Note {
 }
 
 export class Exercise {
-    cols: ExerciseTableCols[];
+    // cols: ExerciseTableCols[];
     title: string;
 }
 

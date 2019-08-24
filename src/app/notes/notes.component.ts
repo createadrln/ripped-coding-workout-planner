@@ -14,6 +14,8 @@ import {WorkoutNotebooksService} from '../services/workout-notebooks.service';
 import {MembersService} from '../services/members.service';
 import {ModalService} from '../services/modal.service';
 
+import {DailyComponent} from './components/daily/daily.component';
+
 @Component({
     selector: 'app-notes',
     templateUrl: './notes.component.html',
@@ -149,9 +151,7 @@ export class NotesComponent implements OnInit {
         this.hideWorkoutRowInputs = [];
     }
 
-    updatePosition() {
-
-    }
+    updatePosition() {}
 
     openLargeModal(content) {
         this.modalService.openLargeModal(content);

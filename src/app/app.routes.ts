@@ -14,22 +14,22 @@ import { PrivacyComponent } from './pages/privacy/privacy.component';
 import { RulesComponent } from './pages/rules/rules.component';
 
 const routes: Routes = [
-    { path: '', redirectTo: 'login', pathMatch: 'full' },
-    { path: 'login', component: LoginComponent },
-    { path: 'login-email', component: EmailComponent },
-    { path: 'signup', component: SignupComponent },
-    { path: 'settings', component: MembersComponent, canActivate: [AuthGuard] },
-    { path: 'current', component: NotesComponent },
-    { path: 'notebooks', component: WorkoutNotebooksComponent },
-    { path: 'notes', component: WorkoutNotesComponent },
-    { path: 'terms-and-conditions', component: TermsAndConditionsComponent },
-    { path: 'privacy-policy', component: PrivacyComponent },
-    { path: 'rules', component: RulesComponent },
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: 'login', component: LoginComponent },
+  { path: 'login-email', component: EmailComponent },
+  { path: 'signup', component: SignupComponent },
+  { path: 'settings', component: MembersComponent, canActivate: [AuthGuard] },
+  { path: 'notebook', component: NotesComponent },
+  { path: 'notebooks', component: WorkoutNotebooksComponent },
+  { path: 'notes', component: WorkoutNotesComponent },
+  { path: 'terms-and-conditions', component: TermsAndConditionsComponent },
+  { path: 'privacy-policy', component: PrivacyComponent },
+  { path: 'rules', component: RulesComponent },
 ];
 
 @NgModule({
-    imports: [RouterModule.forRoot(routes)],
-    exports: [RouterModule]
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
 })
 
 export class AppRoutingModule { }
