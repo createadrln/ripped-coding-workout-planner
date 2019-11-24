@@ -24,7 +24,7 @@
     "@angular/pwa": "^0.800.0",
     "@angular/router": "^8.2.14",
     "@angular/service-worker": "^8.2.14",
-    "@ng-bootstrap/ng-bootstrap": "^4.1.0",
+    "@ng-bootstrap/ng-bootstrap": "^5.1.4",
     "angular-cli-ghpages": "^0.6.0",
     "angularfire2": "^5.2.3",
     "ask-cli": "^1.6.5",
