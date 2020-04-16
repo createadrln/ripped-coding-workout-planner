@@ -7,3 +7,7 @@ Vagrantfile
 ./html
 ./src/environments
 ./dist
+.history/
+dist
+docs
+.vscode/
