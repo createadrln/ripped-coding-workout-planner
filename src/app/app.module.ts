@@ -1,95 +1,18 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { ReactiveFormsModule } from '@angular/forms';
-import { AngularFireModule } from 'angularfire2';
-import { AngularFireDatabaseModule } from 'angularfire2/database';
-import { AngularFireAuthModule } from 'angularfire2/auth';
-import { ServiceWorkerModule } from '@angular/service-worker';
-import { environment } from '../environments/environment';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatIconModule } from '@angular/material/icon';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { NgxSpinnerModule } from 'ngx-spinner';
-import { AuthGuard } from './services/auth.service';
-import { AppRoutingModule } from './app.routes';
-import { TagInputModule } from 'ngx-chips';
 
+import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { AppNavbarComponent } from './app-navbar/app-navbar.component';
-import { LoginComponent } from './login/login.component';
-import { EmailComponent } from './email/email.component';
-import { SignupComponent } from './signup/signup.component';
-import { MembersComponent } from './members/members.component';
-import { NotesComponent } from './notes/notes.component';
-import { WorkoutNotebooksComponent } from './notes/workout-notebooks/workout-notebooks.component';
-import { WorkoutNotesComponent } from './notes/workout-notes/workout-notes.component';
-import { WorkoutNotebookFormComponent } from './notes/workout-notebook-form/workout-notebook-form.component';
-import { WorkoutNoteFormComponent } from './notes/workout-note-form/workout-note-form.component';
-import { TermsAndConditionsComponent } from './pages/terms-and-conditions/terms-and-conditions.component';
-import { PrivacyComponent } from './pages/privacy/privacy.component';
-import { RulesComponent } from './pages/rules/rules.component';
-
-import { NotebooksComponent } from './notebooks/notebooks.component';
-import { ComponentsComponent } from './notebooks/components/components.component';
-import { PagesComponent } from './notebooks/pages/pages.component';
-import { ApiComponent } from './shared/api/api.component';
-import { ModelsComponent } from './shared/models/models.component';
-import { ReversePipe } from './shared/pipes/reverse/reverse.pipe';
-import { FilterPipe } from './shared/pipes/filter/filter.pipe';
-import { KeyPipe } from './shared/pipes/key/key.pipe';
-import { LoginFormComponent } from './user/components/login-form/login-form.component';
-import { CreateAccountFormComponent } from './user/components/create-account-form/create-account-form.component';
-import { CreateAccountComponent } from './user/pages/create-account/create-account.component';
-import { DailyComponent } from './notes/components/daily/daily.component';
 
 @NgModule({
-    declarations: [
-        AppComponent,
-        AppNavbarComponent,
-        ReversePipe,
-        FilterPipe,
-        LoginComponent,
-        EmailComponent,
-        SignupComponent,
-        MembersComponent,
-        NotesComponent,
-        WorkoutNotebookFormComponent,
-        WorkoutNoteFormComponent,
-        WorkoutNotebooksComponent,
-        WorkoutNotesComponent,
-        KeyPipe,
-        TermsAndConditionsComponent,
-        PrivacyComponent,
-        RulesComponent,
-        NotebooksComponent,
-        ComponentsComponent,
-        PagesComponent,
-        ApiComponent,
-        ComponentsComponent,
-        ModelsComponent,
-        LoginFormComponent,
-        CreateAccountFormComponent,
-        CreateAccountComponent,
-        DailyComponent
-    ],
-    imports: [
-        BrowserModule,
-        FormsModule,
-        ReactiveFormsModule,
-        AngularFireModule.initializeApp(environment.firebase),
-        AngularFireDatabaseModule,
-        AngularFireAuthModule,
-        BrowserAnimationsModule,
-        MatIconModule,
-        NgxSpinnerModule,
-        TagInputModule,
-        NgbModule,
-        AppRoutingModule,
-        ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production })
-    ],
-    providers: [AuthGuard],
-    bootstrap: [AppComponent]
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
 })
-export class AppModule {
-}
+export class AppModule { }
