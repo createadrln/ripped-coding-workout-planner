@@ -66,6 +66,7 @@ import { DailyComponent } from './notes/components/daily/daily.component';
         ComponentsComponent,
         PagesComponent,
         ApiComponent,
+        ComponentsComponent,
         ModelsComponent,
         LoginFormComponent,
         CreateAccountFormComponent,
@@ -83,7 +84,7 @@ import { DailyComponent } from './notes/components/daily/daily.component';
         MatIconModule,
         NgxSpinnerModule,
         TagInputModule,
-        NgbModule.forRoot(),
+        NgbModule,
         AppRoutingModule,
         ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production })
     ],
