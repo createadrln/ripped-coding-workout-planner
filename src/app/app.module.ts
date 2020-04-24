@@ -25,6 +25,7 @@ import { ModelsComponent } from './shared/models/models.component';
 import { PipesComponent } from './shared/pipes/pipes.component';
 
 import { environment } from 'src/environments/environment';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { environment } from 'src/environments/environment';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    AngularFireModule.initializeApp(environment.firebase)
+    AngularFireModule.initializeApp(environment.firebase),
+    NgbModule
   ],
   providers: [],
   bootstrap: [AppComponent]
