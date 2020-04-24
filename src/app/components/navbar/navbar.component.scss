@@ -1,0 +1,82 @@
+@import '../../shared/styles/scss/variables';
+
+.navbar {
+  background-color: $black;
+  color: #E6E6E6;
+
+  a,
+  .btn-link {
+    color: $light-gray;
+  }
+
+  .dropdown-menu {
+
+    .nav-link {
+      color: $black;
+    }
+  }
+
+  &.sticky-top {
+    z-index: 1020;
+  }
+
+  &-brand {
+
+    .navbar-brand-logo {
+      font-size: 0;
+    }
+  }
+
+  &-toggler {
+    padding: 0;
+
+    .mat-icon {
+      height: 30px;
+      width: 30px;
+    }
+
+    .material-icons {
+      color: $white;
+      font-size: 30px;
+    }
+  }
+
+  &-collapse {
+
+    .nav-item {
+
+      &.dropdown {
+
+        a {
+          font-size: $font-size-sm;
+        }
+      }
+
+      .nav-link {
+        padding: 0.25rem 1rem;
+      }
+    }
+  }
+}
+
+.navbar-brand {
+  margin-right: 0;
+  padding: 0;
+  text-align: left;
+
+  img {
+    height: auto;
+    margin: 0 auto;
+    max-width: 200px;
+    width: 100%;
+  }
+
+  @media screen and (min-width: map-get($breakpoints, medium)) {
+
+    img {
+      margin: 0;
+      max-width: 100%;
+      width: 300px;
+    }
+  }
+}
