@@ -1,1 +1,23 @@
-<p>notebooks works!</p>
+<header class="workout-notebooks__header">
+  <div
+    class="mx-3 mx-sm-5 my-4 my-sm-0 mt-sm-5 mb-sm-3 pb-3 border-bottom border-dark clearfix"
+  >
+    <h1 class="h5 float-sm-left">My Workout Notebooks</h1>
+    <div class="btn btn-link text-success float-sm-right p-0">
+      <span class="align-middle">Add New Notebook</span>
+    </div>
+  </div>
+</header>
+
+<section>
+  <div class="workout-notebooks px-1 px-sm-5 mb-3 mb-sm-5">
+    <div class="workout-notebooks__search col-sm-3 mb-3">
+      <input
+        [(ngModel)]="searchText"
+        type="text"
+        class="form-control"
+        placeholder="Search Workout Notebooks"
+      />
+    </div>
+  </div>
+</section>
