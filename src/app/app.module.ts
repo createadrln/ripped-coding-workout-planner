@@ -37,7 +37,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 // import { TagInputModule } from 'ngx-chips';
 // import { NgxSpinnerModule } from 'ngx-spinner';
 
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -69,12 +68,12 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     NgbModule,
     MatIconModule,
     BrowserAnimationsModule,
-    AuthGuard,
     AngularFireAuthModule,
     AngularFireDatabaseModule,
     ReactiveFormsModule,
   ],
-  providers: [],
+  providers: [AuthGuard],
   bootstrap: [AppComponent]
 })
+
 export class AppModule { }

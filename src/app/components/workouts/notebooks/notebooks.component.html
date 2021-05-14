@@ -1,10 +1,15 @@
 <header class="workout-notebooks__header">
-  <div class="mx-3 mx-sm-5 my-4 my-sm-0 mt-sm-5 mb-sm-3 pb-3 border-bottom border-dark clearfix">
-      <h1 class="h5 float-sm-left">My Workout Notebooks</h1>
-      <div class="btn btn-link text-success float-sm-right p-0" (click)="openLargeModal(new_workout_modal)">
-          <mat-icon class="align-middle mr-1">description</mat-icon>
-          <span class="align-middle">Add New Notebook</span>
-      </div>
+  <div
+    class="mx-3 mx-sm-5 my-4 my-sm-0 mt-sm-5 mb-sm-3 pb-3 border-bottom border-dark clearfix"
+  >
+    <h1 class="h5 float-sm-left">My Workout Notebooks</h1>
+    <div
+      class="btn btn-link text-success float-sm-right p-0"
+      (click)="openLargeModal(new_workout_modal)"
+    >
+      <mat-icon class="align-middle mr-1">description</mat-icon>
+      <span class="align-middle">Add New Notebook</span>
+    </div>
   </div>
 </header>
 
@@ -20,3 +25,19 @@
     </div>
   </div>
 </section>
+
+<!-- New Workout Form -->
+<ng-template #new_workout_modal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Add New Workout</h4>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="modal.dismiss()"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <!-- <app-workout-note-form (closeEvent)="modal.dismiss()"></app-workout-note-form> -->
+</ng-template>
