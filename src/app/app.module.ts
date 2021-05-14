@@ -1,7 +1,13 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularFireModule } from '@angular/fire';
+import { AngularFireDatabaseModule } from '@angular/fire/database';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+// import { ServiceWorkerModule } from '@angular/core';
+
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatIconModule } from '@angular/material/icon'
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -26,7 +32,11 @@ import { ModelsComponent } from './shared/models/models.component';
 import { PipesComponent } from './shared/pipes/pipes.component';
 
 import { environment } from 'src/environments/environment';
+import { AuthGuard } from './_services/auth.service';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+// import { TagInputModule } from 'ngx-chips';
+// import { NgxSpinnerModule } from 'ngx-spinner';
+
 
 @NgModule({
   declarations: [
@@ -49,14 +59,20 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     ApiComponent,
     ClassesComponent,
     ModelsComponent,
-    PipesComponent
+    PipesComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase),
-    NgbModule
+    NgbModule,
+    MatIconModule,
+    BrowserAnimationsModule,
+    AuthGuard,
+    AngularFireAuthModule,
+    AngularFireDatabaseModule,
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

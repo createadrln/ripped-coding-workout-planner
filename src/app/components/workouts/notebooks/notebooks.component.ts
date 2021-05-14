@@ -10,6 +10,7 @@ import { map } from 'rxjs/operators';
 import { MembersService } from '../../../_services/members.service';
 import { WorkoutsService } from '../../../_services/workouts.service';
 import { ModalService } from '../../../_services/modal.service';
+
 @Component({
   selector: 'app-notebooks',
   templateUrl: './notebooks.component.html',
