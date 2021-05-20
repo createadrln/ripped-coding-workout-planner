@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-// import { NgxSpinnerService } from 'ngx-spinner';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFireDatabase, AngularFireList } from '@angular/fire/database';
 
@@ -7,7 +6,6 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { MembersService } from '../../../_services/members.service';
 import { WorkoutsService } from '../../../_services/workouts.service';
 import { ModalService } from '../../../_services/modal.service';
 
@@ -16,6 +14,7 @@ import { ModalService } from '../../../_services/modal.service';
   templateUrl: './notebooks.component.html',
   styleUrls: ['./notebooks.component.scss']
 })
+
 export class NotebooksComponent {
   notesRef: AngularFireList<any>;
   notes: Observable<any[]>;
@@ -30,15 +29,11 @@ export class NotebooksComponent {
   public searchText: string;
 
   constructor(
-    // private spinner: NgxSpinnerService,
     private afAuth: AngularFireAuth,
     private db: AngularFireDatabase,
     private router: Router,
-    private membersService: MembersService,
     private workoutsService: WorkoutsService,
     private modalService: ModalService,
-    // private notesService: NotesService,
-    // private workoutNotebooksService: WorkoutNotebooksService,
   ) {
     this.afAuth.authState.subscribe(auth => {
 
@@ -66,36 +61,8 @@ export class NotebooksComponent {
     });
   }
 
-  getNotesListRef(authId) {
-    return this.membersService.getMemberDbList(authId, '/notes');
-  }
-
-  getWeeklyWorkoutNotes(notesRef, upcomingWorkouts) {
-    const upcomingWorkoutsVal = upcomingWorkouts.map(val => val.selected);
-    return notesRef.snapshotChanges().map(notes => {
-      const filtered = notes.filter(note => upcomingWorkoutsVal.includes(note.key));
-      return filtered.map(c => ({ key: c.payload.key, ...c.payload.val() }));
-    });
-  }
-
-  getWorkoutNotebookListRef(authId) {
-    return this.membersService.getMemberDbList(authId, '/weeks');
-  }
-
-  removeCurrentWeekToggleData(authId, weeklyWorkoutCollections) {
-    weeklyWorkoutCollections.subscribe(weeks => {
-      const oldCurrentWeek = weeks.filter(week => week.current);
-      return this.membersService.getMemberDbList(authId, '/weeks/' + oldCurrentWeek[0].key).remove('current');
-    });
-  }
-
   deleteNotebook(key: string) {
-    // this.workoutsService.deleteNotebook(key);
-    this.afAuth.authState.subscribe(auth => {
-      if (auth) {
-        this.db.list('/members/' + auth.uid + '/weeks').remove(key);
-      }
-    });
+    this.workoutsService.deleteNotebook(key);
     this.modalService.dismissAllModals();
   }
 
@@ -116,5 +83,4 @@ export class NotebooksComponent {
   openWarningModal(content) {
     this.modalService.openWarningModal(content);
   }
-
 }
