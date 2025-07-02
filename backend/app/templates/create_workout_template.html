@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Create Workout Template</title>
+</head>
+
+<body>
+    <h2>Create a Workout Template</h2>
+    {% if error %}
+    <p style="color:red;">{{ error }}</p>
+    {% endif %}
+    <form method="post">
+        {% csrf_token %}
+        <label>Name:</label>
+        <input type="text" name="name" required><br>
+        <label>Description:</label>
+        <textarea name="description"></textarea><br>
+        <label>Exercises:</label><br>
+        {% for exercise in exercises %}
+        <input type="checkbox" name="exercises" value="{{ exercise.id }}"> {{ exercise.name }}<br>
+        {% empty %}
+        <p>No exercises available. <a href="{% url 'create_exercise' %}">Create one</a></p>
+        {% endfor %}
+        <button type="submit">Create Template</button>
+    </form>
+</body>
+
+</html>

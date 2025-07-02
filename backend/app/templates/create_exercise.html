@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Create Exercise</title>
+</head>
+
+<body>
+    <h2>Create a Custom Exercise</h2>
+    {% if error %}
+    <p style="color:red;">{{ error }}</p>
+    {% endif %}
+    <form method="post">
+        {% csrf_token %}
+        <label>Name:</label>
+        <input type="text" name="name" required><br>
+        <label>Description:</label>
+        <textarea name="description"></textarea><br>
+        <label>Muscle Group:</label>
+        <input type="text" name="muscle_group"><br>
+        <label>Max Weight:</label>
+        <input type="number" step="0.01" name="max_weight"><br>
+        <label>Max Reps:</label>
+        <input type="number" name="max_reps"><br>
+        <button type="submit">Create Exercise</button>
+    </form>
+</body>
+
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>My Workout Templates</title>
+</head>
+
+<body>
+    <h2>My Workout Templates</h2>
+    {% if templates %}
+    <ul>
+        {% for template in templates %}
+        <li>
+            <strong>{{ template.name }}</strong><br>
+            {{ template.description }}<br>
+            Exercises:
+            <ul>
+                {% for exercise in template.exercises.all %}
+                <li>{{ exercise.name }}</li>
+                {% endfor %}
+            </ul>
+            <a href="{% url 'edit_workout_template' template.id %}">Edit</a>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>No workout templates found.</p>
+    {% endif %}
+    <a href="{% url 'create_workout_template' %}">Create New Template</a>
+</body>
+
+</html>
