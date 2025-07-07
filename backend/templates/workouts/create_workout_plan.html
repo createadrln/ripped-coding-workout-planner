@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Create Workout Plan</title>
+</head>
+
+<body>
+    <h2>Create Workout Plan</h2>
+    {% if error %}
+    <p style="color:red;">{{ error }}</p>
+    {% endif %}
+    <form method="post">
+        {% csrf_token %}
+        <label>Workout Templates:</label><br>
+        {% for template in templates %}
+        <input type="checkbox" name="templates" value="{{ template.id }}"> {{ template.name }}<br>
+        {% empty %}
+        <p>No templates available.</p>
+        {% endfor %}
+        <label>Date:</label>
+        <input type="date" name="date" required><br>
+        <label>Notes:</label>
+        <textarea name="notes"></textarea><br>
+        <button type="submit">Create Workout Plan</button>
+    </form>
+</body>
+
+</html>

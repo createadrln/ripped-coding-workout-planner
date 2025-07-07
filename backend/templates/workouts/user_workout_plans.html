@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>View Workout Plans</title>
+</head>
+
+<body>
+    <h2>Workout Plans</h2>
+    {% if workouts %}
+    <ul>
+        {% for workout in workouts %}
+        <li>
+            <strong>{{ workout.date }}</strong><br>
+            <div>
+                <a href="{% url 'workout_plan_detail' workout.id %}">Edit</a>
+            </div>
+            {% if workout.templates.all %}
+            <em>Templates:</em>
+            <ul>
+                {% for template in workout.templates.all %}
+                <li>
+                    <strong>{{ template.name }}</strong>
+                    {% if template.exercises.all %}
+                    <ul>
+                        {% for exercise in template.exercises.all %}
+                        <li>{{ exercise.name }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+            {{ workout.notes }}<br>
+            {% if workout.sets.all %}
+            <ul>
+                {% for s in workout.sets.all %}
+                <li>{{ s.exercise.name }}: {{ s.weight }} x {{ s.reps }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>No workout plans found.</p>
+    {% endif %}
+    <a href="{% url 'create_workout_plan' %}">Create New Workout Plan</a>
+</body>
+
+</html>

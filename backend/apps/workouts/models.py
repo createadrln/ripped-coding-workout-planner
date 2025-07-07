@@ -1,4 +1,5 @@
 from django.db import models
+import uuid
 
 
 class Exercise(models.Model):
@@ -14,8 +15,11 @@ class Exercise(models.Model):
 
 
 class Workout(models.Model):
+    workout_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
     date = models.DateField()
     notes = models.TextField(blank=True)
+    templates = models.ManyToManyField('WorkoutTemplate', blank=True)
+    user = models.ForeignKey('auth.User', on_delete=models.CASCADE, default=1)
 
     def __str__(self):
         return f"Workout on {self.date}"

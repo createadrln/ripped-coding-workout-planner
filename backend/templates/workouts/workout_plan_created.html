@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Workout Plan Created</title>
+</head>
+
+<body>
+    <h2>Workout Plan Created!</h2>
+    <p>Your workout for {{ workout.date }} has been created with the following templates:</p>
+    <ul>
+        {% for template in selected_templates %}
+        <li>{{ template.name }}</li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'create_workout_plan' %}">Create another workout plan</a>
+</body>
+
+</html>

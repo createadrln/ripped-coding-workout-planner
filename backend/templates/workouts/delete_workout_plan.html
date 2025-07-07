@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Delete Workout Plan</title>
+</head>
+
+<body>
+    <h2>Delete Workout Plan</h2>
+    <p>Are you sure you want to delete the workout plan for <strong>{{ workout.date }}</strong>?</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Yes, Delete</button>
+        <a href="{% url 'user_workout_plans' %}">Cancel</a>
+    </form>
+</body>
+
+</html>
