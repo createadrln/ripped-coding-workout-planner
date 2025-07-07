@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/4.x/ref/settings/
 import os
 from pathlib import Path
 
-BASE_DIR = Path(__file__).resolve().parent
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'your-secret-key')
 

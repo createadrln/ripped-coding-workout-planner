@@ -12,8 +12,8 @@ def user_login(request):
             login(request, user)
             return redirect('home')
         else:
-            return render(request, 'login.html', {'error': 'Invalid credentials'})
-    return render(request, 'login.html')
+            return render(request, 'registration/login.html', {'error': 'Invalid credentials'})
+    return render(request, 'registration/login.html')
 
 
 def register(request):
@@ -21,8 +21,8 @@ def register(request):
         username = request.POST.get('username')
         password = request.POST.get('password')
         if User.objects.filter(username=username).exists():
-            return render(request, 'register.html', {'error': 'Username already exists'})
+            return render(request, 'registration/register.html', {'error': 'Username already exists'})
         user = User.objects.create_user(username=username, password=password)
         login(request, user)
         return redirect('home')
-    return render(request, 'register.html')
+    return render(request, 'registration/register.html')

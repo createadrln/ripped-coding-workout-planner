@@ -32,8 +32,8 @@ def create_exercise(request):
             )
             return redirect('exercise_success')
         else:
-            return render(request, 'create_exercise.html', {'error': 'Name is required'})
-    return render(request, 'create_exercise.html')
+            return render(request, 'workouts/create_exercise.html', {'error': 'Name is required'})
+    return render(request, 'workouts/create_exercise.html')
 
 
 @login_required
@@ -52,17 +52,17 @@ def create_workout_template(request):
             template.exercises.set(selected_exercises)
             return redirect('workout_template_success')
         else:
-            return render(request, 'create_workout_template.html', {
+            return render(request, 'workouts/create_workout_template.html', {
                 'error': 'Name is required',
                 'exercises': exercises
             })
-    return render(request, 'create_workout_template.html', {'exercises': exercises})
+    return render(request, 'workouts/create_workout_template.html', {'exercises': exercises})
 
 
 @login_required
 def user_workout_templates(request):
     templates = WorkoutTemplate.objects.filter(user=request.user)
-    return render(request, 'user_workout_templates.html', {'templates': templates})
+    return render(request, 'workouts/user_workout_templates.html', {'templates': templates})
 
 
 @login_required
@@ -81,12 +81,12 @@ def edit_workout_template(request, template_id):
             template.exercises.set(selected_exercises)
             return redirect('user_workout_templates')
         else:
-            return render(request, 'edit_workout_template.html', {
+            return render(request, 'workouts/edit_workout_template.html', {
                 'template': template,
                 'exercises': exercises,
                 'error': 'Name is required'
             })
-    return render(request, 'edit_workout_template.html', {
+    return render(request, 'workouts/edit_workout_template.html', {
         'template': template,
         'exercises': exercises
     })
@@ -106,22 +106,22 @@ def create_workout_plan(request):
             workout.save()
             selected_templates_objs = WorkoutTemplate.objects.filter(
                 id__in=selected_templates, user=request.user)
-            return render(request, 'workout_plan_created.html', {
+            return render(request, 'workouts/workout_plan_created.html', {
                 'workout': workout,
                 'selected_templates': selected_templates_objs
             })
         else:
-            return render(request, 'create_workout_plan.html', {
+            return render(request, 'workouts/create_workout_plan.html', {
                 'templates': templates,
                 'error': 'Please select at least one template and a date.'
             })
-    return render(request, 'create_workout_plan.html', {'templates': templates})
+    return render(request, 'workouts/create_workout_plan.html', {'templates': templates})
 
 
 @login_required
 def user_workout_plans(request):
     workouts = Workout.objects.filter(user=request.user).order_by('-date')
-    return render(request, 'user_workout_plans.html', {'workouts': workouts})
+    return render(request, 'workouts/user_workout_plans.html', {'workouts': workouts})
 
 
 @login_required
@@ -159,7 +159,7 @@ def workout_plan_detail(request, workout_id):
         return redirect('user_workout_plans')
 
     sets = workout.sets.all()
-    return render(request, 'workout_plan_detail.html', {
+    return render(request, 'workouts/workout_plan_detail.html', {
         'workout': workout,
         'templates': templates,
         'exercises': exercises,
@@ -175,4 +175,4 @@ def delete_workout_plan(request, workout_id):
         workout.delete()
         messages.success(request, "Workout plan deleted successfully.")
         return redirect('user_workout_plans')
-    return render(request, 'delete_workout_plan.html', {'workout': workout})
+    return render(request, 'workouts/delete_workout_plan.html', {'workout': workout})
