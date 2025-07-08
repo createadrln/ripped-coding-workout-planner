@@ -1,3 +1,4 @@
+{% include "partials/header.html" %}
 <!DOCTYPE html>
 <html>
 
@@ -8,6 +9,7 @@
 <body>
     <h2>Exercise created successfully!</h2>
     <a href="{% url 'create_exercise' %}">Create another exercise</a>
+    <a href="{% url 'user_exercises' %}">View all exercises</a>
 </body>
 
 </html>

@@ -1,4 +1,4 @@
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 
@@ -26,3 +26,8 @@ def register(request):
         login(request, user)
         return redirect('home')
     return render(request, 'registration/register.html')
+
+
+def user_logout(request):
+    logout(request)
+    return render(request, 'registration/logout.html')

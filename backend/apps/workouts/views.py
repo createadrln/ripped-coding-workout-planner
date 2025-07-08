@@ -37,6 +37,12 @@ def create_exercise(request):
 
 
 @login_required
+def user_exercises(request):
+    exercises = Exercise.objects.filter(user=request.user)
+    return render(request, 'workouts/user_exercises.html', {'exercises': exercises})
+
+
+@login_required
 def create_workout_template(request):
     exercises = Exercise.objects.all()
     if request.method == 'POST':

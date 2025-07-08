@@ -1,0 +1,21 @@
+{% include "partials/header.html" %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>My Exercises</title>
+</head>
+
+<body>
+    <h2>My Exercises</h2>
+    <ul>
+        {% for exercise in exercises %}
+        <li>{{ exercise.name }} - {{ exercise.muscle_group }}</li>
+        {% empty %}
+        <li>No exercises found.</li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'create_exercise' %}">Create New Exercise</a>
+</body>
+
+</html>

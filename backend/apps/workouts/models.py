@@ -9,6 +9,7 @@ class Exercise(models.Model):
     max_weight = models.DecimalField(
         max_digits=6, decimal_places=2, null=True, blank=True)
     max_reps = models.PositiveIntegerField(null=True, blank=True)
+    user = models.ForeignKey('auth.User', on_delete=models.CASCADE, default=1)  # Add this line
 
     def __str__(self):
         return self.name
