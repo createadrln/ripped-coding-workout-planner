@@ -1,4 +1,5 @@
 {% include "partials/header.html" %}
+{% load crispy_forms_tags %}
 <!DOCTYPE html>
 <html>
 
@@ -7,24 +8,38 @@
 </head>
 
 <body>
-    <h2>Create Workout Plan</h2>
-    {% if error %}
-    <p style="color:red;">{{ error }}</p>
-    {% endif %}
-    <form method="post">
-        {% csrf_token %}
-        <label>Workout Templates:</label><br>
-        {% for template in templates %}
-        <input type="checkbox" name="templates" value="{{ template.id }}"> {{ template.name }}<br>
-        {% empty %}
-        <p>No templates available.</p>
-        {% endfor %}
-        <label>Date:</label>
-        <input type="date" name="date" required><br>
-        <label>Notes:</label>
-        <textarea name="notes"></textarea><br>
-        <button type="submit">Create Workout Plan</button>
-    </form>
+    <div class="container mb-5">
+        <h2>Create Workout Plan</h2>
+        {% if error %}
+        <p style="color:red;">{{ error }}</p>
+        {% endif %}
+    </div>
+    <div class="container">
+        <form method="post">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <div class="mb-3">
+                <label class="form-label">Workout Templates:</label>
+                <div>
+                    {% for template in templates %}
+                    <input type="checkbox" name="templates" value="{{ template.id }}"> {{ template.name }}
+                    {% empty %}
+                    <p>No templates available.</p>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Date:</label>
+                <input class="form-control" type="date" name="date" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Notes:</label>
+                <textarea class="form-control form-control-lg" name="notes"></textarea>
+            </div>
+            <button class="btn btn-dark" type="submit">Create Workout Plan</button>
+        </form>
+    </div>
+
 </body>
 
 </html>

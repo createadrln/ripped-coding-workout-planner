@@ -7,27 +7,36 @@
 </head>
 
 <body>
-    <h2>My Workout Templates</h2>
-    {% if templates %}
-    <ul>
-        {% for template in templates %}
-        <li>
-            <strong>{{ template.name }}</strong><br>
-            {{ template.description }}<br>
-            Exercises:
-            <ul>
-                {% for exercise in template.exercises.all %}
-                <li>{{ exercise.name }}</li>
-                {% endfor %}
-            </ul>
-            <a href="{% url 'edit_workout_template' template.id %}">Edit</a>
-        </li>
-        {% endfor %}
-    </ul>
-    {% else %}
-    <p>No workout templates found.</p>
-    {% endif %}
-    <a href="{% url 'create_workout_template' %}">Create New Template</a>
+    <div class="container mb-5">
+        <h2>My Workout Templates</h2>
+    </div>
+    <div class="container">
+        {% if templates %}
+        <ul class="list-group mb-5">
+            {% for template in templates %}
+            <li class="list-group-item">
+                <div class="mt-1 mb-2">
+                    <strong>{{ template.name }}</strong>
+                    <a href="{% url 'edit_workout_template' template.id %}">Edit</a>
+                    {{ template.description }}<br>
+                </div>
+                <div class="mb-3">
+                    Exercises:
+                </div>
+                <ul class="list-group mb-3">
+                    {% for exercise in template.exercises.all %}
+                    <li class="list-group-item">{{ exercise.name }}</li>
+                    {% endfor %}
+                </ul>
+            </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p>No workout templates found.</p>
+        {% endif %}
+        <a href="{% url 'create_workout_template' %}">Create New Template</a><br>
+        <a href="{% url 'user_workout_plans' %}">View Workout Plans</a>
+    </div>
 </body>
 
 </html>

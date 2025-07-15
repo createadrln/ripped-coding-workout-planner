@@ -4,12 +4,9 @@ import uuid
 
 class Exercise(models.Model):
     name = models.CharField(max_length=100)
-    description = models.TextField(blank=True)
+    notes = models.TextField(blank=True)
     muscle_group = models.CharField(max_length=100, blank=True)
-    max_weight = models.DecimalField(
-        max_digits=6, decimal_places=2, null=True, blank=True)
-    max_reps = models.PositiveIntegerField(null=True, blank=True)
-    user = models.ForeignKey('auth.User', on_delete=models.CASCADE, default=1)  # Add this line
+    user = models.ForeignKey('auth.User', on_delete=models.CASCADE, default=1)
 
     def __str__(self):
         return self.name

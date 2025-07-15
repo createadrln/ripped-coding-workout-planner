@@ -7,15 +7,22 @@
 </head>
 
 <body>
-    <h2>My Exercises</h2>
-    <ul>
-        {% for exercise in exercises %}
-        <li>{{ exercise.name }} - {{ exercise.muscle_group }}</li>
-        {% empty %}
-        <li>No exercises found.</li>
-        {% endfor %}
-    </ul>
-    <a href="{% url 'create_exercise' %}">Create New Exercise</a>
+    <div class="container mb-5">
+        <h2>My Exercises</h2>
+    </div>
+    <div class="container">
+        <ul class="list-group mb-5">
+            {% for exercise in exercises %}
+            <li class="list-group-item">
+                {{ exercise.name }}{% if exercise.muscle_group %} - {{ exercise.muscle_group }}{% endif %}
+            </li>
+            {% empty %}
+            <li class="list-group-item">No exercises found.</li>
+            {% endfor %}
+        </ul>
+        <a href="{% url 'create_exercise' %}">Create New Exercise</a><br>
+        <a href="{% url 'user_workout_templates' %}">View Workout Templates</a><br>
+    </div>
 </body>
 
 </html>

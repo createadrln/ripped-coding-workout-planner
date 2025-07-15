@@ -18,17 +18,13 @@ def about(request):
 def create_exercise(request):
     if request.method == 'POST':
         name = request.POST.get('name')
-        description = request.POST.get('description', '')
+        notes = request.POST.get('notes', '')
         muscle_group = request.POST.get('muscle_group', '')
-        max_weight = request.POST.get('max_weight') or None
-        max_reps = request.POST.get('max_reps') or None
         if name:
             Exercise.objects.create(
                 name=name,
-                description=description,
-                muscle_group=muscle_group,
-                max_weight=max_weight if max_weight else None,
-                max_reps=max_reps if max_reps else None
+                notes=notes,
+                muscle_group=muscle_group
             )
             return redirect('exercise_success')
         else:

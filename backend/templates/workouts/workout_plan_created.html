@@ -7,14 +7,21 @@
 </head>
 
 <body>
-    <h2>Workout Plan Created!</h2>
-    <p>Your workout for {{ workout.date }} has been created with the following templates:</p>
-    <ul>
-        {% for template in selected_templates %}
-        <li>{{ template.name }}</li>
-        {% endfor %}
-    </ul>
-    <a href="{% url 'create_workout_plan' %}">Create another workout plan</a>
+    <div class="container mb-5">
+        <h2>Workout Plan Created!</h2>
+    </div>
+
+    <div class="container">
+        <p>Your workout for {{ workout.date }} has been created with the following templates:</p>
+        <ul class="list-group mb-5">
+            {% for template in selected_templates %}
+            <li class="list-group-item">{{ template.name }}</li>
+            {% endfor %}
+        </ul>
+        <a href="{% url 'create_workout_plan' %}">Create another workout plan</a><br>
+        <a href="{% url 'user_workout_plans' %}">View workout plans</a>
+    </div>
+
 </body>
 
 </html>

@@ -7,8 +7,14 @@
 </head>
 
 <body>
-    <h2>Workout Template created successfully!</h2>
-    <a href="{% url 'create_workout_template' %}">Create another template</a>
+    <div class="container mb-5">
+        <h2>Workout Template created successfully!</h2>
+    </div>
+
+    <div class="container">
+        <a href="{% url 'create_workout_template' %}">Create another template</a><br>
+        <a href="{% url 'user_workout_templates' %}">View all workout templates</a>
+    </div>
 </body>
 
 </html>

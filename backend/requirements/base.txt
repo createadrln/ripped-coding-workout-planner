@@ -6,3 +6,6 @@ django-cors-headers==3.10.0
 django-environ==0.8.1
 pytest==6.2.4
 pytest-django==4.5.2
+streamlit
+django-crispy-forms
+crispy-bootstrap5
