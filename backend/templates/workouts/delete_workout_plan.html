@@ -7,13 +7,17 @@
 </head>
 
 <body>
-    <h2>Delete Workout Plan</h2>
-    <p>Are you sure you want to delete the workout plan for <strong>{{ workout.date }}</strong>?</p>
-    <form method="post">
-        {% csrf_token %}
-        <button type="submit">Yes, Delete</button>
-        <a href="{% url 'user_workout_plans' %}">Cancel</a>
-    </form>
+    <div class="container mb-5">
+        <h2>Delete Workout Plan</h2>
+    </div>
+    <div class="container mb-5">
+        <p>Are you sure you want to delete the workout plan for <strong>{{ workout.date }}</strong>?</p>
+        <form method="post">
+            {% csrf_token %}
+            <button class="btn btn-primary" type="submit">Yes, Delete</button>
+            <a class="btn btn-primary" href="{% url 'user_workout_plans' %}">Cancel</a>
+        </form>
+    </div>
 </body>
 
 </html>

@@ -4,6 +4,7 @@ from django.views.decorators.http import require_http_methods
 from apps.workouts.models import Exercise, WorkoutTemplate, Workout, Set
 from django.contrib import messages
 from django.http import JsonResponse
+from datetime import datetime
 
 
 def home(request):
@@ -122,8 +123,17 @@ def create_workout_plan(request):
 
 @login_required
 def user_workout_plans(request):
-    workouts = Workout.objects.filter(user=request.user).order_by('-date')
+    startdate = datetime.today()
+    workouts = Workout.objects.filter(user=request.user).filter(
+        date__gt=startdate).order_by('-date')
     return render(request, 'workouts/user_workout_plans.html', {'workouts': workouts})
+
+@login_required
+def user_workout_plans_history(request):
+    startdate = datetime.today()
+    workouts = Workout.objects.filter(user=request.user).filter(
+        date__lt=startdate).order_by('-date')
+    return render(request, 'workouts/user_workout_plans_history.html', {'workouts': workouts})
 
 
 @login_required

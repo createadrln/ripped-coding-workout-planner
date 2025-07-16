@@ -1,30 +1,47 @@
 {% include "partials/header.html" %}
+{% load crispy_forms_tags %}
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Edit Workout Template</title>
 </head>
+
 <body>
-    <h2>Edit Workout Template</h2>
-    {% if error %}
+    <div class="container mb-5">
+        <h2>Edit Workout Template</h2>
+        {% if error %}
         <p style="color:red;">{{ error }}</p>
-    {% endif %}
-    <form method="post">
-        {% csrf_token %}
-        <label>Name:</label>
-        <input type="text" name="name" value="{{ template.name }}" required><br>
-        <label>Description:</label>
-        <textarea name="description">{{ template.description }}</textarea><br>
-        <label>Exercises:</label><br>
-        {% for exercise in exercises %}
-            <input type="checkbox" name="exercises" value="{{ exercise.id }}"
-                {% if exercise in template.exercises.all %}checked{% endif %}>
-                {{ exercise.name }}<br>
-        {% empty %}
-            <p>No exercises available.</p>
-        {% endfor %}
-        <button type="submit">Save Changes</button>
-    </form>
-    <a href="{% url 'user_workout_templates' %}">Back to My Templates</a>
+        {% endif %}
+    </div>
+    <div class="container mb-5">
+        <form method="post">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <div class="mb-3">
+                <label class="form-label">Name:</label>
+                <input class="form-control form-control-lg" type="text" name="name" value="{{ template.name }}"
+                    required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Description:</label>
+                <textarea class="form-control form-control-lg" name="description">{{ template.description }}</textarea>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Exercises:</label>
+                {% for exercise in exercises %}
+                <div class="mb-1">
+                    <input type="checkbox" name="exercises" value="{{ exercise.id }}" {% if exercise in
+                        template.exercises.all %}checked{% endif %}> {{ exercise.name }}
+                </div>
+                {% empty %}
+                <p>No exercises available. <a href="{% url 'create_exercise' %}">Create one</a></p>
+                {% endfor %}
+            </div>
+            <button class="btn btn-dark" type="submit">Save Changes</button>
+        </form>
+        <a href="{% url 'user_workout_templates' %}">Back to My Templates</a>
+    </div>
 </body>
+
 </html>

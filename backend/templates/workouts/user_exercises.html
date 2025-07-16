@@ -10,16 +10,29 @@
     <div class="container mb-5">
         <h2>My Exercises</h2>
     </div>
-    <div class="container">
-        <ul class="list-group mb-5">
-            {% for exercise in exercises %}
-            <li class="list-group-item">
-                {{ exercise.name }}{% if exercise.muscle_group %} - {{ exercise.muscle_group }}{% endif %}
-            </li>
-            {% empty %}
-            <li class="list-group-item">No exercises found.</li>
-            {% endfor %}
-        </ul>
+    <div class="container mb-5">
+        {% if exercises %}
+        <table class="table table-bordered table-striped mb-5">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Exercise Name</th>
+                    <th scope="col">Muscle Group</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for exercise in exercises %}
+                <tr>
+                    <td>{{ exercise.name }}</td>
+                    {% if exercise.muscle_group %}
+                    <td>{{ exercise.muscle_group }}</td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        No exercises found
+        {% endif %}
         <a href="{% url 'create_exercise' %}">Create New Exercise</a><br>
         <a href="{% url 'user_workout_templates' %}">View Workout Templates</a><br>
     </div>
