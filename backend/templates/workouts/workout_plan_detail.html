@@ -12,10 +12,10 @@
         <h2>Workout for {{ workout.date }}</h2>
     </div>
     <div class="container mb-5">
-        <h3>Templates:</h3>
+        <h3 class="mb-3">Templates:</h3>
         <div>
             {% for template in templates %}
-            <h5>{{ template.name }}</h5>
+            <h5 class="mb-3">{{ template.name }}</h5>
             <form method="post">
                 {% csrf_token %}
                 {{ form|crispy }}
