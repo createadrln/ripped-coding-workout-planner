@@ -13,7 +13,8 @@ class Exercise(models.Model):
 
 
 class Workout(models.Model):
-    workout_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
+    workout_id = models.UUIDField(
+        default=uuid.uuid4, editable=False, unique=True)
     date = models.DateField()
     notes = models.TextField(blank=True)
     templates = models.ManyToManyField('WorkoutTemplate', blank=True)
@@ -30,6 +31,7 @@ class Set(models.Model):
         Exercise, related_name='sets', on_delete=models.CASCADE)
     weight = models.DecimalField(max_digits=6, decimal_places=2)
     reps = models.PositiveIntegerField()
+    rpe = models.PositiveIntegerField()
     set_number = models.PositiveIntegerField()
 
     def __str__(self):

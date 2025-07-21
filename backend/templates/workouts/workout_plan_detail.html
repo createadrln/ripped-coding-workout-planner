@@ -1,63 +1,78 @@
-{% include "partials/header.html" %}
 {% load crispy_forms_tags %}
+{% load static %}
+{% load dict_extras %}
+
 <!DOCTYPE html>
 <html>
-
-<head>
+  <head>
     <title>Workout Plan Detail</title>
-</head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
+  </head>
 
-<body>
+  <body>
     <div class="container mb-5">
-        <h2>Workout for {{ workout.date }}</h2>
+      <h2>Workout for {{ workout.date }}</h2>
     </div>
+
     <div class="container mb-5">
-        <h3 class="mb-3">Templates:</h3>
-        <div>
-            {% for template in templates %}
-            <h5 class="mb-3">{{ template.name }}</h5>
-            <form method="post">
+      <h3 class="mb-3">Templates:</h3>
+
+      {% for template in templates %}
+        <h4 class="mt-4">{{ template.name }}</h4>
+
+        {% for exercise in template.exercises.all %}
+          <div class="card mb-4">
+            <div class="card-body">
+              <h5>{{ exercise.name }}</h5>
+
+              <form method="post" class="row g-3">
                 {% csrf_token %}
-                {{ form|crispy }}
-                <table class="table table-bordered table-striped mb-3">
-                    <thead>
-                        <tr>
-                            <th scope="col">Exercise</th>
-                            <th scope="col">Weight</th>
-                            <th scope="col">Reps</th>
-                            <th scope="col">Set Number</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for exercise in exercises %}
-                        <tr>
-                            <td>{{ exercise.name }}</td>
-                            <td><input type="number" step="0.01" name="weight_{{ exercise.id }}"></td>
-                            <td><input type="number" name="reps_{{ exercise.id }}"></td>
-                            <td><input type="number" name="set_number_{{ exercise.id }}"
-                                    value="{{ next_set_numbers.exercise.id }}" min="1"></td>
-                            <td><button class="btn btn-primary">Add another set</button></td>
-                        </tr>
-                        {% if sets %}
-                        <tr>
-                            {% for s in sets %}
-                            <td>{{ s.exercise.name }}: {{ s.weight }} x {{ s.reps }} (Set {{ s.set_number }})</td>
-                            {% endfor %}
-                        </tr>
-                        {% else %}
-                        <tr>
-                            <td>No sets logged yet.</td>
-                        </tr>
-                        {% endif %}
-                        {% endfor %}
-                    </tbody>
-                </table>
-                <button class="btn btn-primary" type="submit">Save Sets</button>
-            </form>
-            {% endfor %}
-        </div>
-        <a href="{% url 'user_workout_plans' %}">Back to My Workout Plans</a>
-    </div>
-</body>
+                <input type="hidden" name="exercise_id" value="{{ exercise.id }}" />
+                <div class="col-md-3">
+                  <input type="number" step="0.01" name="weight" class="form-control" placeholder="Weight" />
+                </div>
+                <div class="col-md-3">
+                  <input type="number" name="reps" class="form-control" placeholder="Reps" />
+                </div>
+                <div class="col-md-3">
+                  <input type="number" name="set_number" class="form-control" value="{{ next_set_numbers|get_item:exercise.id }}" min="1" />
+                </div>
+                <div class="col-md-3">
+                  <button type="submit" class="btn btn-primary">Add Set</button>
+                </div>
+              </form>
 
+              <div class="mt-3">
+                {% for exercise in exercises %}
+                  {% with sets=exercise_sets|get_item:exercise.id %}
+                    {% if sets %}
+                      <tr>
+                        {% for s in sets %}
+                          <td>{{ s.exercise.name }}: {{ s.weight }} x {{ s.reps }} (Set {{ s.set_number }})</td>
+                        {% endfor %}
+                      </tr>
+                    {% else %}
+                      <tr>
+                        <td>No sets logged yet.</td>
+                      </tr>
+                    {% endif %}
+                  {% endwith %}
+                {% endfor %} {% if sets %}
+                  <ul class="list-group">
+                    {% for s in sets %}
+                      <li class="list-group-item">{{ s.weight }} lbs × {{ s.reps }} reps (Set {{ s.set_number }}) (RPE {{ s.rep }})</li>
+                    {% endfor %}
+                  </ul>
+                {% else %}
+                  <p class="text-muted">No sets logged yet.</p>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      {% endfor %}
+
+      <a href="{% url 'user_workout_plans' %}" class="btn btn-link">Back to My Workout Plans</a>
+    </div>
+  </body>
 </html>

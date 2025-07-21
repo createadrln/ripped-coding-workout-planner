@@ -128,6 +128,7 @@ def user_workout_plans(request):
         date__gt=startdate).order_by('-date')
     return render(request, 'workouts/user_workout_plans.html', {'workouts': workouts})
 
+
 @login_required
 def user_workout_plans_history(request):
     startdate = datetime.today()
@@ -155,28 +156,36 @@ def workout_plan_detail(request, workout_id):
             highest_set.set_number + 1) if highest_set else 1
 
     if request.method == 'POST':
-        for exercise in exercises:
-            weight = request.POST.get(f'weight_{exercise.id}')
-            reps = request.POST.get(f'reps_{exercise.id}')
-            set_number = request.POST.get(
-                f'set_number_{exercise.id}', next_set_numbers[exercise.id])
-            if weight or reps or set_number:
-                Set.objects.create(
-                    workout=workout,
-                    exercise=exercise,
-                    weight=weight if weight else 0,
-                    reps=reps if reps else 0,
-                    set_number=set_number if set_number else 1
-                )
-        return redirect('user_workout_plans')
+        exercise_id = request.POST.get('exercise_id')
+        exercise = get_object_or_404(Exercise, id=exercise_id)
 
-    sets = workout.sets.all()
+        weight = request.POST.get('weight')
+        reps = request.POST.get('reps')
+        set_number = request.POST.get(
+            'set_number', next_set_numbers.get(int(exercise_id), 1))
+
+        if weight or reps:
+            Set.objects.create(
+                workout=workout,
+                exercise=exercise,
+                weight=weight if weight else 0,
+                reps=reps if reps else 0,
+                set_number=set_number if set_number else 1
+            )
+        return redirect('workout_plan_detail', workout_id=workout.id)
+
+    exercise_sets = {}
+
+    for exercise in exercises:
+        sets_for_exercise = workout.sets.filter(exercise=exercise)
+        exercise_sets[exercise.id] = sets_for_exercise
+
     return render(request, 'workouts/workout_plan_detail.html', {
-        'workout': workout,
-        'templates': templates,
-        'exercises': exercises,
-        'sets': sets,
-        'next_set_numbers': next_set_numbers
+        "workout": workout,
+        "templates": templates,
+        "exercises": exercises,
+        "next_set_numbers": next_set_numbers,
+        "exercise_sets": exercise_sets,
     })
 
 
