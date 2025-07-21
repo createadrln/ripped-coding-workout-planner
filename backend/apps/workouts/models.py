@@ -31,11 +31,11 @@ class Set(models.Model):
         Exercise, related_name='sets', on_delete=models.CASCADE)
     weight = models.DecimalField(max_digits=6, decimal_places=2)
     reps = models.PositiveIntegerField()
-    rpe = models.PositiveIntegerField()
+    rpe = models.PositiveIntegerField(default=0)
     set_number = models.PositiveIntegerField()
 
     def __str__(self):
-        return f"{self.exercise.name} - {self.weight} x {self.reps} (Set {self.set_number})"
+        return f"{self.exercise.name} - {self.weight} x {self.reps} (Set {self.set_number}) (REP {self.rpe})"
 
 
 class WorkoutTemplate(models.Model):

@@ -161,6 +161,7 @@ def workout_plan_detail(request, workout_id):
 
         weight = request.POST.get('weight')
         reps = request.POST.get('reps')
+        rpe = request.POST.get('rpe')
         set_number = request.POST.get(
             'set_number', next_set_numbers.get(int(exercise_id), 1))
 
@@ -170,6 +171,7 @@ def workout_plan_detail(request, workout_id):
                 exercise=exercise,
                 weight=weight if weight else 0,
                 reps=reps if reps else 0,
+                rpe=rpe if rpe else 0,
                 set_number=set_number if set_number else 1
             )
         return redirect('workout_plan_detail', workout_id=workout.id)
